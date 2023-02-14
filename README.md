@@ -1,4 +1,5 @@
 #  WIP
+![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 ## Objective  
 Build a Bot for Eve Online that has only one input and one control mechanism, graphical screen scraping and mouse movements respectively.  
 
@@ -16,6 +17,3 @@ This repo will contain several things:
 - Training Data Sets
 - Ability to Execute Yourself
 
-Screen Scraping + Tesseract = High Performance  
-![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/SurveyScanResults_Fact.png)  
-![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/SurveyScanResults_Extract.png)
