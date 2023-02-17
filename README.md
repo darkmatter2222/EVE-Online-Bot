@@ -1,5 +1,15 @@
 #  WIP
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
+
+## UPDATE - 2/16/23  
+A complete end to end automated mining run is finished and working. Many Many quarks to work out.  
+
+
+
+
+
+
+
 ## Objective  
 Build a Bot for Eve Online that has only one input and one control mechanism, graphical screen scraping and mouse movements respectively.  
 
