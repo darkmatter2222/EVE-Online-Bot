@@ -2,7 +2,9 @@
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
 ## UPDATE - 2/16/23  
-A complete end to end automated mining run is finished and working. Many Many quarks to work out.  
+A complete end to end automated mining run is finished and working. Many Many quarks to work out.   
+Inside this [notebook](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Experiment/SurveyScanResultsInit.ipynb)  
+
 
 
 
