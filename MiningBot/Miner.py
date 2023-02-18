@@ -18,30 +18,34 @@ resource_map = {}
 
 def perform_mapping():
     global resource_map
-    targets = ['Site1 P1', 'Site2 P1', 'Site3 P1']
+    targets = ['Site1 Alpha', 'Site2 Alpha', 'Site3 Alpha']
     df = game.get_location_data(refresh_screen=True)
 
     for target in targets:
-        print(f'Navigating to {target}')
-        xy = df.loc[df['Name'] == target, 'click_target'].values[0]
-        pyautogui.moveTo(xy)
-        time.sleep(0.1)
-        pyautogui.click(button='right')
-        time.sleep(0.1)
-        pyautogui.moveTo(xy[0] + 50, xy[1] + 25)
-        time.sleep(0.1)
-        pyautogui.click(button='left')
-        time.sleep(0.1)
-        pyautogui.moveTo(1, 1)
-        time.sleep(60)
+        try:
+            print(f'Navigating to {target}')
+            xy = df.loc[df['Name'] == target, 'click_target'].values[0]
+            pyautogui.moveTo(xy)
+            time.sleep(0.1)
+            pyautogui.click(button='right')
+            time.sleep(0.1)
+            pyautogui.moveTo(xy[0] + 50, xy[1] + 25)
+            time.sleep(0.1)
+            pyautogui.click(button='left')
+            time.sleep(0.1)
+            pyautogui.moveTo(1, 1)
+            time.sleep(60)
 
-        print('scanning...')
-        pyautogui.moveTo(get_processed_cords(config['scanner_button_x'], config['scanner_button_y']))
-        time.sleep(0.1)
-        pyautogui.click(button='left')
-        time.sleep(7)
-        resource_map[target] = game.get_survey_scan_data(refresh_screen=True)
-        print(f'Data Collected!')
+            print('scanning...')
+            pyautogui.moveTo(get_processed_cords(config['scanner_button_x'], config['scanner_button_y']))
+            time.sleep(0.1)
+            pyautogui.click(button='left')
+            time.sleep(7)
+            resource_map[target] = game.get_survey_scan_data(refresh_screen=True)
+            print(f'Data Collected!')
+        except Exception as e:
+            print(e)
+
 
 # warp to playground and begin mapping
 perform_mapping()
