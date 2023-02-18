@@ -90,4 +90,10 @@ def find_mining_spot(keep_finding = True):
             return
 
 
+
+find_mining_spot()
+
+
+
+
 print('lol')
