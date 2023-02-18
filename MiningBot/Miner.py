@@ -22,6 +22,7 @@ def perform_mapping():
     df = game.get_location_data(refresh_screen=True)
 
     for target in targets:
+        print(f'Navigating to {target}')
         xy = df.loc[df['Name'] == target, 'click_target'].values[0]
         pyautogui.moveTo(xy)
         time.sleep(0.1)
@@ -32,8 +33,16 @@ def perform_mapping():
         pyautogui.click(button='left')
         time.sleep(0.1)
         pyautogui.moveTo(1, 1)
+        time.sleep(60)
 
-    time.sleep(60)
+        print('scanning...')
+        pyautogui.moveTo(get_processed_cords(config['scanner_button_x'], config['scanner_button_y']))
+        time.sleep(0.1)
+        pyautogui.click(button='left')
+        time.sleep(7)
+        resource_map[target] = game.get_survey_scan_data(refresh_screen=True)
+        print(f'Data Collected!')
 
 # warp to playground and begin mapping
-print(perform_mapping())
+perform_mapping()
+print('lol')
