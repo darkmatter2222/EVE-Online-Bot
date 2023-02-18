@@ -156,10 +156,3 @@ class Interface:
         img_array = np.array(cargo_bar)
         return len(img_array[img_array == True]) / (
                     len(img_array[img_array == True]) + len(img_array[img_array == False]))
-
-
-
-I = Interface()
-
-df = I.get_cargo_data(refresh_screen=True)
-print(df)
