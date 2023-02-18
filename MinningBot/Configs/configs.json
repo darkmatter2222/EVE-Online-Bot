@@ -1,0 +1,8 @@
+{
+  "monitor_offset_x": 0,
+  "monitor_offset_y": 0,
+  "monitor_number": 1,
+  "survey_scan_box": [1282, 612, 1842, 770],
+  "cargo_box": [372, 638, 630, 643],
+  "locations_box": [863, 135, 1326, 460]
+}
