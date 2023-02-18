@@ -62,8 +62,8 @@ def get_cells(x_range, y_range):
 
 
 def extract_values(img, cells, x_range, y_range, columns,
-                    monitor_x_offset, monitor_y_offset,
-                    click_target_offset_x, click_target_offset_y
+                   monitor_x_offset, monitor_y_offset,
+                   click_target_offset_x, click_target_offset_y
                    ):
     frames = []
     for i in range(len(y_range) - 1):
@@ -78,7 +78,38 @@ def extract_values(img, cells, x_range, y_range, columns,
                                                                                                        ' km').replace(
                 ',', '')
         frame['click_target'] = (
-            cells[0, i][0] + click_target_offset_x + monitor_x_offset, cells[0, i][1] + click_target_offset_y + monitor_y_offset)  # offset by 10x10 pixels
+            cells[0, i][0] + click_target_offset_x + monitor_x_offset,
+            cells[0, i][1] + click_target_offset_y + monitor_y_offset)  # offset by 10x10 pixels
+        frames.append(frame)
+    return pd.DataFrame(frames, columns=columns)
+
+
+def extract_bool(img, cells, x_range, y_range, columns,
+                 monitor_x_offset, monitor_y_offset,
+                 click_target_offset_x, click_target_offset_y
+                 ):
+    frames = []
+    for i in range(len(y_range) - 1):
+        frame = {}
+        for j in range(0, len(x_range) - 1):
+            cell = cell_dims_from_list(list(cells[j, i]))
+            cell_image = img.crop(cell)
+
+            cell_image = convert_to_baw(cell_image, thresh=160)
+            img_array = np.array(cell_image)
+
+            percent_text = len(img_array[img_array == True]) / (
+                    len(img_array[img_array == True]) + len(img_array[img_array == False]))
+
+            populated = False
+            if percent_text > 0.005:
+                populated = True
+
+            frame[columns[j]] = populated
+
+        frame['click_target'] = (
+            cells[0, i][0] + click_target_offset_x + monitor_x_offset,
+            cells[0, i][1] + click_target_offset_y + monitor_y_offset)  # offset by 10x10 pixels
         frames.append(frame)
     return pd.DataFrame(frames, columns=columns)
 
@@ -117,7 +148,7 @@ class Interface:
             img = Image.fromarray(img)
             return img
 
-    def get_survey_scan_data(self, rows=6, refresh_screen=False):
+    def get_survey_scan_data(self, rows=6, refresh_screen=False, extract_type='values'):
         y_range = get_row_points(self.config['survey_scan_box'], rows)
         x_range = get_col_points(self.config['survey_scan_box'], self.config['survey_scan_box_columns'])
         cells = get_cells(x_range, y_range)
@@ -127,12 +158,25 @@ class Interface:
 
         extract_columns = ['Locked', 'Ore', 'Quantity', 'Volume', 'Distance', 'click_target']
 
-        return extract_values(img=self.screen, cells=cells, x_range=x_range,
-                              y_range=y_range, columns=extract_columns,
-                              monitor_x_offset=self.config['monitor_offset_x'],
-                              monitor_y_offset=self.config['monitor_offset_y'],
-                              click_target_offset_x=self.config['click_target_offset_x'],
-                              click_target_offset_y=self.config['click_target_offset_y'])
+        result = None
+        if extract_type == 'values':
+            result = extract_values(img=self.screen, cells=cells, x_range=x_range,
+                                  y_range=y_range, columns=extract_columns,
+                                  monitor_x_offset=self.config['monitor_offset_x'],
+                                  monitor_y_offset=self.config['monitor_offset_y'],
+                                  click_target_offset_x=self.config['click_target_offset_x'],
+                                  click_target_offset_y=self.config['click_target_offset_y'])
+        else:
+            result = extract_bool(img=self.screen, cells=cells, x_range=x_range,
+                                  y_range=y_range, columns=extract_columns,
+                                  monitor_x_offset=self.config['monitor_offset_x'],
+                                  monitor_y_offset=self.config['monitor_offset_y'],
+                                  click_target_offset_x=self.config['click_target_offset_x'],
+                                  click_target_offset_y=self.config['click_target_offset_y'])
+
+        return result
+
+
 
     def get_location_data(self, rows=13, refresh_screen=False):
         y_range = get_row_points(self.config['locations_box'], rows)
@@ -155,4 +199,4 @@ class Interface:
         cargo_bar = convert_to_baw(self.screen.crop(self.config['cargo_box']), thresh=20)
         img_array = np.array(cargo_bar)
         return len(img_array[img_array == True]) / (
-                    len(img_array[img_array == True]) + len(img_array[img_array == False]))
+                len(img_array[img_array == True]) + len(img_array[img_array == False]))

@@ -41,12 +41,53 @@ def perform_mapping():
             time.sleep(0.1)
             pyautogui.click(button='left')
             time.sleep(7)
-            resource_map[target] = game.get_survey_scan_data(refresh_screen=True)
+            resource_map[target] = game.get_survey_scan_data(refresh_screen=True, extract_type='bool')
             print(f'Data Collected!')
         except Exception as e:
             print(e)
 
+def find_mining_spot(keep_finding = True):
+    location_df = game.get_location_data(refresh_screen=True)
+    while True:
+        for target in config['mining_sites']:
+            print(f'Navigating to {target}')
+            xy = location_df.loc[location_df['Name'] == target, 'click_target'].values[0]
+            pyautogui.moveTo(xy)
+            time.sleep(0.1)
+            pyautogui.click(button='right')
+            time.sleep(0.1)
+            pyautogui.moveTo(xy[0] + 50, xy[1] + 25)
+            time.sleep(0.1)
+            pyautogui.click(button='left')
+            time.sleep(0.1)
+            pyautogui.moveTo(1, 1)
+            time.sleep(60)
 
-# warp to playground and begin mapping
-perform_mapping()
+            print('scanning...')
+            pyautogui.moveTo(get_processed_cords(config['scanner_button_x'], config['scanner_button_y']))
+            time.sleep(0.1)
+            pyautogui.click(button='left')
+            time.sleep(7)
+            scan_df = game.get_survey_scan_data(refresh_screen=True, extract_type='bool')
+            if len(scan_df[scan_df['Quantity']==True]) >= 2:
+                return target
+        if ~keep_finding:
+            print('keep_finding = False, sending Home.')
+            target = 'Home'
+            print(f'Navigating to {target}')
+            xy = location_df.loc[location_df['Name'] == target, 'click_target'].values[0]
+            pyautogui.moveTo(xy)
+            time.sleep(0.1)
+            pyautogui.click(button='right')
+            time.sleep(0.1)
+            pyautogui.moveTo(xy[0] + 50, xy[1] + 25)
+            time.sleep(0.1)
+            pyautogui.click(button='left')
+            time.sleep(0.1)
+            pyautogui.moveTo(1, 1)
+            time.sleep(60)
+            print('Unable to locate Ore, Done...')
+            return
+
+
 print('lol')

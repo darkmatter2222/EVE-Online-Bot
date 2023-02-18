@@ -10,5 +10,6 @@
   "survey_scan_box_columns": [0.05, 0.45, 0.15, 0.18],
   "cargo_box": [372, 638, 630, 643],
   "locations_box": [863, 135, 1326, 460],
-  "locations_box_columns": [1]
+  "locations_box_columns": [1],
+  "mining_sites": ["Site One Alpha", "Site Two Alpha", "Site Three Alpha"]
 }
