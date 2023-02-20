@@ -1,6 +1,10 @@
 #  WIP
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+## UPDATE - 2/18/23  
+More cleaning up, now have a dedicated working Interface to Eve and fully working ends to end mining and unloading. Also began making all the necessary config items configureable. Deplyed to local server and workes after some fine tuning in the configs. Also crafted an "Overlay" notebook to guide the fuine tuing of the configs. 
+Dropped OCR on some of the tables, this was very smary. Far mroe reliable and far more performant.  
+
 ## UPDATE - 2/17/23  
 Beginning to formalize the Eve Interface for Screen Scraping. A one Stop Shop for ripping data from the screen configured by JSON. [Here](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/MiningBot/EveInterface/Interface.py)  
 I think i might drop OCR for some cases, the "[get_cargo_data](https://github.com/darkmatter2222/EVE-Online-Bot/blob/9d1428ffa6042c1a8f6d826f4931190bc38bcb0b/MiningBot/EveInterface/Interface.py#L154)" is so accuriate, I might do the same with some of the tables. OCR might be Overkill. 
