@@ -1,13 +1,16 @@
 #  WIP
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+## UPDATE - 2/19/23  
+A good day, the bot ran nearly all day on a private onprem server. Had one bug fix that resulted in optimizing the configurations further. Bot cleared 3 mining belts all by itself today. Likely to add in a mongo cluster for tracking events in real time and possibly remote control via pubsub. Docking w/ space station can have some latency. Should install some real time recognition for when we enter/exit the station. Also need to add in some logic to not round robin all the warp points when they are known to be depleted. 
+
 ## UPDATE - 2/18/23  
-More cleaning up, now have a dedicated working Interface to Eve and fully working ends to end mining and unloading. Also began making all the necessary config items configureable. Deplyed to local server and workes after some fine tuning in the configs. Also crafted an "Overlay" notebook to guide the fuine tuing of the configs. 
-Dropped OCR on some of the tables, this was very smary. Far mroe reliable and far more performant.  
+More cleaning up, now have a dedicated working Interface to Eve and fully working ends to end mining and unloading. Also began making all the necessary config items configurable. Deployed to local server and works after some fine tuning in the configs. Also crafted an "Overlay" notebook to guide the fine tuning of the configs. 
+Dropped OCR on some of the tables, this was very smart. Far more reliable and far more performant.  
 
 ## UPDATE - 2/17/23  
 Beginning to formalize the Eve Interface for Screen Scraping. A one Stop Shop for ripping data from the screen configured by JSON. [Here](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/MiningBot/EveInterface/Interface.py)  
-I think i might drop OCR for some cases, the "[get_cargo_data](https://github.com/darkmatter2222/EVE-Online-Bot/blob/9d1428ffa6042c1a8f6d826f4931190bc38bcb0b/MiningBot/EveInterface/Interface.py#L154)" is so accuriate, I might do the same with some of the tables. OCR might be Overkill. 
+I think i might drop OCR for some cases, the "[get_cargo_data](https://github.com/darkmatter2222/EVE-Online-Bot/blob/9d1428ffa6042c1a8f6d826f4931190bc38bcb0b/MiningBot/EveInterface/Interface.py#L154)" is so accurate, I might do the same with some of the tables. OCR might be Overkill. 
 
 ## UPDATE - 2/16/23  
 A complete end to end automated mining run is finished and working. Many Many quarks to work out.   
