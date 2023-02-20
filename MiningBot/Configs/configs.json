@@ -37,9 +37,18 @@
       1
     ],
     "mining_sites": [
-      "Site One Alpha",
       "Site Two Alpha",
-      "Site Three Alpha"
+      "Site One Alpha",
+      "Site Three Alpha",
+      "Site One Beta",
+      "Site Two Beta",
+      "Site Three Beta",
+      "Site One Charlie",
+      "Site Two Charlie",
+      "Site Three Charlie",
+      "Site One Delta",
+      "Site Three Delta",
+      "Site One Epsilon"
     ],
     "click_and_drag_inv_box": [
       300,
@@ -81,9 +90,18 @@
       1
     ],
     "mining_sites": [
-      "Site One Alpha",
       "Site Two Alpha",
-      "Site Three Alpha"
+      "Site One Alpha",
+      "Site Three Alpha",
+      "Site One Beta",
+      "Site Two Beta",
+      "Site Three Beta",
+      "Site One Charlie",
+      "Site Two Charlie",
+      "Site Three Charlie",
+      "Site One Delta",
+      "Site Three Delta",
+      "Site One Epsilon"
     ],
     "click_and_drag_inv_box": [
       330, 670,
