@@ -6,6 +6,7 @@ from PIL import Image, ImageDraw
 import cv2
 import sys, os, decimal, json
 from pytesseract import pytesseract
+import socket
 
 sys.path.append(os.path.realpath('..'))
 
@@ -123,7 +124,7 @@ class Interface:
     def __init__(self,
                  config_dir=r'..\Configs\configs.json'):
         self.config_dir = config_dir
-        self.config = json.load(open(self.config_dir))
+        self.config = json.load(open(self.config_dir))[socket.gethostname()]
         self.screen = self.get_screen()
 
     def refresh_screen(self):
