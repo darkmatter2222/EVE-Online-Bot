@@ -56,46 +56,27 @@
     "exit_hanger_target": [
       1757,
       378
-    ],
-    "scan_target": [
-      1757,
-      378
     ]
   },
   "databrick": {
-    "monitor_offset_x": -1920,
-    "monitor_offset_y": 7,
+    "monitor_offset_x": 0,
+    "monitor_offset_y": 0,
     "click_target_offset_x": 60,
     "click_target_offset_y": 15,
     "scanner_button_target": [
       1122,
       900
     ],
-    "monitor_number": 2,
-    "survey_scan_box": [
-      1282,
-      612,
-      1842,
-      770
-    ],
+    "monitor_number": 1,
+    "survey_scan_box": [1282, 616, 1842, 768],
     "survey_scan_box_columns": [
       0.05,
       0.45,
       0.15,
       0.18
     ],
-    "cargo_box": [
-      372,
-      638,
-      630,
-      643
-    ],
-    "locations_box": [
-      863,
-      135,
-      1326,
-      460
-    ],
+    "cargo_box": [379, 638, 584, 643],
+    "locations_box": [815, 136, 1250, 475],
     "locations_box_columns": [
       1
     ],
@@ -105,22 +86,14 @@
       "Site Three Alpha"
     ],
     "click_and_drag_inv_box": [
-      300,
-      626,
-      790,
-      913
+      330, 670,
+      730, 970
     ],
     "click_and_drag_inv_line": [
-      336,
-      672,
-      182,
-      811
+      336, 672,
+      150, 830
     ],
     "exit_hanger_target": [
-      1757,
-      378
-    ],
-    "scan_target": [
       1757,
       378
     ]
