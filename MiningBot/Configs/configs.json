@@ -1,15 +1,128 @@
 {
-  "monitor_offset_x": -1920,
-  "monitor_offset_y": 7,
-  "click_target_offset_x": 60,
-  "click_target_offset_y": 15,
-  "scanner_button_x": 1122,
-  "scanner_button_y": 900,
-  "monitor_number": 2,
-  "survey_scan_box": [1282, 612, 1842, 770],
-  "survey_scan_box_columns": [0.05, 0.45, 0.15, 0.18],
-  "cargo_box": [372, 638, 630, 643],
-  "locations_box": [863, 135, 1326, 460],
-  "locations_box_columns": [1],
-  "mining_sites": ["Site One Alpha", "Site Two Alpha", "Site Three Alpha"]
+  "RedComputer": {
+    "monitor_offset_x": -1920,
+    "monitor_offset_y": 7,
+    "click_target_offset_x": 60,
+    "click_target_offset_y": 15,
+    "scanner_button_target": [
+      1122,
+      900
+    ],
+    "monitor_number": 2,
+    "survey_scan_box": [
+      1282,
+      612,
+      1842,
+      770
+    ],
+    "survey_scan_box_columns": [
+      0.05,
+      0.45,
+      0.15,
+      0.18
+    ],
+    "cargo_box": [
+      372,
+      638,
+      630,
+      643
+    ],
+    "locations_box": [
+      863,
+      135,
+      1326,
+      460
+    ],
+    "locations_box_columns": [
+      1
+    ],
+    "mining_sites": [
+      "Site One Alpha",
+      "Site Two Alpha",
+      "Site Three Alpha"
+    ],
+    "click_and_drag_inv_box": [
+      300,
+      626,
+      790,
+      913
+    ],
+    "click_and_drag_inv_line": [
+      336,
+      672,
+      182,
+      811
+    ],
+    "exit_hanger_target": [
+      1757,
+      378
+    ],
+    "scan_target": [
+      1757,
+      378
+    ]
+  },
+  "databrick": {
+    "monitor_offset_x": -1920,
+    "monitor_offset_y": 7,
+    "click_target_offset_x": 60,
+    "click_target_offset_y": 15,
+    "scanner_button_target": [
+      1122,
+      900
+    ],
+    "monitor_number": 2,
+    "survey_scan_box": [
+      1282,
+      612,
+      1842,
+      770
+    ],
+    "survey_scan_box_columns": [
+      0.05,
+      0.45,
+      0.15,
+      0.18
+    ],
+    "cargo_box": [
+      372,
+      638,
+      630,
+      643
+    ],
+    "locations_box": [
+      863,
+      135,
+      1326,
+      460
+    ],
+    "locations_box_columns": [
+      1
+    ],
+    "mining_sites": [
+      "Site One Alpha",
+      "Site Two Alpha",
+      "Site Three Alpha"
+    ],
+    "click_and_drag_inv_box": [
+      300,
+      626,
+      790,
+      913
+    ],
+    "click_and_drag_inv_line": [
+      336,
+      672,
+      182,
+      811
+    ],
+    "exit_hanger_target": [
+      1757,
+      378
+    ],
+    "scan_target": [
+      1757,
+      378
+    ]
+  }
 }
