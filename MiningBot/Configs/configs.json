@@ -1,5 +1,9 @@
 {
   "RedComputer": {
+    "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
+    "mongo_authMechanism": "SCRAM-SHA-256",
+    "db_name": "Eve",
+    "collection_name": "History",
     "monitor_offset_x": -1920,
     "monitor_offset_y": 7,
     "click_target_offset_x": 60,
@@ -68,6 +72,10 @@
     ]
   },
   "databrick": {
+    "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
+    "mongo_authMechanism": "SCRAM-SHA-256",
+    "db_name": "Eve",
+    "collection_name": "History",
     "monitor_offset_x": 0,
     "monitor_offset_y": 0,
     "click_target_offset_x": 60,
