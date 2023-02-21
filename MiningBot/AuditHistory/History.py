@@ -30,7 +30,11 @@ class History:
 
     def insert_payload(self, payload):
         insert_id = None
-        insert_id = self.collection.insert_one(payload).inserted_id
+        try:
+            insert_id = self.collection.insert_one(payload).inserted_id
+        except Exception as e:
+            print(e)
+            pass
 
     def empty_collection(self):
         self.collection.delete_many({})
