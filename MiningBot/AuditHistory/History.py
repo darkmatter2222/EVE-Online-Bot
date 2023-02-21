@@ -58,3 +58,11 @@ class History:
 
         self.insert_payload(log)
 
+    def log_extraction(self):
+        log = log_template.copy()
+        log['datetime'] = datetime.utcnow()
+        log['action'] = 'Extraction'
+        log['context'] = ''
+
+        self.insert_payload(log)
+

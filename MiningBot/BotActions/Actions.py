@@ -96,6 +96,7 @@ class Actions:
             indicies = snap_df.index
             if len(indicies) == 2:
                 print('starting 2x...')
+                self.log.log_extraction()
                 for i in indicies:
                     pyautogui.moveTo(scan_df.loc[i, 'click_target'])
                     time.sleep(0.1)
