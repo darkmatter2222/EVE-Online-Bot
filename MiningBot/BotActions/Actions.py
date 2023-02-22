@@ -4,6 +4,7 @@ import mss
 import mss.tools
 from PIL import Image, ImageDraw
 import cv2
+from datetime import datetime, timedelta
 import sys, os, decimal, json, time
 import pyautogui
 import socket
@@ -65,10 +66,19 @@ class Actions:
 
     def mine_till_full(self, game):
         field_depleted = False
+        mining_stale = False
+        mining_cycle_start = datetime.utcnow()
         while True:
             cargo_percent = game.get_cargo_data(refresh_screen=True)
             print(f'Cargo {cargo_percent:.2f}')
-            if cargo_percent > 0.9 or field_depleted:
+
+            # Stale Check
+            # Something happend where the ore was still targeted however the miners were not activated.
+            if mining_cycle_start + timedelta(minutes=30) < datetime.utcnow():
+                mining_stale = True
+                self.log.log_stale_mining()
+
+            if cargo_percent > 0.9 or field_depleted or mining_stale:
                 target = 'Home'
                 location_df = game.get_location_data(refresh_screen=True)
                 print(f'Navigating to {target}')
@@ -96,6 +106,7 @@ class Actions:
             indicies = snap_df.index
             if len(indicies) == 2:
                 print('starting 2x...')
+                mining_cycle_start = datetime.utcnow()
                 self.log.log_extraction()
                 for i in indicies:
                     pyautogui.moveTo(scan_df.loc[i, 'click_target'])
@@ -138,5 +149,5 @@ class Actions:
         pyautogui.moveTo(self.get_processed_cords(*self.config['exit_hanger_target']))
         time.sleep(0.1)
         pyautogui.click(button='left')
-        log.log_unload()
+        self.log.log_unload()
         time.sleep(60)

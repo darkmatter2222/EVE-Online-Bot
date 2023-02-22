@@ -70,3 +70,11 @@ class History:
 
         self.insert_payload(log)
 
+    def log_stale_mining(self):
+        log = log_template.copy()
+        log['datetime'] = datetime.utcnow()
+        log['action'] = 'Stale Mining Reset'
+        log['context'] = ''
+
+        self.insert_payload(log)
+
