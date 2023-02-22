@@ -1,6 +1,11 @@
 #  WIP
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+## UPDATE - 2/20/23  
+Fomalized [Miner.py](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/MiningBot/Miner.py) and moved actions into [Actions.py](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/MiningBot/BotActions/Actions.py). Also built [Histroy.py](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/MiningBot/AuditHistory/History.py) to log 'log_navigate', 'log_unload', and 'log_extraction' to a Mongo Atlas cluster.  
+Real Time Chart [Here](https://charts.mongodb.com/charts-homeautomation-snhch/public/dashboards/63f41f3b-3f54-4fe9-847e-affaab662973)  
+![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/mongo_histroy.png)
+
 ## UPDATE - 2/19/23  
 A good day, the bot ran nearly all day on a private onprem server. Had one bug fix that resulted in optimizing the configurations further. Bot cleared 3 mining belts all by itself today. Likely to add in a mongo cluster for tracking events in real time and possibly remote control via pubsub. Docking w/ space station can have some latency. Should install some real time recognition for when we enter/exit the station. Also need to add in some logic to not round robin all the warp points when they are known to be depleted. 
 
