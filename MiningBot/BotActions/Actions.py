@@ -23,6 +23,7 @@ class Actions:
         location_df = game.get_location_data(refresh_screen=True)
         while True:
             for target in self.config['mining_sites']:
+                # note this fails hard!!!! One OCR fail it skips the rest of the sequience
                 print(f'Navigating to {target}')
                 xy = location_df.loc[location_df['Name'] == target, 'click_target'].values[0]
                 pyautogui.moveTo(xy)
