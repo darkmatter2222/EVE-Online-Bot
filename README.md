@@ -1,6 +1,10 @@
 #  WIP
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+## UPDATE - 2/21/23  
+She works. Got stuck in a situation where we had ore targeted however the extracters were not running. added a 30 minute failsafe to restart the mining run. A more ideal solution would be to train an image clasifier on the extractor glow from the Icons. Thats overkill.  Next steps, build the auto login process, not sure how i want to approach taht just yet,  timeers and clicks? thats cheap and easy, do I need to build a classification engine for current screen state? Grumble. 
+![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/extractionhistogram.png)  
+
 ## UPDATE - 2/20/23  
 Fomalized [Miner.py](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/MiningBot/Miner.py) and moved actions into [Actions.py](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/MiningBot/BotActions/Actions.py). Also built [Histroy.py](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/MiningBot/AuditHistory/History.py) to log 'log_navigate', 'log_unload', and 'log_extraction' to a Mongo Atlas cluster.  
 Real Time Chart [Here](https://charts.mongodb.com/charts-homeautomation-snhch/public/dashboards/63f41f3b-3f54-4fe9-847e-affaab662973)  
