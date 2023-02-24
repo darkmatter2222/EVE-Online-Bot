@@ -24,6 +24,13 @@ class Actions:
         while True:
             for target in self.config['mining_sites']:
                 # note this fails hard!!!! One OCR fail it skips the rest of the sequience
+                if target not in list(location_df['Name']):
+                    message = f'Unable to find target in list:{target}'
+                    print(message)
+                    print(list(location_df['Name']))
+                    self.log.log_fault(message)
+                    continue
+
                 print(f'Navigating to {target}')
                 xy = location_df.loc[location_df['Name'] == target, 'click_target'].values[0]
                 pyautogui.moveTo(xy)

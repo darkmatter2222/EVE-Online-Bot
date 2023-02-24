@@ -78,3 +78,11 @@ class History:
 
         self.insert_payload(log)
 
+    def log_fault(self, fault):
+        log = log_template.copy()
+        log['datetime'] = datetime.utcnow()
+        log['action'] = 'Fault'
+        log['context'] = fault
+
+        self.insert_payload(log)
+
