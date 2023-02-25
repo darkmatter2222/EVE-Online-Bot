@@ -22,6 +22,7 @@ class ScreenClassifier:
         self.classes = json.loads(f.read())
         self.img_height = 180
         self.img_width = 180
+        print('ScreenClassifier loaded...')
 
     def refresh_screen(self):
         self.screen = self.get_screen()

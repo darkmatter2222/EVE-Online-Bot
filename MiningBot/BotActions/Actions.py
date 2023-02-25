@@ -168,7 +168,8 @@ class Actions:
         time.sleep(60)
 
     def login(self):
-        launcher_pid = subprocess.Popen(r'D:\EVE\Launcher\evelauncher.exe', shell=False)
+        os.startfile(self.config['Eve_Launcher'])
+        #launcher_pid = subprocess.Popen(self.config['Eve_Launcher'], shell=True)
         time.sleep(30)
         pyautogui.moveTo(self.get_processed_cords(467, 694))
         time.sleep(0.1)
@@ -177,19 +178,13 @@ class Actions:
         pyautogui.moveTo(self.get_processed_cords(611, 364))
         time.sleep(0.1)
         pyautogui.click(button='left')
+        print('Login paused, 60 seconds...')
         time.sleep(60)
-
-        f = wmi.WMI()
-
-        eve_game_pid = None
-        for p in f.Win32_Process():
-            if p.Name == 'exefile.exe':
-                eve_game_pid = p.ProcessId
-                break
-
-        return launcher_pid, eve_game_pid
+        print('Login Finished')
+        return None, None
 
     def get_to_starting_point(self):
+        print('starting classifier...')
         current_screen = self.clsf.get_screen_class()
         print(f'Current Screen:{current_screen}')
         if current_screen == 'in_hanger':

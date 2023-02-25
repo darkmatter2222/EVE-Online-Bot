@@ -2,6 +2,7 @@
   "RedComputer": {
     "screen_classifier_model":"O:\\source\\repos\\EVE-Online-Bot\\training_data\\screen_state.h5",
     "screen_classifier_classes":"O:\\source\\repos\\EVE-Online-Bot\\training_data\\screen_state_classes.json",
+    "Eve_Launcher": "D:\\EVE\\Launcher\\evelauncher.exe",
     "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
     "mongo_authMechanism": "SCRAM-SHA-256",
     "db_name": "Eve",
@@ -74,6 +75,9 @@
     ]
   },
   "databrick": {
+    "screen_classifier_model":"E:\\Active Server Drive\\Eve_Models\\screen_state.h5",
+    "screen_classifier_classes":"E:\\Active Server Drive\\Eve_Models\\screen_state_classes.json",
+    "Eve_Launcher": "C:\\EVE\\Launcher\\evelauncher.exe",
     "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
     "mongo_authMechanism": "SCRAM-SHA-256",
     "db_name": "Eve",
