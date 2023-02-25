@@ -7,7 +7,6 @@ import cv2
 from datetime import datetime, timedelta
 import subprocess, os, signal
 import sys, os, decimal, json, time
-import wmi
 import pyautogui
 import socket
 from MiningBot.AuditHistory.History import History
