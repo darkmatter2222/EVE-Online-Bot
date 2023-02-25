@@ -7,6 +7,7 @@ import cv2
 import sys, os, decimal, json
 from pytesseract import pytesseract
 import socket
+import tensorflow as tf
 
 sys.path.append(os.path.realpath('..'))
 
@@ -126,6 +127,12 @@ class Interface:
         self.config_dir = config_dir
         self.config = json.load(open(self.config_dir))[socket.gethostname()]
         self.screen = self.get_screen()
+        self.model = tf.keras.models.load_model(self.config["screen_classifier_model"])
+        f = open(self.config["screen_classifier_classes"], "r")
+        self.classes = json.loads(f.read())
+        self.img_height = 180
+        self.img_width = 180
+        print('ScreenClassifier loaded...')
 
     def refresh_screen(self):
         self.screen = self.get_screen()
@@ -197,7 +204,29 @@ class Interface:
                               click_target_offset_y=self.config['click_target_offset_y'])
 
     def get_cargo_data(self, refresh_screen=False):
+        if refresh_screen:
+            self.screen = self.get_screen()
+
         cargo_bar = convert_to_baw(self.screen.crop(self.config['cargo_box']), thresh=20)
         img_array = np.array(cargo_bar)
         return len(img_array[img_array == True]) / (
                 len(img_array[img_array == True]) + len(img_array[img_array == False]))
+
+    def get_screen_class(self, refresh_screen=False):
+        if refresh_screen:
+            self.screen = self.get_screen()
+
+        img = self.screen.resize((self.img_height, self.img_width), resample=Image.Resampling.NEAREST)
+        img_array = tf.keras.utils.img_to_array(img)
+        img_array = tf.expand_dims(img_array, 0)  # Create a batch
+        predictions = self.model.predict(img_array)
+        scores = tf.nn.softmax(predictions[0])
+        result = {
+            'argmax_index': np.argmax(scores),
+            'value_at_argmax': scores[np.argmax(scores)].numpy(),
+            'pass_general_tollerance': scores[np.argmax(scores)].numpy() > 0.5,
+            'class': self.classes[np.argmax(scores)],
+            'classes': self.classes,
+            'scores': scores.numpy().tolist()
+        }
+        return result

@@ -86,3 +86,11 @@ class History:
 
         self.insert_payload(log)
 
+    def log_image_class_low_confidence_fault_result(self, result):
+        log = log_template.copy()
+        log['datetime'] = datetime.utcnow()
+        log['action'] = 'image_class_low_confidence_fault'
+        log['context'] = result
+
+        self.insert_payload(log)
+

@@ -7,24 +7,31 @@ import cv2
 from datetime import datetime, timedelta
 import subprocess, os, signal
 import sys, os, decimal, json, time
-import pyautogui
+import pyautogui, wmi
 import socket
 from MiningBot.AuditHistory.History import History
-from MiningBot.ScreenStateClassifier.ScreenState import ScreenClassifier
 
 class Actions:
-    def __init__(self, config_dir=r'..\Configs\configs.json'):
+    def __init__(self, interface, config_dir=r'..\Configs\configs.json'):
         self.config_dir = config_dir
         self.config = json.load(open(self.config_dir))[socket.gethostname()]
         self.log = History(config_dir=config_dir)
-        self.clsf = ScreenClassifier(config_dir=config_dir)
+        self.game = interface
+
+    def current_screen_classification(self):
+        screen_class = self.game.get_screen_class(refresh_screen=True)
+        print(f'Current Screen Classification:{screen_class}')
+        if screen_class['class'] == 'connection_lost' and screen_class['pass_general_tollerance']:
+            raise Exception('Connection Lost, Restart')
+
 
     def get_processed_cords(self, x, y):
         return x + self.config['monitor_offset_x'], y + self.config['monitor_offset_y']
 
-    def find_mining_spot(self, game, keep_finding=True):
-        location_df = game.get_location_data(refresh_screen=True)
+    def find_mining_spot(self, keep_finding=True):
+        location_df = self.game.get_location_data(refresh_screen=True)
         while True:
+            self.current_screen_classification() # logging only
             for target in self.config['mining_sites']:
                 # note this fails hard!!!! One OCR fail it skips the rest of the sequience
                 if target not in list(location_df['Name']):
@@ -53,7 +60,7 @@ class Actions:
                 time.sleep(0.1)
                 pyautogui.click(button='left')
                 time.sleep(7)
-                scan_df = game.get_survey_scan_data(refresh_screen=True, extract_type='bool')
+                scan_df = self.game.get_survey_scan_data(refresh_screen=True, extract_type='bool')
                 if len(scan_df[scan_df['Quantity'] == True]) >= 2:
                     return target
             if keep_finding == False:
@@ -75,12 +82,13 @@ class Actions:
                 print('Unable to locate Ore, Done...')
                 return
 
-    def mine_till_full(self, game):
+    def mine_till_full(self):
         field_depleted = False
         mining_stale = False
         mining_cycle_start = datetime.utcnow()
         while True:
-            cargo_percent = game.get_cargo_data(refresh_screen=True)
+            self.current_screen_classification()  # logging only
+            cargo_percent = self.game.get_cargo_data(refresh_screen=True)
             print(f'Cargo {cargo_percent:.2f}')
 
             # Stale Check
@@ -91,7 +99,7 @@ class Actions:
 
             if cargo_percent > 0.9 or field_depleted or mining_stale:
                 target = 'Home'
-                location_df = game.get_location_data(refresh_screen=True)
+                location_df = self.game.get_location_data(refresh_screen=True)
                 print(f'Navigating to {target}')
                 xy = location_df.loc[location_df['Name'] == target, 'click_target'].values[0]
                 pyautogui.moveTo(xy)
@@ -106,7 +114,7 @@ class Actions:
                 self.log.log_navigate(target)
                 time.sleep(180)  # warning, docking can take some time.
                 break
-            scan_df = game.get_survey_scan_data(refresh_screen=True, extract_type='bool')
+            scan_df = self.game.get_survey_scan_data(refresh_screen=True, extract_type='bool')
             scan_df = scan_df[scan_df['Quantity'] == True]
 
             if len(scan_df) < 2:
@@ -146,7 +154,8 @@ class Actions:
                 print('skipping...')
                 time.sleep(30)
 
-    def unload(self, game):
+    def unload(self):
+        self.current_screen_classification()  # logging only
         pyautogui.moveTo(self.get_processed_cords(*self.config['click_and_drag_inv_box'][2:4]))  #
         time.sleep(0.1)
         x, y = self.get_processed_cords(*self.config['click_and_drag_inv_box'][0:2])
@@ -165,10 +174,10 @@ class Actions:
         time.sleep(0.1)
         pyautogui.click(button='left')
         time.sleep(60)
+        self.current_screen_classification()  # logging only
 
     def login(self):
         os.startfile(self.config['Eve_Launcher'])
-        #launcher_pid = subprocess.Popen(self.config['Eve_Launcher'], shell=True)
         time.sleep(30)
         pyautogui.moveTo(self.get_processed_cords(467, 694))
         time.sleep(0.1)
@@ -179,14 +188,29 @@ class Actions:
         pyautogui.click(button='left')
         print('Login paused, 60 seconds...')
         time.sleep(60)
-        print('Login Finished')
-        return None, None
+        print('Login Finished, getting PIDs...')
+        self.current_screen_classification()  # logging only
+
+        launcher_pid = None
+        game_pid = None
+
+        f = wmi.WMI()
+
+        for p in f.Win32_Process():
+            if p.Name == 'exefile.exe':
+                game_pid = p.ProcessId
+            elif p.Name == 'evelauncher.exe':
+                launcher_pid = p.ProcessId
+            if launcher_pid is not None and game_pid is not None:
+                break
+
+        return launcher_pid, game_pid
 
     def get_to_starting_point(self):
         print('starting classifier...')
-        current_screen = self.clsf.get_screen_class()
-        print(f'Current Screen:{current_screen}')
-        if current_screen == 'in_hanger':
+        screen_class_result = self.game.get_screen_class(refresh_screen=True)
+        print(f'Current Screen:{screen_class_result}')
+        if screen_class_result["class"] == 'in_hanger':
             self.exit_hanger()
 
 
