@@ -12,6 +12,8 @@ config = json.load(open(config_dir))[socket.gethostname()]
 game = Interface(config_dir=config_dir)
 bot = Actions(config_dir=config_dir)
 
+bot.login()
+
 while True:
     try:
         bot.find_mining_spot(game)

@@ -5,16 +5,20 @@ import mss.tools
 from PIL import Image, ImageDraw
 import cv2
 from datetime import datetime, timedelta
+import subprocess, os, signal
 import sys, os, decimal, json, time
+import wmi
 import pyautogui
 import socket
 from MiningBot.AuditHistory.History import History
+from MiningBot.ScreenStateClassifier.ScreenState import ScreenClassifier
 
 class Actions:
     def __init__(self, config_dir=r'..\Configs\configs.json'):
         self.config_dir = config_dir
         self.config = json.load(open(self.config_dir))[socket.gethostname()]
         self.log = History(config_dir=config_dir)
+        self.clsf = ScreenClassifier(config_dir=config_dir)
 
     def get_processed_cords(self, x, y):
         return x + self.config['monitor_offset_x'], y + self.config['monitor_offset_y']
@@ -154,8 +158,42 @@ class Actions:
         x, y = self.get_processed_cords(*self.config['click_and_drag_inv_line'][2:4])
         pyautogui.dragTo(x, y, 1, button='left')
         time.sleep(0.1)
+        self.log.log_unload()
+        self.exit_hanger()
+
+    def exit_hanger(self):
         pyautogui.moveTo(self.get_processed_cords(*self.config['exit_hanger_target']))
         time.sleep(0.1)
         pyautogui.click(button='left')
-        self.log.log_unload()
         time.sleep(60)
+
+    def login(self):
+        launcher_pid = subprocess.Popen(r'D:\EVE\Launcher\evelauncher.exe', shell=False)
+        time.sleep(30)
+        pyautogui.moveTo(self.get_processed_cords(467, 694))
+        time.sleep(0.1)
+        pyautogui.click(button='left')
+        time.sleep(30)
+        pyautogui.moveTo(self.get_processed_cords(611, 364))
+        time.sleep(0.1)
+        pyautogui.click(button='left')
+        time.sleep(60)
+
+        f = wmi.WMI()
+
+        eve_game_pid = None
+        for p in f.Win32_Process():
+            if p.Name == 'exefile.exe':
+                eve_game_pid = p.ProcessId
+                break
+
+        return launcher_pid, eve_game_pid
+
+    def get_to_starting_point(self):
+        current_screen = self.clsf.get_screen_class()
+        print(f'Current Screen:{current_screen}')
+        if current_screen == 'in_hanger':
+            self.exit_hanger()
+
+
+

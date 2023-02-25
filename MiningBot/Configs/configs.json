@@ -1,5 +1,7 @@
 {
   "RedComputer": {
+    "screen_classifier_model":"O:\\source\\repos\\EVE-Online-Bot\\training_data\\screen_state.h5",
+    "screen_classifier_classes":"O:\\source\\repos\\EVE-Online-Bot\\training_data\\screen_state_classes.json",
     "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
     "mongo_authMechanism": "SCRAM-SHA-256",
     "db_name": "Eve",
