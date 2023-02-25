@@ -75,8 +75,8 @@
     ]
   },
   "databrick": {
-    "screen_classifier_model":"E:\\Active Server Drive\\Eve_Models\\screen_state.h5",
-    "screen_classifier_classes":"E:\\Active Server Drive\\Eve_Models\\screen_state_classes.json",
+    "screen_classifier_model":"E:\\Eve_Models\\screen_state.h5",
+    "screen_classifier_classes":"E:\\Eve_Models\\screen_state_classes.json",
     "Eve_Launcher": "C:\\EVE\\Launcher\\evelauncher.exe",
     "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
     "mongo_authMechanism": "SCRAM-SHA-256",
