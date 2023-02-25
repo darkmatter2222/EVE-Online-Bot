@@ -2,7 +2,7 @@
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
 ## UPDATE - 2/24/23
-Today, we installed the magic! Our first Tensorflow Image classifier. Very simple classifier (yet to be shared w/ the public.) grab the screen and classify if, ["connection_lost", "in_flight", "in_hanger"]. And it works with very minimal trainign data. Will share more when it is cleaned up...  
+Today, we installed the magic! Our first Tensorflow Image classifier. Very simple classifier (yet to be shared w/ the public.) grab the screen and classify if, ["connection_lost", "in_flight", "in_hanger"]. And it works with very minimal trainign data. Will share more when it is cleaned up...  Also built the "Login" function, need to builod "Logout" and "Server Reset" logic. This image classifier enables reading this. 
 ![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/state.png)
 
 ## UPDATE - 2/22/23  
