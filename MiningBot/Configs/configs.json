@@ -11,6 +11,7 @@
     "monitor_offset_y": 7,
     "click_target_offset_x": 60,
     "click_target_offset_y": 15,
+    "mining_hold_target": [183, 730],
     "scanner_button_target": [
       1122,
       900
@@ -59,15 +60,15 @@
     ],
     "click_and_drag_inv_box": [
       300,
-      626,
+      676,
       790,
-      913
+      963
     ],
     "click_and_drag_inv_line": [
       336,
-      672,
+      692,
       182,
-      811
+      871
     ],
     "exit_hanger_target": [
       1757,
@@ -86,6 +87,7 @@
     "monitor_offset_y": 0,
     "click_target_offset_x": 60,
     "click_target_offset_y": 15,
+    "mining_hold_target": [175, 688],
     "scanner_button_target": [
       1122,
       900

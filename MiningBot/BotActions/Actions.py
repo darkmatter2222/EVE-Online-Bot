@@ -90,6 +90,7 @@ class Actions:
         mining_cycle_start = datetime.utcnow()
         while True:
             self.current_screen_classification()  # logging only
+            self.select_mining_hold()
             cargo_percent = self.game.get_cargo_data(refresh_screen=True)
             print(f'Cargo {cargo_percent:.2f}')
 
@@ -156,8 +157,16 @@ class Actions:
                 print('skipping...')
                 time.sleep(30)
 
+    def select_mining_hold(self):
+        print('Opening Mining Hold...')
+        pyautogui.moveTo(self.get_processed_cords(*self.config['mining_hold_target'])) # ensure we have mining hold selected
+        time.sleep(0.1)
+        pyautogui.click(button='left')
+        time.sleep(1)
+
     def unload(self):
         self.current_screen_classification()  # logging only
+        self.select_mining_hold()
         pyautogui.moveTo(self.get_processed_cords(*self.config['click_and_drag_inv_box'][2:4]))  #
         time.sleep(0.1)
         x, y = self.get_processed_cords(*self.config['click_and_drag_inv_box'][0:2])
