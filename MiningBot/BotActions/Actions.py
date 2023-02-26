@@ -18,10 +18,12 @@ class Actions:
         self.log = History(config_dir=config_dir)
         self.game = interface
 
-    def current_screen_classification(self):
+    def current_screen_classification(self, report_fault=True):
         screen_class = self.game.get_screen_class(refresh_screen=True)
         print(f'Current Screen Classification:{screen_class}')
-        if screen_class['class'] == 'connection_lost' and screen_class['pass_general_tollerance']:
+        if report_fault and \
+                screen_class['class'] == 'connection_lost' and \
+                screen_class['pass_general_tollerance']:
             raise Exception('Connection Lost, Restart')
 
 
@@ -31,8 +33,8 @@ class Actions:
     def find_mining_spot(self, keep_finding=True):
         location_df = self.game.get_location_data(refresh_screen=True)
         while True:
-            self.current_screen_classification() # logging only
             for target in self.config['mining_sites']:
+                self.current_screen_classification()  # logging only
                 # note this fails hard!!!! One OCR fail it skips the rest of the sequience
                 if target not in list(location_df['Name']):
                     message = f'Unable to find target in list:{target}'
@@ -176,6 +178,80 @@ class Actions:
         time.sleep(60)
         self.current_screen_classification()  # logging only
 
+    def start_launcher(self):
+        os.startfile(self.config['Eve_Launcher'])
+        print('starting launcher, waiting 30 seconds...')
+        time.sleep(30)
+        f = wmi.WMI()
+        pid = None
+        for p in f.Win32_Process():
+            if p.Name == 'evelauncher.exe':
+                pid = p.ProcessId
+                break
+
+        if pid == None:
+            raise Exception("Eve Launcher Did Not Start")
+        return pid
+
+    def start_game(self):
+        pyautogui.moveTo(self.get_processed_cords(467, 694))
+        time.sleep(0.1)
+        pyautogui.click(button='left')
+        print('starting game, waiting 30 seconds...')
+        time.sleep(30)
+        f = wmi.WMI()
+        pid = None
+        for p in f.Win32_Process():
+            if p.Name == 'exefile.exe':
+                pid = p.ProcessId
+                break
+
+        if pid == None:
+            raise Exception("Eve Launcher Did Not Start")
+        return pid
+
+    def select_char(self):
+        pyautogui.moveTo(self.get_processed_cords(611, 364))
+        time.sleep(0.1)
+        pyautogui.click(button='left')
+
+
+    def login_sequience(self):
+        # start launcher
+        while True:
+            print('Beginning Login Sequence...')
+            print('Starting Launcher...')
+            launcher_pid = self.start_launcher()
+            print('Starting Game...')
+            game_pid = self.start_game()
+            #check for connection issue?
+            sc = self.game.get_screen_class(refresh_screen=True)
+            print(f'Screen Class:{sc}')
+            if sc['class'] == 'char_select' and sc['pass_general_tollerance']:
+                print('Selecting Char...')
+                self.select_char()
+                time.sleep(60)
+                break
+            else:
+                print('Not on Char Selection Screen, Killing PIDs')
+                try:
+                    os.kill(game_pid, signal.SIGTERM)
+                except:
+                    pass
+                time.sleep(1)
+                try:
+                    os.kill(launcher_pid, signal.SIGTERM)
+                except:
+                    pass
+                print('Failed to start and get to Char Screen, trying again...')
+                time.sleep(30)
+        return launcher_pid, game_pid
+
+
+
+
+
+
     def login(self):
         os.startfile(self.config['Eve_Launcher'])
         time.sleep(30)
@@ -189,7 +265,6 @@ class Actions:
         print('Login paused, 60 seconds...')
         time.sleep(60)
         print('Login Finished, getting PIDs...')
-        self.current_screen_classification()  # logging only
 
         launcher_pid = None
         game_pid = None

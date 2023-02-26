@@ -16,43 +16,7 @@ print('waiting 5 seconds...')
 time.sleep(5)
 print('starting...')
 
-while True:
-    launcher_pid = None
-    game_pid = None
-    try:
-        print('Initializing...')
-        launcher_pid, game_pid = bot.login()
-        print(f'Launcher PID:{launcher_pid}, Game PID:{game_pid}')
-        bot.get_to_starting_point()
-    except Exception as e:
-        print(e)
-        if e == 'Connection Lost, Restart':
-            print('Complete Termination Beginning...')
-            try:
-                os.kill(game_pid, signal.SIGTERM)
-            except:
-                pass
-            time.sleep(1)
-            try:
-                os.kill(launcher_pid, signal.SIGTERM)
-            except:
-                pass
-            time.sleep(30)
-            continue
-        pass
-
-    while True:
-        try:
-            bot.find_mining_spot()
-            bot.mine_till_full()
-            bot.unload()
-        except Exception as e:
-            print(e)
-            if e == 'Connection Lost, Restart':
-                break
-            pass
-
-    print('Complete Termination Beginning...')
+def recycle(launcher_pid, game_pid):
     try:
         os.kill(game_pid, signal.SIGTERM)
     except:
@@ -62,4 +26,41 @@ while True:
         os.kill(launcher_pid, signal.SIGTERM)
     except:
         pass
-    time.sleep(30)
+
+
+while True:
+    launcher_pid = None
+    game_pid = None
+    try:
+        # startup
+        launcher_pid, game_pid = bot.login_sequience()
+        print(f'Main Loop-Launcher PID:{launcher_pid}, Game PID:{game_pid}')
+
+        # prep
+        print('Main Loop-Prep')
+        bot.get_to_starting_point()
+
+        # mine
+        print('Main Loop-Mine') # should spend 23 hours a day here...
+        while True:
+            try:
+                bot.find_mining_spot()
+                bot.mine_till_full()
+                bot.unload()
+            except Exception as e:
+                print(e)
+                if e.args[0] == 'Connection Lost, Restart':
+                    break # Recycle and repeat main loop
+                pass
+
+        # recycle
+        print('Main Loop-Recycle Begin')
+        recycle(launcher_pid, game_pid)
+        print('Main Loop-Sleeping 30 seconds...')
+        time.sleep(30)
+    except Exception as e:
+        print(f'Main Loop-Exception:{e}')
+        recycle(launcher_pid, game_pid)
+        print('Main Loop-Sleeping 30 seconds...')
+        time.sleep(30)
+        pass
