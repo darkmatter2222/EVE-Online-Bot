@@ -8,7 +8,10 @@ BIG UPDATE! We are End to End from Login to Mining to Log out fully automated. A
  - Connection Lost (Server Restart)
  - Character Selection Screen   
  
-Lots of fine tuning has already been achieved, however now that we have a relatively reliable classifier where only few samples need to be provided, we can really kick this thing into gear. Lesson learned, don’t run tensorflow-gpu while running Eve on the same GPU. Your PC will come to a halt, more specifically my RTX3090 24GB totally freaked out, fans went to 100%.
+Lots of fine tuning has already been achieved, however now that we have a relatively reliable classifier where only few samples need to be provided, we can really kick this thing into gear. Lesson learned, don’t run tensorflow-gpu while running Eve on the same GPU. Your PC will come to a halt, more specifically my RTX3090 24GB totally freaked out, fans went to 100%.  
+  
+Model included int his repo!  
+
 
 ## UPDATE - 2/24/23
 Today, we installed the magic! Our first Tensorflow Image classifier. Very simple classifier (yet to be shared w/ the public.) grab the screen and classify if, ["connection_lost", "in_flight", "in_hanger"]. And it works with very minimal trainign data. Will share more when it is cleaned up...  Also built the "Login" function, need to builod "Logout" and "Server Reset" logic. This image classifier enables reading this.  This image classifier can also be sued to detect enemies and build emergency exit plans.  
