@@ -188,6 +188,17 @@ class Actions:
         self.current_screen_classification()  # logging only
 
     def start_launcher(self):
+        f = wmi.WMI()
+        killed = False
+        for p in f.Win32_Process():
+            if p.Name == 'evelauncher.exe':
+                print('evelauncher.exe found to be running, killing...')
+                os.kill(p.ProcessId, signal.SIGTERM)
+                killed = True
+
+        if killed:
+            time.sleep(10)
+
         os.startfile(self.config['Eve_Launcher'])
         print('starting launcher, waiting 30 seconds...')
         time.sleep(30)
@@ -203,6 +214,17 @@ class Actions:
         return pid
 
     def start_game(self):
+        f = wmi.WMI()
+        killed = False
+        for p in f.Win32_Process():
+            if p.Name == 'exefile.exe':
+                print('exefile.exe found to be running, killing...')
+                os.kill(p.ProcessId, signal.SIGTERM)
+                killed = True
+
+        if killed:
+            time.sleep(10)
+
         pyautogui.moveTo(self.get_processed_cords(467, 694))
         time.sleep(0.1)
         pyautogui.click(button='left')
