@@ -18,6 +18,12 @@ log_template = {
 }
 
 class History:
+    # make singleton
+    def __new__(cls, config_dir=r'..\Configs\configs.json'):
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(History, cls).__new__(cls)
+        return cls.instance
+
     def __init__(self, config_dir=r'..\Configs\configs.json'):
         self.config_dir = config_dir
         self.config = json.load(open(self.config_dir))[socket.gethostname()]
@@ -27,6 +33,7 @@ class History:
                                   password=os.getenv("eve_password"))
         self.db = self.client[self.config['db_name']]
         self.collection = self.db[self.config['collection_name']]
+        self.temp = 0
 
     def insert_payload(self, payload):
         insert_id = None
@@ -94,3 +101,10 @@ class History:
 
         self.insert_payload(log)
 
+    def log_main_loop_activity(self, action, result):
+        log = log_template.copy()
+        log['datetime'] = datetime.utcnow()
+        log['action'] = f'Main_Loop_{action}'
+        log['context'] = result
+
+        self.insert_payload(log)
