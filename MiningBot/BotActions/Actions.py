@@ -152,7 +152,7 @@ class Actions:
                 xy = (10, 10)
                 pyautogui.moveTo(xy)
                 print('started...')
-                time.sleep(130) # adding in mining crystals... reducing to 130 from 175
+                time.sleep(175)
             else:
                 print('skipping...')
                 time.sleep(30)
