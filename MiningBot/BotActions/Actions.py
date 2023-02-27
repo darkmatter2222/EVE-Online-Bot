@@ -40,7 +40,7 @@ class Actions:
                     message = f'Unable to find target in list:{target}'
                     print(message)
                     print(list(location_df['Name']))
-                    self.log.log_fault(message)
+                    #self.log.log_fault(message) Disabling for now as it can spam the DB
                     continue
 
                 print(f'Navigating to {target}')
