@@ -87,7 +87,7 @@
     "monitor_offset_y": 0,
     "click_target_offset_x": 60,
     "click_target_offset_y": 15,
-    "mining_hold_target": [175, 688],
+    "mining_hold_target": [175, 730],
     "scanner_button_target": [
       1122,
       900
@@ -120,12 +120,12 @@
       "Site One Epsilon"
     ],
     "click_and_drag_inv_box": [
-      330, 670,
+      300, 670,
       730, 970
     ],
     "click_and_drag_inv_line": [
-      336, 672,
-      150, 830
+      336, 700,
+      150, 870
     ],
     "exit_hanger_target": [
       1757,
