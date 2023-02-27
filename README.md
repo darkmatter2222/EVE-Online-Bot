@@ -4,6 +4,9 @@
 
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+## UPDATE - 2/26/23
+Quality of life enhancements... Improved Logging, Fixed a cycling bug, etc... 
+
 ## UPDATE - 2/25/23
 BIG UPDATE! We are End to End from Login to Mining to Log out fully automated. An ensemble of Tensorflow Image Classifiers, Google Tesseract OCR and classical pixel condition logic. The magic truly is in the speed and reliability in the image classifier, today we are classifying:
  - Ship in hanger (Docked)
