@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 .idea
 /training_data/
-/training_data_miner/Unlabeled*.png
+/training_data_miner/Unlabeled/*.png
