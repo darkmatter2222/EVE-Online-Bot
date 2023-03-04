@@ -12,6 +12,7 @@
     "click_target_offset_x": 60,
     "click_target_offset_y": 15,
     "mining_hold_target": [183, 730],
+    "miners": [1058, 820, 1188, 878],
     "scanner_button_target": [
       1122,
       900
