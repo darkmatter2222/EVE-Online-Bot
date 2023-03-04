@@ -4,13 +4,12 @@ import mss
 import mss.tools
 from PIL import Image, ImageDraw
 import cv2
-import sys, os, decimal, json
+import sys, os, decimal, json, time, uuid
 from pytesseract import pytesseract
 import socket
 import tensorflow as tf
 
 sys.path.append(os.path.realpath('..'))
-
 
 def drange(x, y, jump):
     while x < y:
@@ -136,6 +135,16 @@ class Interface:
 
     def refresh_screen(self):
         self.screen = self.get_screen()
+        self.data_collection()
+
+    def data_collection(self):
+        image_stack = []
+        for i in range(10):
+            img = self.get_screen()
+            image_stack.append(np.array(img.crop(self.config['miners'])))
+            time.sleep(0.1)
+        final_img = Image.fromarray(np.concatenate(image_stack, axis=0))
+        final_img.save(fr'../training_data_miner\Unlabeled/{uuid.uuid1()}.png')
 
     def get_screen(self):
         with mss.mss() as sct:
