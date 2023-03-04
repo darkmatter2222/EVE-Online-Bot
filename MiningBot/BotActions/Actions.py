@@ -33,6 +33,7 @@ class Actions:
     def find_mining_spot(self, keep_finding=True):
         location_df = self.game.get_location_data(refresh_screen=True)
         while True:
+            self.game.data_collection()
             for target in self.config['mining_sites']:
                 self.current_screen_classification()  # logging only
                 # note this fails hard!!!! One OCR fail it skips the rest of the sequience
@@ -89,6 +90,7 @@ class Actions:
         mining_stale = False
         mining_cycle_start = datetime.utcnow()
         while True:
+            self.game.data_collection()
             self.current_screen_classification()  # logging only
             self.select_mining_hold()
             cargo_percent = self.game.get_cargo_data(refresh_screen=True)
@@ -165,6 +167,7 @@ class Actions:
         time.sleep(1)
 
     def unload(self):
+        self.game.data_collection()
         self.current_screen_classification()  # logging only
         self.select_mining_hold()
         pyautogui.moveTo(self.get_processed_cords(*self.config['click_and_drag_inv_box'][2:4]))  #
@@ -181,6 +184,7 @@ class Actions:
         self.exit_hanger()
 
     def exit_hanger(self):
+        self.game.data_collection()
         pyautogui.moveTo(self.get_processed_cords(*self.config['exit_hanger_target']))
         time.sleep(0.1)
         pyautogui.click(button='left')

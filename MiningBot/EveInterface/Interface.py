@@ -135,7 +135,6 @@ class Interface:
 
     def refresh_screen(self):
         self.screen = self.get_screen()
-        self.data_collection()
 
     def data_collection(self):
         image_stack = []
