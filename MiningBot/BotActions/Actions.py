@@ -218,6 +218,7 @@ class Actions:
 
             if len(scan_df) == 0:
                 field_depleted = True
+                self.log.log_field_depleted()
                 print('field_depleted = True')
 
             snap_df = scan_df[0:2]
