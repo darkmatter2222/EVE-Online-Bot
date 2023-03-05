@@ -147,7 +147,7 @@ class Actions:
             if len(indicies) == 2:
                 print('starting 2x...')
                 mining_cycle_start = datetime.utcnow()
-                self.log.log_extraction()
+                self.log.log_extraction(action='Both_Miners')
                 for i in indicies:
                     pyautogui.moveTo(scan_df.loc[i, 'click_target'])
                     time.sleep(0.1)
@@ -211,6 +211,8 @@ class Actions:
 
                 if self.all_same(scan_df_hist):
                     break
+                else:
+                    print('Not all same, trying again...')
 
             scan_df = scan_df[scan_df['Quantity'] == True]
 
@@ -226,7 +228,7 @@ class Actions:
             if len(indicies) == 2:
                 print('Starting Both Miners...')
                 mining_cycle_start = datetime.utcnow()
-                self.log.log_extraction()
+                self.log.log_extraction(action='Both_Miners')
                 for i in indicies:
                     pyautogui.moveTo(scan_df.loc[i, 'click_target'])
                     time.sleep(0.1)
@@ -277,13 +279,13 @@ class Actions:
                         pyautogui.press(f'f{2}')
                         time.sleep(1)
                         mining_cycle_start = datetime.utcnow()
-                        self.log.log_extraction()
+                        self.log.log_extraction(action='Miner_1')
                         print('Miner 2 Started...')
                     else:
                         pyautogui.press(f'f{1}')
                         time.sleep(1)
                         mining_cycle_start = datetime.utcnow()
-                        self.log.log_extraction()
+                        self.log.log_extraction(action='Miner_2')
                         print('Miner 1 Started...')
                 elif result['class'] == 'both_running':
                     mining_stale = True

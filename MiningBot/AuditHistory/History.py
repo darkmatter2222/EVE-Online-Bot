@@ -69,11 +69,11 @@ class History:
 
         self.insert_payload(log)
 
-    def log_extraction(self):
+    def log_extraction(self, action='Both_Miners'):
         log = log_template.copy()
         log['datetime'] = datetime.utcnow()
         log['action'] = 'Extraction'
-        log['context'] = ''
+        log['context'] = action
 
         self.insert_payload(log)
 
