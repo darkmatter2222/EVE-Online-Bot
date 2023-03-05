@@ -52,7 +52,7 @@ while True:
         while True:
             try:
                 bot.find_mining_spot()
-                bot.mine_till_full()
+                bot.mine_till_full_v2()
                 bot.unload()
             except Exception as e:
                 print(e)

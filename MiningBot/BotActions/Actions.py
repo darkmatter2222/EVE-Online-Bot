@@ -30,6 +30,24 @@ class Actions:
     def get_processed_cords(self, x, y):
         return x + self.config['monitor_offset_x'], y + self.config['monitor_offset_y']
 
+    def navigate_home(self):
+        target = 'Home'
+        location_df = self.game.get_location_data(refresh_screen=True)
+        print(f'Navigating to {target}')
+        xy = location_df.loc[location_df['Name'] == target, 'click_target'].values[0]
+        pyautogui.moveTo(xy)
+        time.sleep(0.1)
+        pyautogui.click(button='right')
+        time.sleep(0.1)
+        pyautogui.moveTo(xy[0] + 50, xy[1] + 25)
+        time.sleep(0.1)
+        pyautogui.click(button='left')
+        time.sleep(0.1)
+        pyautogui.moveTo(10, 10)
+        self.log.log_navigate(target)
+        time.sleep(180)  # warning, docking can take some time.
+
+
     def find_mining_spot(self, keep_finding=True):
         location_df = self.game.get_location_data(refresh_screen=True)
         while True:
@@ -156,6 +174,134 @@ class Actions:
             else:
                 print('skipping...')
                 time.sleep(30)
+
+    def all_same(self, items):
+        return all(items[0].equals(x) for x in items)
+
+    def mine_till_full_v2(self):
+        field_depleted = False
+        mining_stale = False
+        mining_cycle_start = datetime.utcnow()
+        cycle_delay = 30
+        while True:
+            self.select_mining_hold() # Ensure we have our mining hold selected so we can read the inv space
+            cargo_percent = self.game.get_cargo_data(refresh_screen=True)
+            print(f'Cargo {cargo_percent:.2f}')
+
+            # Stale Check
+            # Something happend where the ore was still targeted however the miners were not activated.
+            if mining_cycle_start + timedelta(minutes=30) < datetime.utcnow():
+                mining_stale = True
+                print('Time Based mining_stale = True')
+                self.log.log_stale_mining()
+
+            if cargo_percent > 0.9 or field_depleted or mining_stale:
+                self.navigate_home()
+                break
+
+            scan_df_hist  = []
+            scan_df = None
+            while True: # detecting race condition,= where minder finished WHILE scanning, scan 3x times
+                print('Chacking scan results...')
+                for i in range(3):
+                    print(f'Scan Itt Check:{i}')
+                    scan_df = self.game.get_survey_scan_data(refresh_screen=True, extract_type='bool')
+                    scan_df_hist.append(scan_df)
+                    time.sleep(1)
+
+                if self.all_same(scan_df_hist):
+                    break
+
+            scan_df = scan_df[scan_df['Quantity'] == True]
+
+            if len(scan_df) == 0:
+                field_depleted = True
+                print('field_depleted = True')
+
+            snap_df = scan_df[0:2]
+            snap_df = snap_df[~snap_df['Locked'] == True]
+            indicies = snap_df.index # top two rows that are not locked
+            time.sleep(1)
+
+            if len(indicies) == 2:
+                print('Starting Both Miners...')
+                mining_cycle_start = datetime.utcnow()
+                self.log.log_extraction()
+                for i in indicies:
+                    pyautogui.moveTo(scan_df.loc[i, 'click_target'])
+                    time.sleep(0.1)
+                    pyautogui.keyDown('ctrl')
+                    time.sleep(0.1)
+                    pyautogui.click()
+                    time.sleep(0.1)
+                    pyautogui.keyUp('ctrl')
+                    time.sleep(1)
+                time.sleep(4)
+                xy = None
+                for i, index in enumerate(indicies):
+                    xy = scan_df.loc[index, 'click_target']
+                    pyautogui.moveTo(xy)
+                    time.sleep(0.1)
+                    pyautogui.click()
+                    time.sleep(0.1)
+                    pyautogui.press(f'f{i + 1}')
+                    time.sleep(1)
+                xy = (10, 10)
+                pyautogui.moveTo(xy)
+                print('Both Miners Started...')
+            elif len(indicies) == 0:
+                print(f'Both Miners Running - skipping...')
+            elif len(indicies) == 1:
+                print('Identifying what miner is running...')
+                result = self.game.get_mining_tool_class()
+                print(result)
+                if result['class'] == 'miner_1_running' or result['class'] == 'miner_2_running':
+                    # Start Targeting
+                    pyautogui.moveTo(scan_df.loc[indicies[0], 'click_target'])
+                    time.sleep(0.1)
+                    pyautogui.keyDown('ctrl')
+                    time.sleep(0.1)
+                    pyautogui.click()
+                    time.sleep(0.1)
+                    pyautogui.keyUp('ctrl')
+                    time.sleep(1)
+                    # wait for targeting...
+                    time.sleep(4)
+                    # reselect post targeting...
+                    pyautogui.moveTo(scan_df.loc[indicies[0], 'click_target'])
+                    time.sleep(0.1)
+                    pyautogui.click()
+                    time.sleep(1)
+
+                    if result['class'] == 'miner_1_running':
+                        pyautogui.press(f'f{2}')
+                        time.sleep(1)
+                        mining_cycle_start = datetime.utcnow()
+                        self.log.log_extraction()
+                        print('Miner 2 Started...')
+                    else:
+                        pyautogui.press(f'f{1}')
+                        time.sleep(1)
+                        mining_cycle_start = datetime.utcnow()
+                        self.log.log_extraction()
+                        print('Miner 1 Started...')
+                elif result['class'] == 'both_running':
+                    mining_stale = True
+                    self.log.log_stale_mining()
+                    # setting as stable for now to reset...
+                else:
+                    print(f'FAULT - skipping....')
+
+                xy = (10, 10)
+                pyautogui.moveTo(xy)
+
+            print(f'Cycle Delay... {cycle_delay} seconds...')
+            time.sleep(30)
+
+
+
+
+
 
     def select_mining_hold(self):
         print('Opening Mining Hold...')
