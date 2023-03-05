@@ -192,6 +192,7 @@ class Actions:
             # Something happend where the ore was still targeted however the miners were not activated.
             if mining_cycle_start + timedelta(minutes=30) < datetime.utcnow():
                 mining_stale = True
+                print('Time Based mining_stale = True')
                 self.log.log_stale_mining()
 
             if cargo_percent > 0.9 or field_depleted or mining_stale:
@@ -206,6 +207,7 @@ class Actions:
                     print(f'Scan Itt Check:{i}')
                     scan_df = self.game.get_survey_scan_data(refresh_screen=True, extract_type='bool')
                     scan_df_hist.append(scan_df)
+                    time.sleep(1)
 
                 if self.all_same(scan_df_hist):
                     break
@@ -275,14 +277,17 @@ class Actions:
                         pyautogui.press(f'f{2}')
                         time.sleep(1)
                         mining_cycle_start = datetime.utcnow()
+                        self.log.log_extraction()
                         print('Miner 2 Started...')
                     else:
                         pyautogui.press(f'f{1}')
                         time.sleep(1)
                         mining_cycle_start = datetime.utcnow()
+                        self.log.log_extraction()
                         print('Miner 1 Started...')
                 elif result['class'] == 'both_running':
                     mining_stale = True
+                    self.log.log_stale_mining()
                     # setting as stable for now to reset...
                 else:
                     print(f'FAULT - skipping....')
