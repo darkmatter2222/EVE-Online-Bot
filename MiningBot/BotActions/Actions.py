@@ -19,7 +19,7 @@ class Actions:
         self.game = interface
 
     def current_screen_classification(self, report_fault=True):
-        screen_class = self.game.get_screen_class(refresh_screen=True)
+        screen_class = self.game.get_screen_class()
         print(f'Current Screen Classification:{screen_class}')
         if report_fault and \
                 screen_class['class'] == 'connection_lost' and \
@@ -256,7 +256,7 @@ class Actions:
             print('Starting Game...')
             game_pid = self.start_game()
             #check for connection issue?
-            sc = self.game.get_screen_class(refresh_screen=True)
+            sc = self.game.get_screen_class()
             print(f'Screen Class:{sc}')
             if sc['class'] == 'char_select' and sc['pass_general_tollerance']:
                 print('Selecting Char...')
@@ -314,7 +314,7 @@ class Actions:
 
     def get_to_starting_point(self):
         print('starting classifier...')
-        screen_class_result = self.game.get_screen_class(refresh_screen=True)
+        screen_class_result = self.game.get_screen_class()
         print(f'Current Screen:{screen_class_result}')
         if screen_class_result["class"] == 'in_hanger':
             self.exit_hanger()

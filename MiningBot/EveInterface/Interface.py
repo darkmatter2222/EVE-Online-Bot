@@ -126,24 +126,19 @@ class Interface:
         self.config_dir = config_dir
         self.config = json.load(open(self.config_dir))[socket.gethostname()]
         self.screen = self.get_screen()
-        self.model = tf.keras.models.load_model(self.config["screen_classifier_model"])
-        f = open(self.config["screen_classifier_classes"], "r")
-        self.classes = json.loads(f.read())
-        self.img_height = 180
-        self.img_width = 180
-        print('ScreenClassifier loaded...')
+        self.classifiers = {}
+
+        for clsf_name in self.config['Classifiers'].keys():
+            f = open(self.config['Classifiers'][clsf_name]['class_location'], "r")
+            self.classifiers[clsf_name]= {
+                'model': tf.keras.models.load_model(self.config['Classifiers'][clsf_name]['model_location']),
+                'classes': json.loads(f.read()),
+                'image_resize': tuple(self.config['Classifiers'][clsf_name]['image_resize'])
+            }
+            print(f'{clsf_name} Model Loaded')
 
     def refresh_screen(self):
         self.screen = self.get_screen()
-
-    def data_collection(self):
-        image_stack = []
-        for i in range(10):
-            img = self.get_screen()
-            image_stack.append(np.array(img.crop(self.config['miners'])))
-            time.sleep(0.1)
-        final_img = Image.fromarray(np.concatenate(image_stack, axis=0))
-        final_img.save(fr'../training_data_miner\Unlabeled/{uuid.uuid1()}.png')
 
     def get_screen(self):
         with mss.mss() as sct:
@@ -220,21 +215,44 @@ class Interface:
         return len(img_array[img_array == True]) / (
                 len(img_array[img_array == True]) + len(img_array[img_array == False]))
 
-    def get_screen_class(self, refresh_screen=False):
-        if refresh_screen:
-            self.screen = self.get_screen()
-
-        img = self.screen.resize((self.img_height, self.img_width), resample=Image.Resampling.NEAREST)
+    def execute_clsf(self, img, clsf_name):
+        img = img.resize((self.classifiers[clsf_name]['image_resize'][1], self.classifiers[clsf_name]['image_resize'][0]), # TF trains backwards
+                         resample=Image.Resampling.NEAREST)
         img_array = tf.keras.utils.img_to_array(img)
         img_array = tf.expand_dims(img_array, 0)  # Create a batch
-        predictions = self.model.predict(img_array)
+
+        predictions = self.classifiers[clsf_name]['model'].predict(img_array)
         scores = tf.nn.softmax(predictions[0])
         result = {
             'argmax_index': np.argmax(scores),
             'value_at_argmax': scores[np.argmax(scores)].numpy(),
             'pass_general_tollerance': scores[np.argmax(scores)].numpy() > 0.5,
-            'class': self.classes[np.argmax(scores)],
-            'classes': self.classes,
+            'class': self.classifiers[clsf_name]['classes'][np.argmax(scores)],
+            'classes': self.classifiers[clsf_name]['classes'],
             'scores': scores.numpy().tolist()
         }
         return result
+
+    def get_screen_class(self):
+        self.screen = self.get_screen()
+
+        result = self.execute_clsf(self.screen, 'game_state')
+
+        return result
+
+    def get_mining_tool_class(self):
+        image_stack = []
+        for i in range(10):
+            img = self.get_screen()
+            image_stack.append(np.array(img.crop(self.config['miners'])))
+            time.sleep(0.1)
+        final_img = Image.fromarray(np.concatenate(image_stack, axis=0))
+
+        result = self.execute_clsf(final_img, 'mining_tool_state')
+
+        return result
+
+
+
+
+
