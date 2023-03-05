@@ -4,6 +4,7 @@ sys.path.append(os.path.realpath('..'))
 from MiningBot.AuditHistory.History import History
 from MiningBot.EveInterface.Interface import Interface
 from MiningBot.BotActions.Actions import Actions
+
 import json, time
 import socket
 
