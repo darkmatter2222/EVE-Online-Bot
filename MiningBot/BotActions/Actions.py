@@ -199,9 +199,9 @@ class Actions:
                 self.navigate_home()
                 break
 
-            scan_df_hist  = []
             scan_df = None
             while True: # detecting race condition,= where minder finished WHILE scanning, scan 3x times
+                scan_df_hist = []
                 print('Chacking scan results...')
                 for i in range(3):
                     print(f'Scan Itt Check:{i}')
