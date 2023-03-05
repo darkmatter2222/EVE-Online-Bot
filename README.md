@@ -8,7 +8,8 @@
 The bot ran for an entire week with no intervention, Works great!  
  - Built new training pipelines so we can build new models and improve existing models faster.  
  - Converted existing classifiers to new prediction pipelines so we can impliment more models more quickly.  
-
+ - Sizeable directory Cleanup...  
+ 
 ## UPDATE - 2/26/23
 Quality of life enhancements... Improved Logging, Fixed a cycling bug, etc... 
 
