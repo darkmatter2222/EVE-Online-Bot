@@ -4,7 +4,12 @@
 
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
-## UPDATE - 2/26/23
+## UPDATE - 3/5/23
+Deployed the next model! Now we can more efficiently detect when one of the two miners have finished and we can selective start each miner. The model is very simple, grab 10 screen shots 100 ms appart so we can get a temporal understanding (green glowing pulsating effect), and from there, detect what miners are running.  
+Also added someadditional logging.  
+![Loading Animation GIF...](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/animation.gif)
+
+## UPDATE - 3/4/23
 The bot ran for an entire week with no intervention, Works great!  
  - Built new training pipelines so we can build new models and improve existing models faster.  
  - Converted existing classifiers to new prediction pipelines so we can impliment more models more quickly.  
