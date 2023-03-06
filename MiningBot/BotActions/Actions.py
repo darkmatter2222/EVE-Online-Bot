@@ -316,6 +316,7 @@ class Actions:
     def unload(self):
         self.current_screen_classification()  # logging only
         self.select_mining_hold()
+        cargo_percent = self.game.get_cargo_data(refresh_screen=True)
         pyautogui.moveTo(self.get_processed_cords(*self.config['click_and_drag_inv_box'][2:4]))  #
         time.sleep(0.1)
         x, y = self.get_processed_cords(*self.config['click_and_drag_inv_box'][0:2])
@@ -326,7 +327,7 @@ class Actions:
         x, y = self.get_processed_cords(*self.config['click_and_drag_inv_line'][2:4])
         pyautogui.dragTo(x, y, 1, button='left')
         time.sleep(0.1)
-        self.log.log_unload()
+        self.log.log_unload(cargo_percent)
         self.exit_hanger()
 
     def exit_hanger(self):

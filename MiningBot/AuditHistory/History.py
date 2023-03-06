@@ -61,11 +61,11 @@ class History:
 
         self.insert_payload(log)
 
-    def log_unload(self):
+    def log_unload(self, cargo_volume):
         log = log_template.copy()
         log['datetime'] = datetime.utcnow()
         log['action'] = 'Unload'
-        log['context'] = ''
+        log['context'] = cargo_volume
 
         self.insert_payload(log)
 
