@@ -116,7 +116,7 @@ class Actions:
             # Something happend where the ore was still targeted however the miners were not activated.
             if mining_cycle_start + timedelta(minutes=30) < datetime.utcnow():
                 mining_stale = True
-                self.log.log_stale_mining()
+                self.log.log_stale_mining('30 Minute Timeout')
 
             if cargo_percent > 0.9 or field_depleted or mining_stale:
                 target = 'Home'
@@ -193,7 +193,7 @@ class Actions:
             if mining_cycle_start + timedelta(minutes=30) < datetime.utcnow():
                 mining_stale = True
                 print('Time Based mining_stale = True')
-                self.log.log_stale_mining()
+                self.log.log_stale_mining('30 Minute Timeout')
 
             if cargo_percent > 0.9 or field_depleted or mining_stale:
                 self.navigate_home()
@@ -291,7 +291,7 @@ class Actions:
                 else:
                     print(f'FAULT - skipping....')
                     mining_stale = True
-                    self.log.log_stale_mining()
+                    self.log.log_stale_mining('Invalid Miner State')
                     # setting as stable for now to reset...
 
                 xy = (10, 10)

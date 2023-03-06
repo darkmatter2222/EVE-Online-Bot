@@ -77,11 +77,11 @@ class History:
 
         self.insert_payload(log)
 
-    def log_stale_mining(self):
+    def log_stale_mining(self, fault='unknown'):
         log = log_template.copy()
         log['datetime'] = datetime.utcnow()
         log['action'] = 'Stale Mining Reset'
-        log['context'] = ''
+        log['context'] = fault
 
         self.insert_payload(log)
 
