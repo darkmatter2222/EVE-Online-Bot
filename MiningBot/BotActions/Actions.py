@@ -288,12 +288,11 @@ class Actions:
                         mining_cycle_start = datetime.utcnow()
                         self.log.log_extraction(action='Miner_2')
                         print('Miner 1 Started...')
-                elif result['class'] == 'both_running':
+                else:
+                    print(f'FAULT - skipping....')
                     mining_stale = True
                     self.log.log_stale_mining()
                     # setting as stable for now to reset...
-                else:
-                    print(f'FAULT - skipping....')
 
                 xy = (10, 10)
                 pyautogui.moveTo(xy)
