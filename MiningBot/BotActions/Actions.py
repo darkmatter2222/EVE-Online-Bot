@@ -254,6 +254,16 @@ class Actions:
                 print('Both Miners Started...')
             elif len(indicies) == 0:
                 print(f'Both Miners Running - skipping...')
+
+                print('double checking...')
+                result = self.game.get_mining_tool_class()
+                print(result)
+                if result['class'] == 'invalid' or result['class'] == 'no_miners_running':
+                    print(f'FAULT Index Read - STALE....')
+                    mining_stale = True
+                    self.log.log_stale_mining('Invalid Miner State on Index Read')
+
+
             elif len(indicies) == 1:
                 print('Identifying what miner is running...')
                 result = self.game.get_mining_tool_class()
