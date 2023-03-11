@@ -6,8 +6,10 @@
 
 
 ## UPDATE - 3/10/23
-A great week! The bot made alot of mistakes tho. Rebuilt the mining function again...  Should perform MUCH better.  
-Next Steps... Optimize finding mining spot... There after, moving between spots when field empty.  
+A great week! The bot made alot of mistakes tho.  
+Rebuilt the mining function again...  Should perform MUCH better.  
+Rebuilt navigation function (find mining spot), Should perform better.  
+Next Steps...There after, moving between spots when field empty.  
 
 ## UPDATE - 3/5/23
 Deployed the next model! Now we can more efficiently detect when one of the two miners have finished and we can selective start each miner. The model is very simple, grab 10 screen shots 100 ms appart so we can get a temporal understanding (green glowing pulsating effect), and from there, detect what miners are running.  
