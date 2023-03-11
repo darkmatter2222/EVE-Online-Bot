@@ -12,6 +12,7 @@ from loguru import logger
 
 sys.path.append(os.path.realpath('..'))
 
+
 def drange(x, y, jump):
     while x < y:
         yield float(x)
@@ -131,10 +132,11 @@ class Interface:
 
         for clsf_name in self.config['Classifiers'].keys():
             f = open(self.config['Classifiers'][clsf_name]['class_location'], "r")
-            self.classifiers[clsf_name]= {
+            self.classifiers[clsf_name] = {
                 'model': tf.keras.models.load_model(self.config['Classifiers'][clsf_name]['model_location']),
                 'classes': json.loads(f.read()),
-                'image_resize': tuple(self.config['Classifiers'][clsf_name]['image_resize'])
+                'image_resize': tuple(self.config['Classifiers'][clsf_name]['image_resize']),
+                'save_images': bool(self.config['Classifiers'][clsf_name]['save_images']),
             }
             logger.info(f'{clsf_name} Model Loaded')
 
@@ -173,11 +175,11 @@ class Interface:
         result = None
         if extract_type == 'values':
             result = extract_values(img=self.screen, cells=cells, x_range=x_range,
-                                  y_range=y_range, columns=extract_columns,
-                                  monitor_x_offset=self.config['monitor_offset_x'],
-                                  monitor_y_offset=self.config['monitor_offset_y'],
-                                  click_target_offset_x=self.config['click_target_offset_x'],
-                                  click_target_offset_y=self.config['click_target_offset_y'])
+                                    y_range=y_range, columns=extract_columns,
+                                    monitor_x_offset=self.config['monitor_offset_x'],
+                                    monitor_y_offset=self.config['monitor_offset_y'],
+                                    click_target_offset_x=self.config['click_target_offset_x'],
+                                    click_target_offset_y=self.config['click_target_offset_y'])
         else:
             result = extract_bool(img=self.screen, cells=cells, x_range=x_range,
                                   y_range=y_range, columns=extract_columns,
@@ -187,8 +189,6 @@ class Interface:
                                   click_target_offset_y=self.config['click_target_offset_y'])
 
         return result
-
-
 
     def get_location_data(self, rows=13, refresh_screen=False):
         y_range = get_row_points(self.config['locations_box'], rows)
@@ -217,8 +217,10 @@ class Interface:
                 len(img_array[img_array == True]) + len(img_array[img_array == False]))
 
     def execute_clsf(self, img, clsf_name):
-        img = img.resize((self.classifiers[clsf_name]['image_resize'][1], self.classifiers[clsf_name]['image_resize'][0]), # TF trains backwards
-                         resample=Image.Resampling.NEAREST)
+        img = img.resize(
+            (self.classifiers[clsf_name]['image_resize'][1], self.classifiers[clsf_name]['image_resize'][0]),
+            # TF trains backwards
+            resample=Image.Resampling.NEAREST)
         img_array = tf.keras.utils.img_to_array(img)
         img_array = tf.expand_dims(img_array, 0)  # Create a batch
 
@@ -235,13 +237,23 @@ class Interface:
         return result
 
     def get_screen_class(self):
+        clsf_name = 'game_state'
+
         self.screen = self.get_screen()
 
-        result = self.execute_clsf(self.screen, 'game_state')
+        id = uuid.uuid1()
+        if self.classifiers[clsf_name]['save_images']:
+            self.screen.save(f"{self.config['log_dir']}\\{id}.png")
+
+        result = self.execute_clsf(self.screen, clsf_name)
+        result['id'] = id
+        result['model'] = clsf_name
 
         return result
 
     def get_mining_tool_class(self):
+        clsf_name = 'mining_tool_state'
+
         image_stack = []
         for i in range(10):
             img = self.get_screen()
@@ -250,14 +262,11 @@ class Interface:
         final_img = Image.fromarray(np.concatenate(image_stack, axis=0))
 
         id = uuid.uuid1()
-        final_img.save(f"{self.config['log_dir']}\\{id}.png")
+        if self.classifiers[clsf_name]['save_images']:
+            final_img.save(f"{self.config['log_dir']}\\{id}.png")
 
-        result = self.execute_clsf(final_img, 'mining_tool_state')
+        result = self.execute_clsf(final_img, clsf_name)
         result['id'] = id
+        result['model'] = clsf_name
 
         return result
-
-
-
-
-
