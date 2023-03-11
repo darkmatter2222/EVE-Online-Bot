@@ -4,10 +4,13 @@
     "Classifiers": {
       "mining_tool_state": {"image_resize": [116, 26],
          "class_location": "O:\\source\\repos\\EVE-Online-Bot\\training_data\\mining_tool_state\\mining_tool_state_classes.json",
-         "model_location": "O:\\source\\repos\\EVE-Online-Bot\\training_data\\mining_tool_state\\mining_tool_state_model.h5"},
+         "model_location": "O:\\source\\repos\\EVE-Online-Bot\\training_data\\mining_tool_state\\mining_tool_state_model.h5",
+         "save_images": 1},
+
       "game_state": {"image_resize": [206, 384],
          "class_location": "O:\\source\\repos\\EVE-Online-Bot\\training_data\\game_state\\game_state_classes.json",
-         "model_location": "O:\\source\\repos\\EVE-Online-Bot\\training_data\\game_state\\game_state_model.h5"}
+         "model_location": "O:\\source\\repos\\EVE-Online-Bot\\training_data\\game_state\\game_state_model.h5",
+         "save_images": 1}
     },
     "Eve_Launcher": "D:\\EVE\\Launcher\\evelauncher.exe",
     "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
@@ -88,10 +91,12 @@
     "Classifiers": {
       "mining_tool_state": {"image_resize": [116, 26],
          "class_location": "E:\\Eve_Models\\mining_tool_state_classes.json",
-         "model_location": "E:\\Eve_Models\\mining_tool_state_model.h5"},
+         "model_location": "E:\\Eve_Models\\mining_tool_state_model.h5",
+         "save_images": 1},
       "game_state": {"image_resize": [206, 384],
          "class_location": "E:\\Eve_Models\\game_state_classes.json",
-         "model_location": "E:\\Eve_Models\\game_state_model.h5"}
+         "model_location": "E:\\Eve_Models\\game_state_model.h5",
+         "save_images": 1}
     },
     "Eve_Launcher": "C:\\EVE\\Launcher\\evelauncher.exe",
     "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
