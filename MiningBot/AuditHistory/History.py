@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import socket
 from pathlib import Path
 from dotenv import load_dotenv
+from loguru import logger
 
 env_path = Path(fr"{os.environ['USERPROFILE']}\.env")
 load_dotenv(dotenv_path=env_path)
@@ -40,7 +41,7 @@ class History:
         try:
             insert_id = self.collection.insert_one(payload).inserted_id
         except Exception as e:
-            print(e)
+            logger.info(e)
             pass
 
     def empty_collection(self):

@@ -1,5 +1,6 @@
 {
   "RedComputer": {
+    "log_dir": "O:\\log_dir\\eve_miner",
     "Classifiers": {
       "mining_tool_state": {"image_resize": [116, 26],
          "class_location": "O:\\source\\repos\\EVE-Online-Bot\\training_data\\mining_tool_state\\mining_tool_state_classes.json",
@@ -83,6 +84,7 @@
     ]
   },
   "databrick": {
+        "log_dir": "E:\\log_dir\\eve_miner",
     "Classifiers": {
       "mining_tool_state": {"image_resize": [116, 26],
          "class_location": "E:\\Eve_Models\\mining_tool_state_classes.json",
