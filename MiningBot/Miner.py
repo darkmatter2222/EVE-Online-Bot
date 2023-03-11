@@ -51,7 +51,7 @@ while True:
         log.log_main_loop_activity('Mine', "Mining Main Loop Starting")
         while True:
             try:
-                bot.find_mining_spot()
+                bot.find_mining_spot_v2()
                 bot.mine_till_full_v2()
                 bot.unload()
             except Exception as e:
