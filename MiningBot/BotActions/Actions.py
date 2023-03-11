@@ -17,6 +17,8 @@ class Actions:
         self.config_dir = config_dir
         self.config = json.load(open(self.config_dir))[socket.gethostname()]
         self.log = History(config_dir=config_dir)
+        self.stale_mining_locations = {}
+        self.last_nav_target = ''
         self.game = interface
 
     def current_screen_classification(self, report_fault=True):
@@ -100,6 +102,75 @@ class Actions:
                 self.log.log_navigate(target)
                 print('Unable to locate Ore, Done...')
                 return
+
+    def add_stale_field(self, location_name, stale_duration_hours=2):
+        self.stale_mining_locations[location_name] = timedelta(hours=stale_duration_hours) + datetime.utcnow()
+
+    def get_stale_mining_sites(self):
+        release_keys = []
+        for key in self.stale_mining_locations.keys():
+            if datetime.utcnow() > self.stale_mining_locations[key]:
+                release_keys.append(key)
+        for key in release_keys:
+            del self.stale_mining_locations[key]
+        return self.stale_mining_locations.keys()
+
+    def get_valid_mining_targets(self):
+        targets = self.config['mining_sites']
+        stale_sites = self.get_stale_mining_sites()
+        final_list = [x for x in targets if x not in stale_sites]
+
+        if len(final_list) == 0:
+            final_list = self.config['mining_sites']
+            print('Ran out of targets, returning full list')
+
+        return final_list
+
+    def find_mining_spot_v2(self, keep_finding=True):
+        location_df = self.game.get_location_data(refresh_screen=True)
+        print(location_df)
+        targets = self.get_valid_mining_targets()
+
+        for target in targets:
+            self.current_screen_classification()  # logging only
+            # note this fails hard!!!! One OCR fail it skips the rest of the sequience
+            if target not in list(location_df['Name']):
+                message = f'Unable to find target in list:{target}'
+                print(message)
+                print(list(location_df['Name']))
+                continue
+
+            print(f'Navigating to {target}')
+            xy = location_df.loc[location_df['Name'] == target, 'click_target'].values[0]
+            pyautogui.moveTo(xy)
+            time.sleep(0.1)
+            pyautogui.click(button='right')
+            time.sleep(0.1)
+            pyautogui.moveTo(xy[0] + 50, xy[1] + 25)
+            time.sleep(0.1)
+            pyautogui.click(button='left')
+            time.sleep(0.1)
+            pyautogui.moveTo(1, 1)
+            time.sleep(60)
+            self.log.log_navigate(target)
+
+            print('scanning...')
+            pyautogui.moveTo(self.get_processed_cords(*self.config['scanner_button_target']))
+            time.sleep(0.1)
+            pyautogui.click(button='left')
+            time.sleep(7)
+            scan_df = self.game.get_survey_scan_data(refresh_screen=True, extract_type='bool')
+            if len(scan_df[scan_df['Quantity'] == True]) >= 2:
+                return target
+            else:
+                print(f'Marking Stale: {target}')
+                self.add_stale_field(target)
+
+        if keep_finding == False:
+            print('keep_finding = False, sending Home.')
+            self.navigate_home()
+            print('Unable to locate Ore, Done...')
+            return
 
     def mine_till_full(self):
         field_depleted = False
