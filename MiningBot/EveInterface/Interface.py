@@ -8,6 +8,7 @@ import sys, os, decimal, json, time, uuid
 from pytesseract import pytesseract
 import socket
 import tensorflow as tf
+from loguru import logger
 
 sys.path.append(os.path.realpath('..'))
 
@@ -135,7 +136,7 @@ class Interface:
                 'classes': json.loads(f.read()),
                 'image_resize': tuple(self.config['Classifiers'][clsf_name]['image_resize'])
             }
-            print(f'{clsf_name} Model Loaded')
+            logger.info(f'{clsf_name} Model Loaded')
 
     def refresh_screen(self):
         self.screen = self.get_screen()
@@ -248,7 +249,11 @@ class Interface:
             time.sleep(0.1)
         final_img = Image.fromarray(np.concatenate(image_stack, axis=0))
 
+        id = uuid.uuid1()
+        final_img.save(f"{self.config['log_dir']}\\{id}.png")
+
         result = self.execute_clsf(final_img, 'mining_tool_state')
+        result['id'] = id
 
         return result
 
