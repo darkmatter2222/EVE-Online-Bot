@@ -11,6 +11,7 @@ import pyautogui, wmi
 import socket
 from MiningBot.AuditHistory.History import History
 
+
 class Actions:
     def __init__(self, interface, config_dir=r'..\Configs\configs.json'):
         self.config_dir = config_dir
@@ -25,7 +26,6 @@ class Actions:
                 screen_class['class'] == 'connection_lost' and \
                 screen_class['pass_general_tollerance']:
             raise Exception('Connection Lost, Restart')
-
 
     def get_processed_cords(self, x, y):
         return x + self.config['monitor_offset_x'], y + self.config['monitor_offset_y']
@@ -47,7 +47,6 @@ class Actions:
         self.log.log_navigate(target)
         time.sleep(180)  # warning, docking can take some time.
 
-
     def find_mining_spot(self, keep_finding=True):
         location_df = self.game.get_location_data(refresh_screen=True)
         while True:
@@ -58,7 +57,7 @@ class Actions:
                     message = f'Unable to find target in list:{target}'
                     print(message)
                     print(list(location_df['Name']))
-                    #self.log.log_fault(message) Disabling for now as it can spam the DB
+                    # self.log.log_fault(message) Disabling for now as it can spam the DB
                     continue
 
                 print(f'Navigating to {target}')
@@ -179,12 +178,13 @@ class Actions:
         return all(items[0].equals(x) for x in items)
 
     def mine_till_full_v2(self):
+        default_location = (10, 10)
         field_depleted = False
         mining_stale = False
         mining_cycle_start = datetime.utcnow()
         cycle_delay = 30
         while True:
-            self.select_mining_hold() # Ensure we have our mining hold selected so we can read the inv space
+            self.select_mining_hold()  # Ensure we have our mining hold selected so we can read the inv space
             cargo_percent = self.game.get_cargo_data(refresh_screen=True)
             print(f'Cargo {cargo_percent:.2f}')
 
@@ -200,7 +200,7 @@ class Actions:
                 break
 
             scan_df = None
-            while True: # detecting race condition,= where minder finished WHILE scanning, scan 3x times
+            while True:  # detecting race condition,= where minder finished WHILE scanning, scan 3x times
                 scan_df_hist = []
                 print('Chacking scan results...')
                 for i in range(3):
@@ -221,16 +221,22 @@ class Actions:
                 self.log.log_field_depleted()
                 print('field_depleted = True')
 
-            snap_df = scan_df[0:2]
-            snap_df = snap_df[~snap_df['Locked'] == True]
-            indicies = snap_df.index # top two rows that are not locked
+            top_two_scan_df = scan_df[0:2]
+            top_two_not_locked_scan_df = top_two_scan_df[~top_two_scan_df['Locked'] == True]
+            top_two_not_locked_scan_indicies = top_two_not_locked_scan_df.index  # top two rows that are not locked
+            print('Identifying what miner is running...')
+            mining_tool_results = self.game.get_mining_tool_class()
+            print(mining_tool_results)
             time.sleep(1)
 
-            if len(indicies) == 2:
-                print('Starting Both Miners...')
-                mining_cycle_start = datetime.utcnow()
-                self.log.log_extraction(action='Both_Miners')
-                for i in indicies:
+            # valid, desirable states
+            if len(top_two_not_locked_scan_indicies) == 0 and mining_tool_results['class'] == 'both_running':
+                # Do Nothing, All Good
+                print('Both Miners Running, All Good...')
+                pass
+            elif len(top_two_not_locked_scan_indicies) == 2 and mining_tool_results['class'] == 'no_miners_running':
+                # fire up both miners
+                for i in top_two_not_locked_scan_indicies:
                     pyautogui.moveTo(scan_df.loc[i, 'click_target'])
                     time.sleep(0.1)
                     pyautogui.keyDown('ctrl')
@@ -241,7 +247,7 @@ class Actions:
                     time.sleep(1)
                 time.sleep(4)
                 xy = None
-                for i, index in enumerate(indicies):
+                for i, index in enumerate(top_two_not_locked_scan_indicies):
                     xy = scan_df.loc[index, 'click_target']
                     pyautogui.moveTo(xy)
                     time.sleep(0.1)
@@ -249,75 +255,64 @@ class Actions:
                     time.sleep(0.1)
                     pyautogui.press(f'f{i + 1}')
                     time.sleep(1)
-                xy = (10, 10)
-                pyautogui.moveTo(xy)
+                self.log.log_extraction(action='Both_Miners')
                 print('Both Miners Started...')
-            elif len(indicies) == 0:
-                print(f'Both Miners Running - skipping...')
+            elif len(top_two_not_locked_scan_indicies) == 1 and \
+                    mining_tool_results['class'] in ['miner_1_running', 'miner_2_running']:
 
-                print('double checking...')
-                result = self.game.get_mining_tool_class()
-                print(result)
-                if result['class'] == 'invalid' or result['class'] == 'no_miners_running':
-                    print(f'FAULT Index Read - STALE....')
-                    mining_stale = True
-                    self.log.log_stale_mining('Invalid Miner State on Index Read')
+                # Start Targeting
+                pyautogui.moveTo(scan_df.loc[top_two_not_locked_scan_indicies[0], 'click_target'])
+                time.sleep(0.1)
+                pyautogui.keyDown('ctrl')
+                time.sleep(0.1)
+                pyautogui.click()
+                time.sleep(0.1)
+                pyautogui.keyUp('ctrl')
+                time.sleep(1)
+                # wait for targeting...
+                time.sleep(4)
+                # reselect post targeting...
+                pyautogui.moveTo(scan_df.loc[top_two_not_locked_scan_indicies[0], 'click_target'])
+                time.sleep(0.1)
+                pyautogui.click()
+                time.sleep(1)
 
-
-            elif len(indicies) == 1:
-                print('Identifying what miner is running...')
-                result = self.game.get_mining_tool_class()
-                print(result)
-                if result['class'] == 'miner_1_running' or result['class'] == 'miner_2_running':
-                    # Start Targeting
-                    pyautogui.moveTo(scan_df.loc[indicies[0], 'click_target'])
-                    time.sleep(0.1)
-                    pyautogui.keyDown('ctrl')
-                    time.sleep(0.1)
-                    pyautogui.click()
-                    time.sleep(0.1)
-                    pyautogui.keyUp('ctrl')
+                if mining_tool_results['class'] == 'miner_1_running':
+                    # fire up miner 2
+                    pyautogui.press(f'f{2}')
                     time.sleep(1)
-                    # wait for targeting...
-                    time.sleep(4)
-                    # reselect post targeting...
-                    pyautogui.moveTo(scan_df.loc[indicies[0], 'click_target'])
-                    time.sleep(0.1)
-                    pyautogui.click()
+                    mining_cycle_start = datetime.utcnow()
+                    self.log.log_extraction(action='Miner_2')
+                    print('Miner 2 Started...')
+                    pass
+                elif mining_tool_results['class'] == 'miner_2_running':
+                    # fire up miner 1
+                    pyautogui.press(f'f{1}')
                     time.sleep(1)
-
-                    if result['class'] == 'miner_1_running':
-                        pyautogui.press(f'f{2}')
-                        time.sleep(1)
-                        mining_cycle_start = datetime.utcnow()
-                        self.log.log_extraction(action='Miner_1')
-                        print('Miner 2 Started...')
-                    else:
-                        pyautogui.press(f'f{1}')
-                        time.sleep(1)
-                        mining_cycle_start = datetime.utcnow()
-                        self.log.log_extraction(action='Miner_2')
-                        print('Miner 1 Started...')
+                    mining_cycle_start = datetime.utcnow()
+                    self.log.log_extraction(action='Miner_1')
+                    print('Miner 1 Started...')
                 else:
-                    print(f'FAULT - skipping....')
+                    # should be impossible to get here, log just in case.
+                    # #aybe a race condition between scanning and mining tool check?
+                    print(f'FAULT (L2) - skipping....')
                     mining_stale = True
-                    self.log.log_stale_mining('Invalid Miner State')
-                    # setting as stable for now to reset...
+                    self.log.log_stale_mining('Invalid Miner State (L2)')
+            # invalid, restart states
+            else:
+                print(f'FAULT (L1) - skipping....')
+                mining_stale = True
+                self.log.log_stale_mining('Invalid Miner State (L1)')
 
-                xy = (10, 10)
-                pyautogui.moveTo(xy)
+            pyautogui.moveTo(default_location)
 
             print(f'Cycle Delay... {cycle_delay} seconds...')
             time.sleep(30)
 
-
-
-
-
-
     def select_mining_hold(self):
         print('Opening Mining Hold...')
-        pyautogui.moveTo(self.get_processed_cords(*self.config['mining_hold_target'])) # ensure we have mining hold selected
+        pyautogui.moveTo(
+            self.get_processed_cords(*self.config['mining_hold_target']))  # ensure we have mining hold selected
         time.sleep(0.1)
         pyautogui.click(button='left')
         time.sleep(1)
@@ -405,7 +400,6 @@ class Actions:
         time.sleep(0.1)
         pyautogui.click(button='left')
 
-
     def login_sequience(self):
         # start launcher
         while True:
@@ -414,7 +408,7 @@ class Actions:
             launcher_pid = self.start_launcher()
             print('Starting Game...')
             game_pid = self.start_game()
-            #check for connection issue?
+            # check for connection issue?
             sc = self.game.get_screen_class()
             print(f'Screen Class:{sc}')
             if sc['class'] == 'char_select' and sc['pass_general_tollerance']:
@@ -436,11 +430,6 @@ class Actions:
                 print('Failed to start and get to Char Screen, trying again...')
                 time.sleep(30)
         return launcher_pid, game_pid
-
-
-
-
-
 
     def login(self):
         os.startfile(self.config['Eve_Launcher'])
@@ -477,6 +466,3 @@ class Actions:
         print(f'Current Screen:{screen_class_result}')
         if screen_class_result["class"] == 'in_hanger':
             self.exit_hanger()
-
-
-
