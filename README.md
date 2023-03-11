@@ -4,6 +4,10 @@
 
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+## UPDATE - 3/11/23
+So, after the last update, I was suprised to see some faults. Added some heady duty logging... and we found the issue... The classifiers need some additional sampels.  
+![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/failed_prediction.png)
+
 
 ## UPDATE - 3/10/23
 A great week! The bot made alot of mistakes tho.  
