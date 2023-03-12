@@ -6,7 +6,9 @@
 
 ## UPDATE - 3/12/23
 With the new logging, we can improve the models quite a bit. Below we can see low confidence and a miss classification. Add it to the pool of samples and retrain! Depending how things go over the next few days, my update the architecture, I suspect overfitting.  
-![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/failed_miner_class.png)
+![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/failed_miner_class.png)  
+making improvements:  
+![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/class_improvements.png)
 
 ## UPDATE - 3/11/23
 So, after the last update, I was suprised to see some faults. Added some heady duty logging... and we found the issue... The classifiers need some additional sampels.  
