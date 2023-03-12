@@ -22,6 +22,21 @@ class Actions:
         self.last_nav_target = ''
         self.game = interface
 
+    def recover_mouse(self):
+        try:
+            logger.info('recovering mouse...')
+            pyautogui.FAILSAFE = False
+            time.sleep(1)
+            pyautogui.moveTo(50, 50)
+            time.sleep(1)
+            pyautogui.FAILSAFE = True
+            logger.info('recovered')
+        except:
+            logger.info('failed recovery')
+            pass
+        time.sleep(5)
+
+
     def current_screen_classification(self, report_fault=True):
         screen_class = self.game.get_screen_class()
         logger.info(f'Current Screen Classification:{screen_class}')

@@ -62,6 +62,8 @@ while True:
                 logger.info(e)
                 if e.args[0] == 'Connection Lost, Restart':
                     break # Recycle and repeat main loop
+                elif 'PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen' in e.args[0]:
+                    bot.recover_mouse()
                 pass
         log.log_main_loop_activity('Mine', "Mining Main Loop Finished")
 
