@@ -146,11 +146,13 @@ class Actions:
 
             scan_df = self.game.get_survey_scan_data(refresh_screen=True, extract_type='bool')
 
+            logger.info('Full scan:')
             logger.info(scan_df)
 
             scan_df = scan_df[scan_df['Quantity'] == True]
-
+            logger.info('Quantity scan subset:')
             logger.info(scan_df)
+            count_valid_minables = len(scan_df.index)
 
             if len(scan_df) == 0:
                 field_depleted = True
@@ -158,7 +160,7 @@ class Actions:
                 logger.info('field_depleted = True')
 
             top_two_scan_df = scan_df[0:2]
-
+            logger.info('Quantity scan top 2 subset:')
             logger.info(top_two_scan_df)
 
             top_two_not_locked_scan_df = top_two_scan_df[~top_two_scan_df['Locked'] == True]
@@ -175,7 +177,12 @@ class Actions:
             if len(top_two_not_locked_scan_indicies) == 0 and mining_tool_results['class'] == 'both_running':
                 # Do Nothing, All Good
                 logger.info('Both Miners Running, All Good...')
-                pass
+            # Valid, last bit of a field:
+            elif len(top_two_not_locked_scan_indicies) == 0 and \
+                    mining_tool_results['class'] in ['miner_1_running', 'miner_2_running']:
+                # Do Nothing, All Good
+                logger.info(f"{mining_tool_results['class']} miner Running, All Good... Finishing Field...")
+            # valid, desirable states
             elif len(top_two_not_locked_scan_indicies) == 2 and mining_tool_results['class'] == 'no_miners_running':
                 # fire up both miners
                 for i in top_two_not_locked_scan_indicies:
@@ -199,6 +206,7 @@ class Actions:
                     time.sleep(1)
                 self.log.log_extraction(action='Both_Miners')
                 logger.info('Both Miners Started...')
+            # valid, desirable states
             elif len(top_two_not_locked_scan_indicies) == 1 and \
                     mining_tool_results['class'] in ['miner_1_running', 'miner_2_running']:
 
@@ -240,7 +248,7 @@ class Actions:
                     logger.info(f'FAULT (L2) - skipping....')
                     mining_stale = True
                     self.log.log_stale_mining('Invalid Miner State (L2)')
-            # invalid, restart states
+            # Catch All
             else:
                 logger.info(f'FAULT (L1) - skipping....')
                 mining_stale = True
