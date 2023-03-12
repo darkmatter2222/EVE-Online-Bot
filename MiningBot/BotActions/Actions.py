@@ -68,13 +68,18 @@ class Actions:
     def add_stale_field(self, location_name, stale_duration_hours=2):
         self.stale_mining_locations[location_name] = timedelta(hours=stale_duration_hours) + datetime.utcnow()
 
+    def reset_stale_mining_sites(self):
+        self.stale_mining_locations = {}
+
     def get_stale_mining_sites(self):
+        logger.info(f'pre - current stale mining sites:{self.stale_mining_locations}')
         release_keys = []
         for key in self.stale_mining_locations.keys():
             if datetime.utcnow() > self.stale_mining_locations[key]:
                 release_keys.append(key)
         for key in release_keys:
             del self.stale_mining_locations[key]
+        logger.info(f'post - current stale mining sites:{self.stale_mining_locations}')
         return self.stale_mining_locations.keys()
 
     def get_valid_mining_targets(self):

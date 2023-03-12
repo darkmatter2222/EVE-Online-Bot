@@ -48,6 +48,7 @@ while True:
         logger.info('Main Loop-Prep')
         log.log_main_loop_activity('Prep', "Get To Starting Point Starting")
         bot.get_to_starting_point()
+        bot.reset_stale_mining_sites()
         log.log_main_loop_activity('Prep', "Get To Starting Point Finished")
 
         # mine
