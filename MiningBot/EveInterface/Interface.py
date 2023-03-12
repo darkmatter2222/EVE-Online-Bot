@@ -171,7 +171,7 @@ class Interface:
             self.screen = self.get_screen()
 
         id = uuid.uuid1()
-        self.screen.save(f"{self.config['log_dir']}\\{id}.png")
+        self.screen.save(f"{self.config['log_dir']}\\images\\{id}.png")
         logger.info(f'Survey_Scan_Results Image_Saved: {id}')
 
         extract_columns = ['Locked', 'Ore', 'Quantity', 'Volume', 'Distance', 'click_target']
@@ -247,7 +247,7 @@ class Interface:
 
         id = uuid.uuid1()
         if self.classifiers[clsf_name]['save_images']:
-            self.screen.save(f"{self.config['log_dir']}\\{id}.png")
+            self.screen.save(f"{self.config['log_dir']}\\images\\{id}.png")
 
         result = self.execute_clsf(self.screen, clsf_name)
         result['id'] = id
@@ -267,7 +267,7 @@ class Interface:
 
         id = uuid.uuid1()
         if self.classifiers[clsf_name]['save_images']:
-            final_img.save(f"{self.config['log_dir']}\\{id}.png")
+            final_img.save(f"{self.config['log_dir']}\\images\\{id}.png")
 
         result = self.execute_clsf(final_img, clsf_name)
         result['id'] = id
