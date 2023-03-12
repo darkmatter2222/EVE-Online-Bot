@@ -170,6 +170,10 @@ class Interface:
         if refresh_screen:
             self.screen = self.get_screen()
 
+        id = uuid.uuid1()
+        self.screen.save(f"{self.config['log_dir']}\\{id}.png")
+        logger.info(f'Survey_Scan_Results Image_Saved: {id}')
+
         extract_columns = ['Locked', 'Ore', 'Quantity', 'Volume', 'Distance', 'click_target']
 
         result = None
