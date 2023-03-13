@@ -89,7 +89,8 @@ class Actions:
 
         if len(final_list) == 0:
             final_list = self.config['mining_sites']
-            logger.info('Ran out of targets, returning full list')
+            self.reset_stale_mining_sites()
+            logger.info('Ran out of targets, returning full list, resetting...')
 
         return final_list
 

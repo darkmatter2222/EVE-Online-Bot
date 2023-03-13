@@ -4,11 +4,13 @@ import PIL, json
 import tensorflow as tf
 import socket
 import pathlib
+
 from PIL import Image, ImageDraw
 
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
+from sklearn.metrics import confusion_matrix
 
 
 def build_and_train(root_image_directory,
@@ -66,6 +68,7 @@ def build_and_train(root_image_directory,
         layers.MaxPooling2D(),
         layers.Flatten(),
         layers.Dense(128, activation='relu'),
+        layers.Dropout(0.5),
         layers.Dense(num_classes)
     ])
 
@@ -79,10 +82,19 @@ def build_and_train(root_image_directory,
         validation_data=val_ds,
         epochs=epochs
     )
-
+    train_data = list(train_ds)
+    features = np.concatenate([train_data[n][0] for n in range(0, len(train_data))])
+    targets = np.concatenate([train_data[n][1] for n in range(0, len(train_data))])
+    print(targets)
+    predictions = model.predict(features)
+    print(predictions.argmax(1))
+    
+    cf = confusion_matrix(targets, predictions.argmax(1).astype(int))
+    
     model_location = fr'{root_image_directory}\{model_name}_model.h5'
     model.save(model_location)
-
+    
     return {'image_resize': [img_height, img_width],
             'class_location': class_location,
-            'model_location': model_location}
+            'model_location': model_location,
+            'cm':cf}
