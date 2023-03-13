@@ -179,6 +179,7 @@ class Actions:
                 field_depleted = True
                 self.log.log_field_depleted()
                 logger.info('field_depleted = True')
+                continue
 
             top_two_scan_df = scan_df[0:2]
             logger.info('Quantity scan top 2 subset:')
