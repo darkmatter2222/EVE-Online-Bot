@@ -12,6 +12,8 @@ from loguru import logger
 
 sys.path.append(os.path.realpath('..'))
 
+save_images = False
+
 
 def drange(x, y, jump):
     while x < y:
@@ -171,8 +173,9 @@ class Interface:
             self.screen = self.get_screen()
 
         id = uuid.uuid1()
-        self.screen.save(f"{self.config['log_dir']}\\images\\{id}.png")
-        logger.info(f'Survey_Scan_Results Image_Saved: {id}')
+        if save_images:
+            self.screen.save(f"{self.config['log_dir']}\\images\\{id}.png")
+            logger.info(f'Survey_Scan_Results Image_Saved: {id}')
 
         extract_columns = ['Locked', 'Ore', 'Quantity', 'Volume', 'Distance', 'click_target']
 
