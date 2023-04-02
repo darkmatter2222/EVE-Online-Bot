@@ -1,7 +1,7 @@
 import sys, os, decimal, json
 import socket, uuid, time
 import pyautogui
-from tkinter import Frame, Canvas, Tk, BOTH, N, W, E, NW, Label, END, RIGHT, CENTER, Button, Listbox, LabelFrame
+from tkinter import Frame, Canvas, Tk, BOTH, N, W, E, NW, Label, END, RIGHT, CENTER, Button, Listbox, LabelFrame, Text, INSERT
 from PIL import Image, ImageTk
 import glob
 import json
@@ -19,23 +19,21 @@ game = Interface(config_dir=config_dir)
 def get_processed_cords(x, y):
     return x + config['monitor_offset_x'], y + config['monitor_offset_y']
 
-
+# Jita IV - Moon 4 - Caldari Navy Assembly Plant
+# Amsen VI - Moon - Moon 1 Science and Trade Institute School
 class AI_Pilot():
     def __init__(self):
         self.data_root = r'O:\source\repos\data_labeler\training_data\inventory'
         self.image_names = []
         self.image_data = []
 
-        # self.width = int(1920 / 6)
-        # self.height = int(1080 / 6)
         self.temp = ''
         self.title = "AI Pilot"
         self.root = Tk()
-        # self.root.geometry(f"{self.width}x{self.height}")
         self.root.resizable(width=True, height=True)
 
         self.dock_at_dest_lf = LabelFrame(self.root, text="Dock at Destination")
-        self.dock_at_dest_lf.grid(row=0, column=0, sticky=N, padx=(10, 10), pady=(10, 10))
+        self.dock_at_dest_lf.grid(row=0, column=0, sticky=NW, padx=(10, 10), pady=(10, 10))
         self.dock_at_dest_button = Button(self.dock_at_dest_lf, text="Start", width=30,
                                           command=self.dock_at_dest_threaded)
         self.dock_at_dest_button.grid(row=0, column=0, sticky=N, padx=(10, 10), pady=(10, 5))
@@ -47,6 +45,38 @@ class AI_Pilot():
         self.dock_at_dest_lb.grid(row=2, column=0, sticky=N, padx=(5, 5), pady=(5, 10))
         self.dock_at_dest_log = []
         self.dock_at_dest_e_stop_bool = False
+
+        self.migrate_ore_lf = LabelFrame(self.root, text="Migrate Ore (Start in Space)")
+        self.migrate_ore_lf.grid(row=0, column=1, sticky=W, padx=(10, 10), pady=(10, 10))
+
+        self.migrate_ore_lf_sub1 = Frame(self.migrate_ore_lf)
+        self.migrate_ore_lf_sub1.grid(row=0, column=0, sticky=W, padx=(10, 10), pady=(0, 0))
+        self.migrate_ore_l1 = Label(self.migrate_ore_lf_sub1, text="From:")
+        self.migrate_ore_l1.grid(row=0, column=0, sticky=W, padx=(10, 10), pady=(10, 5))
+        self.migrate_ore_tb1 = Text(self.migrate_ore_lf_sub1, height=1, width=25)
+        self.migrate_ore_tb1.insert(INSERT, "Amsen VI - Moon - Moon 1 Science and Trade Institute School")
+        self.migrate_ore_tb1.grid(row=0, column=1, sticky=W, padx=(10, 10), pady=(10, 5))
+
+        self.migrate_ore_lf_sub2 = Frame(self.migrate_ore_lf)
+        self.migrate_ore_lf_sub2.grid(row=1, column=0, sticky=W, padx=(10, 10), pady=(0, 0))
+        self.migrate_ore_l2 = Label(self.migrate_ore_lf_sub2, text="To:")
+        self.migrate_ore_l2.grid(row=0, column=0, sticky=W, padx=(10, 10), pady=(5, 10))
+        self.migrate_ore_tb2 = Text(self.migrate_ore_lf_sub2, height=1, width=25)
+        self.migrate_ore_tb2.insert(INSERT, "Jita IV - Moon 4 - Caldari Navy Assembly Plant")
+        self.migrate_ore_tb2.grid(row=0, column=1, sticky=W, padx=(10, 10), pady=(10, 5))
+
+        self.migrate_ore_start_button = Button(self.migrate_ore_lf, text="Start", width=35,
+                                          command=self.dock_at_dest_threaded)
+        self.migrate_ore_start_button.grid(row=2, column=0, sticky=N, padx=(10, 10), pady=(10, 5))
+        self.migrate_ore_e_stop_button = Button(self.migrate_ore_lf, text="End", width=35,
+                                          command=self.dock_at_dest_threaded)
+        self.migrate_ore_e_stop_button.grid(row=3, column=0, sticky=N, padx=(10, 10), pady=(5, 5))
+        self.migrate_ore_e_stop_button["state"] = "disabled"
+
+        self.migrate_ore_lb = Listbox(self.migrate_ore_lf, width=40)
+        self.migrate_ore_lb.grid(row=4, column=0, sticky=N, padx=(5, 5), pady=(5, 10))
+        self.migrate_ore_log = []
+
 
     def dock_at_dest_e_stop(self):
         self.dock_at_dest_e_stop_bool = True
