@@ -11,8 +11,10 @@ import tensorflow as tf
 from loguru import logger
 
 sys.path.append(os.path.realpath('..'))
-
+from ML_Components.Universal_Prediction import Universal_Prediction
 save_images = False
+UC = Universal_Prediction()
+
 
 
 def drange(x, y, jump):
@@ -240,26 +242,6 @@ class Interface:
         return len(img_array[img_array == True]) / (
                 len(img_array[img_array == True]) + len(img_array[img_array == False]))
 
-    def execute_clsf(self, img, clsf_name):
-        img = img.resize(
-            (self.classifiers[clsf_name]['image_resize'][1], self.classifiers[clsf_name]['image_resize'][0]),
-            # TF trains backwards
-            resample=Image.Resampling.NEAREST)
-        img_array = tf.keras.utils.img_to_array(img)
-        img_array = tf.expand_dims(img_array, 0)  # Create a batch
-
-        predictions = self.classifiers[clsf_name]['model'].predict(img_array)
-        scores = tf.nn.softmax(predictions[0])
-        result = {
-            'argmax_index': np.argmax(scores),
-            'value_at_argmax': scores[np.argmax(scores)].numpy(),
-            'pass_general_tollerance': scores[np.argmax(scores)].numpy() > 0.5,
-            'class': self.classifiers[clsf_name]['classes'][np.argmax(scores)],
-            'classes': self.classifiers[clsf_name]['classes'],
-            'scores': scores.numpy().tolist()
-        }
-        return result
-
     def get_screen_class(self):
         clsf_name = 'game_state'
 
@@ -269,7 +251,7 @@ class Interface:
         if self.classifiers[clsf_name]['save_images']:
             self.screen.save(f"{self.config['log_dir']}\\images\\{id}.png")
 
-        result = self.execute_clsf(self.screen, clsf_name)
+        result = UC.predict(self.screen, clsf_name)
         result['id'] = id
         result['model'] = clsf_name
 
@@ -289,7 +271,7 @@ class Interface:
         if self.classifiers[clsf_name]['save_images']:
             final_img.save(f"{self.config['log_dir']}\\images\\{id}.png")
 
-        result = self.execute_clsf(final_img, clsf_name)
+        result = UC.predict(final_img, clsf_name)
         result['id'] = id
         result['model'] = clsf_name
 

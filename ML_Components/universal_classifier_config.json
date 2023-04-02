@@ -1,0 +1,52 @@
+{
+  "RedComputer": {
+    "log_dir": "\\\\databrick\\N\\eve_logs",
+    "Classifiers": {
+      "mining_tool_state": {
+        "image_resize": [
+          116,
+          26
+        ],
+        "class_location": "O:\\eve_models\\training_data\\mining_tool_state\\mining_tool_state_classes.json",
+        "model_location": "O:\\eve_models\\training_data\\mining_tool_state\\mining_tool_state_model.h5",
+        "save_images": 0
+      },
+      "nav_options": {
+        "image_resize": [
+          73,
+          71
+        ],
+        "class_location": "O:\\eve_models\\training_data\\nav_options\\nav_options_classes.json",
+        "model_location": "O:\\eve_models\\training_data\\nav_options\\nav_options_model.h5",
+        "save_images": 0
+      },
+      "game_state": {
+        "image_resize": [
+          206,
+          384
+        ],
+        "class_location": "O:\\eve_models\\training_data\\game_state\\game_state_classes.json",
+        "model_location": "O:\\eve_models\\training_data\\game_state\\game_state_model.h5",
+        "save_images": 0
+      },
+      "hanger_menus": {
+        "image_resize": [
+          206,
+          384
+        ],
+        "class_location": "O:\\eve_models\\training_data\\hanger_menus\\hanger_menus_classes.json",
+        "model_location": "O:\\eve_models\\training_data\\hanger_menus\\hanger_menus_model.h5",
+        "save_images": 0
+      },
+      "set_dest": {
+        "image_resize": [
+          79,
+          53
+        ],
+        "class_location": "O:\\eve_models\\training_data\\set_dest\\set_dest_classes.json",
+        "model_location": "O:\\eve_models\\training_data\\set_dest\\set_dest_model.h5",
+        "save_images": 0
+      }
+    }
+  }
+}
