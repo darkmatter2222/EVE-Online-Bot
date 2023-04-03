@@ -34,8 +34,8 @@ class Bot_Engine:
 
     def dock_at_destination(self, logging_callback, ui_callback):
         self.dock_at_destination_parms['e_stop'] = False
-        ui_callback('dock_at_dest_button', 'state', 'disabled')
-        ui_callback('dock_at_dest_e_stop_button', 'state', 'active')
+        ui_callback('dock_at_destination_button', 'state', 'disabled')
+        ui_callback('dock_at_destination_e_stop_button', 'state', 'active')
         logging_callback(f"Starting in 1 Second...")
         time.sleep(1)
 
@@ -57,7 +57,39 @@ class Bot_Engine:
             img = img.crop(tuple(config['next_waypoint_menu_box']))
             nav_result = UP.predict(img, 'nav_options')
             logger.info(nav_result)
-            time.sleep(5)
+            if state_result['class'] == 'in_flight':
+                click_target = None
+                logging_callback(f"{itter_counter} - state:{state_result['class']} nav:{nav_result['class']}")
+                # TODO Train a model to pos this?
+                if nav_result['class'] == 'dock_now':
+                    click_target = (nav_point_xy[0] + 50, nav_point_xy[1] + 75)
+                elif nav_result['class'] == 'jump_though_first':
+                    click_target = (nav_point_xy[0] + 50, nav_point_xy[1] + 25)
+                elif nav_result['class'] == 'jump_through_second':
+                    click_target = (nav_point_xy[0] + 50, nav_point_xy[1] + 50)
+                elif nav_result['class'] == 'warp_to_dock_3':
+                    click_target = (nav_point_xy[0] + 50, nav_point_xy[1] + 75)
+                elif nav_result['class'] == 'warp_to_dock_4':
+                    click_target = (nav_point_xy[0] + 50, nav_point_xy[1] + 100)
+                else:
+                    logger.info('do nothing nav...')
 
+                if click_target is not None:
+                    pyautogui.moveTo(click_target)
+                    time.sleep(0.1)
+                    pyautogui.click(button='left')
+
+            elif state_result['class'] == 'in_hanger':
+                break
+            else:
+                break
+            time.sleep(0.1)
+            pyautogui.moveTo(self.get_cords_with_offset(*config['default_cords']))
+            time.sleep(0.1)
+            pyautogui.click(button='left')
+            time.sleep(10)
+        ui_callback('dock_at_destination_button', 'state', 'active')
+        ui_callback('dock_at_destination_e_stop_button', 'state', 'disabled')
+        logging_callback(f"Arrived")
     # endregion
 

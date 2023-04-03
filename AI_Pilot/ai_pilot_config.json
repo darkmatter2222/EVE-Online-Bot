@@ -1,7 +1,9 @@
 {
   "RedComputer": {
+    "log_dir": "\\\\databrick\\N\\eve_logs",
     "monitor_number": 2,
     "next_waypoint_click_target": [137, 378],
-    "next_waypoint_menu_box": [102, 289, 458, 658]
+    "next_waypoint_menu_box": [102, 289, 458, 658],
+    "default_cords": [100,100]
   }
 }

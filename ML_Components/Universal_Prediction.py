@@ -5,7 +5,16 @@ import tensorflow as tf
 from loguru import logger
 
 class Universal_Prediction:
+    def __new__(cls): # make singleton
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(Universal_Prediction, cls).__new__(cls)
+            cls.instance.__initialized = False
+        return cls.instance
+
     def __init__(self):
+        if(self.__initialized): return # make singleton
+        self.__initialized = True
+
         self.classifiers = {}
 
         self.config_dir = r'../ML_Components/universal_classifier_config.json'
