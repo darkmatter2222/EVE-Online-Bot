@@ -4,15 +4,16 @@ from PIL import Image, ImageDraw
 import tensorflow as tf
 from loguru import logger
 
+
 class Universal_Prediction:
-    def __new__(cls): # make singleton
+    def __new__(cls):  # make singleton
         if not hasattr(cls, 'instance'):
             cls.instance = super(Universal_Prediction, cls).__new__(cls)
             cls.instance.__initialized = False
         return cls.instance
 
     def __init__(self):
-        if(self.__initialized): return # make singleton
+        if (self.__initialized): return  # make singleton
         self.__initialized = True
 
         self.classifiers = {}
@@ -21,7 +22,7 @@ class Universal_Prediction:
         self.config = json.load(open(self.config_dir))[socket.gethostname()]
 
         logger.add(
-        self.config['log_dir'] + '\\' + socket.gethostname() + "_" + sys.argv[0].split('/')[-1:][0] + "_{time}.log")
+            self.config['log_dir'] + '\\' + socket.gethostname() + "_" + sys.argv[0].split('/')[-1:][0] + "_{time}.log")
 
         for clsf_name in self.config['Classifiers'].keys():
             f = open(self.config['Classifiers'][clsf_name]['class_location'], "r")

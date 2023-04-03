@@ -2,7 +2,6 @@ import mss, cv2
 import numpy as np
 from PIL import Image
 
-
 def get_monitor_spec(monitor_number):
     with mss.mss() as sct:
         mon = sct.monitors[monitor_number]
@@ -16,7 +15,6 @@ def get_monitor_spec(monitor_number):
             "monitor_number": monitor_number,
         }
     return monitor
-
 
 def get_screen(monitor_number):
     with mss.mss() as sct:
