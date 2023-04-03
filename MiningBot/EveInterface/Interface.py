@@ -132,17 +132,6 @@ class Interface:
         self.config_dir = config_dir
         self.config = json.load(open(self.config_dir))[socket.gethostname()]
         self.screen = self.get_screen()
-        self.classifiers = {}
-
-        for clsf_name in self.config['Classifiers'].keys():
-            f = open(self.config['Classifiers'][clsf_name]['class_location'], "r")
-            self.classifiers[clsf_name] = {
-                'model': tf.keras.models.load_model(self.config['Classifiers'][clsf_name]['model_location']),
-                'classes': json.loads(f.read()),
-                'image_resize': tuple(self.config['Classifiers'][clsf_name]['image_resize']),
-                'save_images': bool(self.config['Classifiers'][clsf_name]['save_images']),
-            }
-            logger.info(f'{clsf_name} Model Loaded')
 
     def refresh_screen(self):
         self.screen = self.get_screen()
@@ -248,8 +237,6 @@ class Interface:
         self.screen = self.get_screen()
 
         id = uuid.uuid1()
-        if self.classifiers[clsf_name]['save_images']:
-            self.screen.save(f"{self.config['log_dir']}\\images\\{id}.png")
 
         result = UC.predict(self.screen, clsf_name)
         result['id'] = id
@@ -268,8 +255,6 @@ class Interface:
         final_img = Image.fromarray(np.concatenate(image_stack, axis=0))
 
         id = uuid.uuid1()
-        if self.classifiers[clsf_name]['save_images']:
-            final_img.save(f"{self.config['log_dir']}\\images\\{id}.png")
 
         result = UC.predict(final_img, clsf_name)
         result['id'] = id
