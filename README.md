@@ -6,6 +6,10 @@
 
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+## UPDATE - 4/4/23  
+Lots of movements. Beginning to formalize this as as a releaseable product. Training a few new models to make this solution less configureable and moreso powered by ML.  
+Very closes to calling this, "AI Pilot"  
+
 ## UPDATE - 3/26/23  
 Made progrss on out window detector (R-CNN), currently sitting at 93% IOU (Green = Truth, Red = Prediction):  
 ![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/bounding.png)
