@@ -11,7 +11,7 @@ UP = Universal_Prediction()
 
 
 import tensorflow as tf
-model2 = tf.keras.models.load_model(r"O:\source\repos\EVE-Online-Bot\TrainingPipelines\test_location.h5")
+model2 = tf.keras.models.load_model(r"O:\source\repos\EVE-Online-Bot\TrainingPipelines\test_location.h5", compile=False)
 
 class Bot_Engine:
     def __init__(self):
@@ -73,21 +73,22 @@ class Bot_Engine:
         while True:
             itter_counter += 1
 
-            self.data_collector()
-            time.sleep(10)
-            continue
+            #self.data_collector()
+            #time.sleep(10)
+            #continue
 
 
             if self.dock_at_destination_parms['e_stop']:
                 break
 
             img = get_screen(config['monitor_number'])
-            img = img.crop((0, 0, 500, 600))
+            img = img.crop((132, 0, 140, 600))
 
             prediction = model2.predict(np.array([np.array(img)]))
             prediction = (prediction * np.array([600]))
             logger.info(f"prediction:{prediction}")
-            pyautogui.moveTo(self.get_cords_with_offset(136, prediction[0]))
+            nav_point_xy = self.get_cords_with_offset(136, prediction[0])
+            pyautogui.moveTo(nav_point_xy)
             time.sleep(0.1)
             pyautogui.click(button='right')
             time.sleep(0.1)
@@ -95,7 +96,13 @@ class Bot_Engine:
             state_result = UP.predict(img, 'game_state')
             logger.info(state_result)
             # TODO Train a model to crop this?
-            img = img.crop(tuple(config['next_waypoint_menu_box']))
+
+            template = config['next_waypoint_menu_box']
+            delta = template[3] - template[1]
+            template[1] = prediction[0][0] - 5
+            template[3] = prediction[0][0] - 5 + delta
+
+            img = img.crop(tuple(template))
             nav_result = UP.predict(img, 'nav_options')
             logger.info(nav_result)
             if state_result['class'] == 'in_flight':
@@ -128,7 +135,7 @@ class Bot_Engine:
             pyautogui.moveTo(self.get_cords_with_offset(*config['default_cords']))
             time.sleep(0.1)
             pyautogui.click(button='left')
-            self.data_collector()
+            #self.data_collector()
             time.sleep(10)
         ui_callback('dock_at_destination_button', 'state', 'active')
         ui_callback('dock_at_destination_e_stop_button', 'state', 'disabled')
