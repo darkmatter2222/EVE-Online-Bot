@@ -1,4 +1,4 @@
-import threading, time, json, socket, pyautogui
+import threading, time, json, socket, pyautogui, uuid, random
 from AI_Pilot.Monitor_Interface.Monitors import get_monitor_spec, get_screen
 from ML_Components.Universal_Prediction import Universal_Prediction
 import numpy as np
@@ -7,6 +7,11 @@ from loguru import logger
 config_dir = r'../AI_Pilot/ai_pilot_config.json'
 config = json.load(open(config_dir))[socket.gethostname()]
 UP = Universal_Prediction()
+
+
+
+import tensorflow as tf
+model2 = tf.keras.models.load_model(r"O:\source\repos\EVE-Online-Bot\TrainingPipelines\test_location.h5")
 
 class Bot_Engine:
     def __init__(self):
@@ -21,6 +26,29 @@ class Bot_Engine:
         # don't ask why i did it this way, it felt good.
         result = np.array([x, y]) + self.monitor_offset
         return result[0], result[1]
+    # endregion
+
+    # region ----- Training Data Collector
+    def data_collector(self):
+        combos = [
+            (138, 100),
+            (163, 100),
+            (189, 100)
+        ]
+        data_root = r'O:\eve_models\training_data\unclass'
+        for i in range(10):
+            xy = random.choice(combos)
+            pyautogui.moveTo(self.get_cords_with_offset(*xy))
+            time.sleep(0.1)
+            pyautogui.click(button='left')
+            time.sleep(0.1)
+            pyautogui.moveTo(self.get_cords_with_offset(*config['default_cords']))
+            time.sleep(1)
+            img = get_screen(config['monitor_number'])
+            id = uuid.uuid1()
+            img = img.crop((0, 0, 500, 600))
+            img.save(f"{data_root}\\{id}.png")
+            logger.info(f'Saved image:{id}')
     # endregion
 
     # region ----- dock_at_destination
@@ -44,9 +72,22 @@ class Bot_Engine:
         itter_counter = 0
         while True:
             itter_counter += 1
+
+            self.data_collector()
+            time.sleep(10)
+            continue
+
+
             if self.dock_at_destination_parms['e_stop']:
                 break
-            pyautogui.moveTo(nav_point_xy)
+
+            img = get_screen(config['monitor_number'])
+            img = img.crop((0, 0, 500, 600))
+
+            prediction = model2.predict(np.array([np.array(img)]))
+            prediction = (prediction * np.array([600]))
+            logger.info(f"prediction:{prediction}")
+            pyautogui.moveTo(self.get_cords_with_offset(136, prediction[0]))
             time.sleep(0.1)
             pyautogui.click(button='right')
             time.sleep(0.1)
@@ -87,6 +128,7 @@ class Bot_Engine:
             pyautogui.moveTo(self.get_cords_with_offset(*config['default_cords']))
             time.sleep(0.1)
             pyautogui.click(button='left')
+            self.data_collector()
             time.sleep(10)
         ui_callback('dock_at_destination_button', 'state', 'active')
         ui_callback('dock_at_destination_e_stop_button', 'state', 'disabled')

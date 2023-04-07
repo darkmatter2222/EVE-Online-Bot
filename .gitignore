@@ -132,3 +132,4 @@ dmypy.json
 /training_data/*/*/*.png
 /training_data/*/*.h5
 /training_data/*/*.json
+*.h5
