@@ -85,7 +85,7 @@ class Bot_Engine:
             img = img.crop((132, 0, 140, 600))
 
             prediction = model2.predict(np.array([np.array(img)]))
-            prediction = (prediction * np.array([600]))
+            prediction = (prediction * np.array([1000]))
             logger.info(f"prediction:{prediction}")
             nav_point_xy = self.get_cords_with_offset(136, prediction[0])
             pyautogui.moveTo(nav_point_xy)
@@ -99,7 +99,7 @@ class Bot_Engine:
 
             template = config['next_waypoint_menu_box']
             delta = template[3] - template[1]
-            template[1] = prediction[0][0] - 5
+            template[1] = prediction[0][0] - 90
             template[3] = prediction[0][0] - 5 + delta
 
             img = img.crop(tuple(template))
