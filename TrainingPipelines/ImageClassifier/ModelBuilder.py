@@ -15,7 +15,7 @@ from sklearn.metrics import confusion_matrix
 #tf.config.set_visible_devices([], 'GPU')
 
 def build_and_train(root_image_directory,
-                    model_name):
+                    model_name, epochs=10, resize_ratio = 0.2):
     data_dir = pathlib.Path(root_image_directory)
 
     image_list = list(data_dir.glob('*/*.png'))
@@ -25,8 +25,8 @@ def build_and_train(root_image_directory,
     img = Image.open(image_list[0])
 
     batch_size = 1
-    img_height = int(img.height * 0.2)
-    img_width = int(img.width * 0.2)
+    img_height = int(img.height * resize_ratio)
+    img_width = int(img.width * resize_ratio)
 
     train_ds = tf.keras.utils.image_dataset_from_directory(
         data_dir,
@@ -77,7 +77,6 @@ def build_and_train(root_image_directory,
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                   metrics=['accuracy'])
 
-    epochs = 10
     history = model.fit(
         train_ds,
         validation_data=val_ds,
