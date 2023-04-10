@@ -12,16 +12,12 @@ import numpy as np
 import random
 import PIL, json
 import tensorflow as tf
+from PIL import Image
 import socket
 import pathlib
 from tqdm import tqdm
 from PIL import Image, ImageDraw, ImageOps
 
-from tensorflow.keras import layers
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.optimizers import Adam
-import tensorflow_addons as tfa
-from tensorflow.keras.callbacks import ModelCheckpoint, CSVLogger, ReduceLROnPlateau, EarlyStopping, TensorBoard
 
 from sklearn.metrics import confusion_matrix
 
@@ -35,33 +31,37 @@ plt.rcParams['figure.facecolor'] = '#0d1117'
 plt.rcParams['axes.facecolor'] = '#0d1117'
 plt.rcParams['savefig.facecolor'] = '#0d1117'
 
-cap = cv2.VideoCapture(f"C:\\Users\\ryans\\Videos\\2023-03-27 20-15-29.mp4")
+cap = cv2.VideoCapture(f"C:\\Users\\ryans\\Videos\\2023-04-09 21-29-33.mp4")
 
-output = cv2.VideoWriter(f"C:\\Users\\ryans\\Videos\\out.avi", cv2.VideoWriter_fourcc(*'DIVX'), 30, (1920, 1080))
+output = cv2.VideoWriter(f"C:\\Users\\ryans\\Videos\\out2.avi", cv2.VideoWriter_fourcc(*'DIVX'), 30, (1920, 1080))
 
-model2 = tf.keras.models.load_model(r"O:\source\repos\EVE-Online-Bot\TrainingPipelines\temp.h5")
+model2 = tf.keras.models.load_model(r"O:\source\repos\EVE-Online-Bot\TrainingPipelines\test_location.h5", compile=False)
 
-reduction = 10
+reduction = 2
 
-img_width = int(1920/reduction)
-img_height = int(1080/reduction)
+img_width = int(500/reduction)
+img_height = int(600/reduction)
 
 while (True):
     ret, frame = cap.read()
     if (ret):
 
         # adding filled rectangle on each frame
-        if random.randint(0, 9) < 1:
-            id = uuid.uuid1()
-            cv2.imwrite(f"temp\\{id}.png", frame)
+        #if random.randint(0, 9) < 1:
+        #    id = uuid.uuid1()
+        #    cv2.imwrite(f"temp\\{id}.png", frame)
+        #frame = cv2.transpose(frame)
+        color_converted = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame = cv2.transpose(frame)
-        frame2 = cv2.resize(frame, (img_height, img_width), interpolation=None )
-        frame2 = cv2.transpose(frame2)
-        img = np.array([np.array(frame2)])
+        pil_image=Image.fromarray(color_converted)
+        pil_image = pil_image.crop((0, 0, 500, 600))
+        img = pil_image.resize((img_width, img_height), resample=Image.Resampling.NEAREST)
+
+        img = np.array([np.array(img)])
         prediction = model2.predict(img)
-        result2 = ((prediction) * np.array([1920, 1080, 1920, 1080]) )
+        result2 = ((prediction) * np.array([600]) )
         frame = cv2.transpose(frame)
-        cv2.rectangle(frame, (int(result2[0][0]), int(result2[0][1])), (int(result2[0][2]), int(result2[0][3])),
+        cv2.line(frame, (0, int(result2[0][0])), (1000, int(result2[0][0])),
                       (0, 255, 0), thickness = 2)
 
         # writing the new frame in output
