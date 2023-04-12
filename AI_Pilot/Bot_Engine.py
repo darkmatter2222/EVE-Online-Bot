@@ -80,8 +80,6 @@ class Bot_Engine:
         logging_callback(f"Starting in 1 Second...")
         time.sleep(1)
 
-        # TODO Train a model to find this?
-        nav_point_xy = self.get_cords_with_offset(*config['next_waypoint_click_target'])
         itter_counter = 0
         while True:
             itter_counter += 1
