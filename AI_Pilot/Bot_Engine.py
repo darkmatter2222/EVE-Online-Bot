@@ -8,11 +8,6 @@ config_dir = r'../AI_Pilot/ai_pilot_config.json'
 config = json.load(open(config_dir))[socket.gethostname()]
 UP = Universal_Prediction()
 
-
-
-import tensorflow as tf
-model2 = tf.keras.models.load_model(r"O:\source\repos\EVE-Online-Bot\TrainingPipelines\test_location.h5", compile=False)
-
 class Bot_Engine:
     def __init__(self):
         monitor_spec = get_monitor_spec(config['monitor_number'])
@@ -73,38 +68,40 @@ class Bot_Engine:
         while True:
             itter_counter += 1
 
-            #self.data_collector()
-            #time.sleep(10)
-            #continue
-
-
             if self.dock_at_destination_parms['e_stop']:
                 break
 
+            # region ----- get waypoint y
             img = get_screen(config['monitor_number'])
-            img = img.crop((132, 0, 140, 600))
+            img_x = img.crop((0, 0, 500, 600))
+            route_y_large_vert_class_v2_result = UP.predict(img_x, 'route_y_large_vert_class_v2')
+            logger.info(route_y_large_vert_class_v2_result)
+            # endregion
 
-            prediction = model2.predict(np.array([np.array(img)]))
-            prediction = (prediction * np.array([1000]))
-            logger.info(f"prediction:{prediction}")
-            nav_point_xy = self.get_cords_with_offset(136, prediction[0])
+            target_y = int(route_y_large_vert_class_v2_result['class'])
+            nav_point_xy = self.get_cords_with_offset(136, target_y + 4)
             pyautogui.moveTo(nav_point_xy)
             time.sleep(0.1)
             pyautogui.click(button='right')
             time.sleep(0.1)
+
+            # region ----- get game state
             img = get_screen(config['monitor_number'])
             state_result = UP.predict(img, 'game_state')
             logger.info(state_result)
+            # endregion
+
             # TODO Train a model to crop this?
-
             template = config['next_waypoint_menu_box']
-            delta = template[3] - template[1]
-            template[1] = prediction[0][0] - 90
-            template[3] = prediction[0][0] - 5 + delta
+            template[1] = target_y - 90
+            template[3] = template[1] + 369
 
+            # region ----- get gav options
             img = img.crop(tuple(template))
             nav_result = UP.predict(img, 'nav_options')
             logger.info(nav_result)
+            # endregion
+
             if state_result['class'] == 'in_flight':
                 click_target = None
                 logging_callback(f"{itter_counter} - state:{state_result['class']} nav:{nav_result['class']}")
