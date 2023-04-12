@@ -16,6 +16,7 @@ class AI_Pilot():
     def __init__(self):
         self.title = "AI Pilot"
         self.root = tk.Tk()
+        self.root.attributes('-topmost', True)
         self.root.resizable(width=True, height=True)
 
         self.dock_at_destination_lf = tk.LabelFrame(self.root, text="Dock at Destination")

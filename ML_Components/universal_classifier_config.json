@@ -54,7 +54,7 @@
         ],
         "class_location": "O:\\eve_models\\training_data\\route_y_large_vert_class_v2\\route_y_large_vert_class_v2_classes.json",
         "model_location": "O:\\eve_models\\training_data\\route_y_large_vert_class_v2\\route_y_large_vert_class_v2_model.h5",
-        "save_images": 0
+        "save_images": 1
       }
     }
   },
