@@ -8,6 +8,7 @@ config_dir = r'../AI_Pilot/ai_pilot_config.json'
 config = json.load(open(config_dir))[socket.gethostname()]
 UP = Universal_Prediction()
 
+
 class Bot_Engine:
     def __init__(self):
         monitor_spec = get_monitor_spec(config['monitor_number'])
@@ -17,6 +18,25 @@ class Bot_Engine:
         self.dock_at_destination_parms = {}
 
     # region ----- Common Functions
+    def move_to_default_pos(self):
+        pyautogui.moveTo(self.get_cords_with_offset(*config['default_cords']))
+        time.sleep(0.1)
+
+
+    def perform_click(self, button):
+        pyautogui.click(button=button)
+        time.sleep(0.1)
+
+    def perform_move_click(self, pos, button='right', perform_offset=True, finish_at_default=False):
+        # pos is tuple (x, y)
+        if perform_offset:
+            pos = self.get_cords_with_offset(*pos)
+        pyautogui.moveTo(pos)
+        time.sleep(0.1)
+        self.perform_click(button)
+        self.move_to_default_pos()
+        return
+
     def get_cords_with_offset(self, x, y):
         # don't ask why i did it this way, it felt good.
         result = np.array([x, y]) + self.monitor_offset
@@ -33,10 +53,8 @@ class Bot_Engine:
         data_root = r'O:\eve_models\training_data\unclass'
         for i in range(10):
             xy = random.choice(combos)
-            pyautogui.moveTo(self.get_cords_with_offset(*xy))
-            time.sleep(0.1)
-            pyautogui.click(button='left')
-            time.sleep(0.1)
+
+            self.perform_move_click(pos=xy, button='left', perform_offset=True)
             pyautogui.moveTo(self.get_cords_with_offset(*config['default_cords']))
             time.sleep(1)
             img = get_screen(config['monitor_number'])
@@ -80,10 +98,7 @@ class Bot_Engine:
 
             target_y = int(route_y_large_vert_class_v2_result['class'])
             nav_point_xy = self.get_cords_with_offset(136, target_y + 4)
-            pyautogui.moveTo(nav_point_xy)
-            time.sleep(0.1)
-            pyautogui.click(button='right')
-            time.sleep(0.1)
+            self.perform_move_click(pos=nav_point_xy, button='right', perform_offset=False)
 
             # region ----- get game state
             img = get_screen(config['monitor_number'])
@@ -120,19 +135,15 @@ class Bot_Engine:
                     logger.info('do nothing nav...')
 
                 if click_target is not None:
-                    pyautogui.moveTo(click_target)
-                    time.sleep(0.1)
-                    pyautogui.click(button='left')
+                    self.perform_move_click(pos=click_target, button='left', perform_offset=False)
 
             elif state_result['class'] == 'in_hanger':
                 break
             else:
                 break
-            time.sleep(0.1)
-            pyautogui.moveTo(self.get_cords_with_offset(*config['default_cords']))
+            self.move_to_default_pos()
             time.sleep(0.1)
             pyautogui.click(button='left')
-            #self.data_collector()
             time.sleep(10)
         ui_callback('dock_at_destination_button', 'state', 'active')
         ui_callback('dock_at_destination_e_stop_button', 'state', 'disabled')
