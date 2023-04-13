@@ -12,20 +12,21 @@ logger.add(config['log_dir'] + '\\' + socket.gethostname() + "_" + sys.argv[0].s
 UC = Universal_Prediction()
 Bot = Bot_Engine()
 
+
 class AI_Pilot():
     def __init__(self):
         self.title = "AI Pilot"
         self.root = tk.Tk()
-        self.root.attributes('-topmost', True)
+        # self.root.attributes('-topmost', True)
         self.root.resizable(width=True, height=True)
 
         self.dock_at_destination_lf = tk.LabelFrame(self.root, text="Dock at Destination")
         self.dock_at_destination_lf.grid(row=0, column=0, sticky=tk.NW, padx=(10, 10), pady=(10, 10))
         self.dock_at_destination_button = tk.Button(self.dock_at_destination_lf, text="Start", width=30,
-                                          command=self.dock_at_destination_start)
+                                                    command=self.dock_at_destination_start)
         self.dock_at_destination_button.grid(row=0, column=0, sticky=tk.N, padx=(10, 10), pady=(10, 5))
         self.dock_at_destination_e_stop_button = tk.Button(self.dock_at_destination_lf, text="E Stop", width=30,
-                                                 command=self.dock_at_destination_e_stop)
+                                                           command=self.dock_at_destination_e_stop)
         self.dock_at_destination_e_stop_button.grid(row=1, column=0, sticky=tk.N, padx=(10, 10), pady=(5, 5))
         self.dock_at_destination_e_stop_button["state"] = "disabled"
         self.dock_at_destination_lb = tk.Listbox(self.dock_at_destination_lf, width=40)
@@ -53,10 +54,10 @@ class AI_Pilot():
         self.migrate_ore_tb2.grid(row=0, column=1, sticky=tk.W, padx=(10, 10), pady=(10, 5))
 
         self.migrate_ore_start_button = tk.Button(self.migrate_ore_lf, text="Start", width=35,
-                                          )
+                                                  )
         self.migrate_ore_start_button.grid(row=2, column=0, sticky=tk.N, padx=(10, 10), pady=(10, 5))
         self.migrate_ore_e_stop_button = tk.Button(self.migrate_ore_lf, text="End", width=35,
-                                          )
+                                                   )
         self.migrate_ore_e_stop_button.grid(row=3, column=0, sticky=tk.N, padx=(10, 10), pady=(5, 5))
         self.migrate_ore_e_stop_button["state"] = "disabled"
 
@@ -82,15 +83,17 @@ class AI_Pilot():
 
     def dock_at_destination_e_stop(self):
         Bot.dock_at_destination_e_stop()
-        
+
     def dock_at_destination_start(self):
         self.dock_at_destination_clear_log()
         Bot.dock_at_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change)
+
     # endregion
 
     def start(self):
         self.root.title(self.title)
         self.root.mainloop()
+
 
 AIP = AI_Pilot()
 AIP.start()

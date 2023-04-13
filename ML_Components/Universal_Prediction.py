@@ -3,6 +3,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 import tensorflow as tf
 from loguru import logger
+import requests
 
 
 def mkdir_p(path):
@@ -35,13 +36,36 @@ class Universal_Prediction:
             self.config['log_dir'] + '\\' + socket.gethostname() + "_" + sys.argv[0].split('/')[-1:][0] + "_{time}.log")
 
         for clsf_name in self.config['Classifiers'].keys():
+            if not os.path.isfile(self.config['Classifiers'][clsf_name]['model_location']):
+                logger.info(f'Downloading Model:{clsf_name}')
+                outfile = os.path.join(self.config['Classifiers'][clsf_name]['model_location'])
+                mkdir_p('\\'.join(self.config['Classifiers'][clsf_name]['model_location'].split('\\')[:-1]))
+                response = requests.get(self.config['Classifiers'][clsf_name]['download_source_model'], stream=True)
+                with open(outfile, 'wb') as output:
+                    output.write(response.content)
+            else:
+                logger.info(f'Using Downloaded Model:{clsf_name}')
+
+            if not os.path.isfile(self.config['Classifiers'][clsf_name]['class_location']):
+                logger.info(f'Downloading Classes:{clsf_name}')
+                outfile = os.path.join(self.config['Classifiers'][clsf_name]['class_location'])
+                mkdir_p('\\'.join(self.config['Classifiers'][clsf_name]['class_location'].split('\\')[:-1]))
+                response = requests.get(self.config['Classifiers'][clsf_name]['download_source_class'], stream=True)
+                with open(outfile, 'wb') as output:
+                    output.write(response.content)
+            else:
+                logger.info(f'Using Downloaded Model:{clsf_name}')
+
             f = open(self.config['Classifiers'][clsf_name]['class_location'], "r")
             self.classifiers[clsf_name] = {
+                'download_source_model': self.config['Classifiers'][clsf_name]['download_source_model'],
+                'download_source_class': self.config['Classifiers'][clsf_name]['download_source_class'],
                 'model': tf.keras.models.load_model(self.config['Classifiers'][clsf_name]['model_location']),
                 'classes': json.loads(f.read()),
                 'image_resize': tuple(self.config['Classifiers'][clsf_name]['image_resize']),
                 'save_images': bool(self.config['Classifiers'][clsf_name]['save_images']),
             }
+
             mkdir_p(f"{self.config['log_dir']}\\{clsf_name}")
             logger.info(f'{clsf_name} Model Loaded')
 
