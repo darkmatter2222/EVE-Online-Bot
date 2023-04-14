@@ -6,6 +6,10 @@
 
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+## UPDATE - 4/14/23  
+Much going on! However the coolest part might be the model are now public on GCP for download! [HERE](https://storage.googleapis.com/eve_online_models/)  
+However the new "Universal_Prediction" Class will download them for you at startup.  Soon we will have a UI and a formal Release! 
+
 ## UPDATE - 4/4/23  
 Lots of movements. Beginning to formalize this as as a releaseable product. Training a few new models to make this solution less configureable and moreso powered by ML.  
 Very closes to calling this, "AI Pilot"  
