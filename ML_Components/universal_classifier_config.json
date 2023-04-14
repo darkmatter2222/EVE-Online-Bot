@@ -10,6 +10,10 @@
         "set_dest",
         "route_y_large_vert_class_v2"
       ],
+      "save_image_classifiers": [
+        "route_y_large_vert_class_v2"
+      ],
+
       "download_source_root":"https://storage.googleapis.com/eve_online_models",
       "download_dest_root":"O:\\eve_live_models",
 

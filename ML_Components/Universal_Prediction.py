@@ -38,14 +38,11 @@ class Universal_Prediction:
         self.sync_models()
 
         for clsf_name in self.config['Classifiers']['enabled_classifiers']:
-            f = open(self.config['Classifiers'][clsf_name]['class_location'], "r")
+            f = open(f"{self.config['Classifiers']['download_dest_root']}\\{clsf_name}\\{clsf_name}_meta.json", "r")
             self.classifiers[clsf_name] = {
-                'download_source_model': self.config['Classifiers'][clsf_name]['download_source_model'],
-                'download_source_class': self.config['Classifiers'][clsf_name]['download_source_class'],
-                'model': tf.keras.models.load_model(self.config['Classifiers'][clsf_name]['model_location']),
-                'classes': json.loads(f.read()),
-                'image_resize': tuple(self.config['Classifiers'][clsf_name]['image_resize']),
-                'save_images': bool(self.config['Classifiers'][clsf_name]['save_images']),
+                'model': tf.keras.models.load_model(f"{self.config['Classifiers']['download_dest_root']}\\{clsf_name}\\{clsf_name}_model.h5"),
+                'meta': json.loads(f.read()),
+                'save_images': clsf_name in self.config['Classifiers']['save_image_classifiers'],
             }
 
             mkdir_p(f"{self.config['log_dir']}\\{clsf_name}")
@@ -89,25 +86,28 @@ class Universal_Prediction:
         for clsf_name in self.config['Classifiers']['enabled_classifiers']:
             if clsf_name not in available_models.keys():
                 Exception(f"{clsf_name} not available for download.")
-
+        change_made = False
         for clsf_name in self.config['Classifiers']['enabled_classifiers']:
             if clsf_name in installed_models:
                 if installed_models[clsf_name] != available_models[clsf_name]:
                     self.download_model(clsf_name, available_models)
                     installed_models[clsf_name] = available_models[clsf_name]
+                    change_made = True
             else:
                 self.download_model(clsf_name, available_models)
                 installed_models[clsf_name] = available_models[clsf_name]
+                change_made = True
 
-        f = open(f"{self.config['Classifiers']['download_dest_root']}\\installed_models.json", "w")
-        f.write(installed_models)
-        f.close()
+        if change_made:
+            f = open(f"{self.config['Classifiers']['download_dest_root']}\\installed_models.json", "w")
+            f.write(json.dumps(installed_models, indent=1))
+            f.close()
 
 
 
     def predict(self, img, clsf_name):
         img = img.resize(
-            (self.classifiers[clsf_name]['image_resize'][1], self.classifiers[clsf_name]['image_resize'][0]),
+            (self.classifiers[clsf_name]['meta']['image_resize'][1], self.classifiers[clsf_name]['meta']['image_resize'][0]),
             # TF trains backwards
             resample=Image.Resampling.NEAREST)
 
@@ -124,8 +124,8 @@ class Universal_Prediction:
             'argmax_index': np.argmax(scores),
             'value_at_argmax': scores[np.argmax(scores)].numpy(),
             'pass_general_tollerance': scores[np.argmax(scores)].numpy() > 0.5,
-            'class': self.classifiers[clsf_name]['classes'][np.argmax(scores)],
-            'classes': self.classifiers[clsf_name]['classes'],
+            'class': self.classifiers[clsf_name]['meta']['classes'][np.argmax(scores)],
+            'classes': self.classifiers[clsf_name]['meta']['classes'],
             'scores': scores.numpy().tolist(),
             'id': id,
             'image_saved': self.classifiers[clsf_name]['save_images'],
