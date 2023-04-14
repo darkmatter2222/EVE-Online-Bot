@@ -1,4 +1,4 @@
-import sys, os, decimal, json, time, uuid, socket, errno
+import sys, os, decimal, json, time, uuid, socket, errno, xmltodict
 import numpy as np
 from PIL import Image, ImageDraw
 import tensorflow as tf
@@ -35,27 +35,9 @@ class Universal_Prediction:
         logger.add(
             self.config['log_dir'] + '\\' + socket.gethostname() + "_" + sys.argv[0].split('/')[-1:][0] + "_{time}.log")
 
-        for clsf_name in self.config['Classifiers'].keys():
-            if not os.path.isfile(self.config['Classifiers'][clsf_name]['model_location']):
-                logger.info(f'Downloading Model:{clsf_name}')
-                outfile = os.path.join(self.config['Classifiers'][clsf_name]['model_location'])
-                mkdir_p('\\'.join(self.config['Classifiers'][clsf_name]['model_location'].split('\\')[:-1]))
-                r = requests.get(self.config['Classifiers'][clsf_name]['download_source_model'], allow_redirects=True)
-                open(outfile, 'wb').write(r.content)
+        self.sync_models()
 
-            else:
-                logger.info(f'Using Downloaded Model:{clsf_name}')
-
-            if not os.path.isfile(self.config['Classifiers'][clsf_name]['class_location']):
-                logger.info(f'Downloading Classes:{clsf_name}')
-                outfile = os.path.join(self.config['Classifiers'][clsf_name]['class_location'])
-                mkdir_p('\\'.join(self.config['Classifiers'][clsf_name]['class_location'].split('\\')[:-1]))
-                response = requests.get(self.config['Classifiers'][clsf_name]['download_source_class'], stream=True)
-                with open(outfile, 'wb') as output:
-                    output.write(response.content)
-            else:
-                logger.info(f'Using Downloaded Model:{clsf_name}')
-
+        for clsf_name in self.config['Classifiers']['enabled_classifiers']:
             f = open(self.config['Classifiers'][clsf_name]['class_location'], "r")
             self.classifiers[clsf_name] = {
                 'download_source_model': self.config['Classifiers'][clsf_name]['download_source_model'],
@@ -68,6 +50,72 @@ class Universal_Prediction:
 
             mkdir_p(f"{self.config['log_dir']}\\{clsf_name}")
             logger.info(f'{clsf_name} Model Loaded')
+
+    def download_model(self, clsf_name, available_models):
+        local_model_root = f"{self.config['Classifiers']['download_dest_root']}\\{clsf_name}"
+        mkdir_p(local_model_root)
+
+        logger.info(f'Downloading Model:{clsf_name}')
+        outfile = f"{local_model_root}\\{clsf_name}_model.h5"
+        upfile = available_models[clsf_name]['Key']
+
+        r = requests.get(upfile, allow_redirects=True)
+        open(outfile, 'wb').write(r.content)
+
+
+
+        #if not os.path.isfile(f"{local_model_root}"):
+
+
+
+        if not os.path.isfile(self.config['Classifiers'][clsf_name]['model_location']):
+            logger.info(f'Downloading Model:{clsf_name}')
+            outfile = os.path.join(self.config['Classifiers'][clsf_name]['model_location'])
+            mkdir_p('\\'.join(self.config['Classifiers'][clsf_name]['model_location'].split('\\')[:-1]))
+            r = requests.get(self.config['Classifiers'][clsf_name]['download_source_model'], allow_redirects=True)
+            open(outfile, 'wb').write(r.content)
+        else:
+            logger.info(f'Using Downloaded Model:{clsf_name}')
+
+        if not os.path.isfile(self.config['Classifiers'][clsf_name]['class_location']):
+            logger.info(f'Downloading Classes:{clsf_name}')
+            outfile = os.path.join(self.config['Classifiers'][clsf_name]['class_location'])
+            mkdir_p('\\'.join(self.config['Classifiers'][clsf_name]['class_location'].split('\\')[:-1]))
+            response = requests.get(self.config['Classifiers'][clsf_name]['download_source_class'], stream=True)
+            with open(outfile, 'wb') as output:
+                output.write(response.content)
+        else:
+            logger.info(f'Using Downloaded Model:{clsf_name}')
+
+    def sync_models(self):
+        r = requests.get(self.config['Classifiers']['download_source_root'], allow_redirects=True)
+        data_dict = xmltodict.parse(r.content)
+        available_models = {}
+        for obj in data_dict['ListBucketResult']['Contents']:
+            key_split = obj['Key'].split('/')
+            available_models[key_split[0]] = available_models[key_split[0]] if key_split[0] in available_models else {}
+            available_models[key_split[0]][key_split[1]] = obj
+
+        installed_models = {}
+        try:
+            f = open(f"{self.config['Classifiers']['download_dest_root']}\\installed_models.json", "r")
+            installed_models = json.loads(f.read())
+            f.close()
+        except:
+            logger.info('installed_models file missing, proceeding w/ new.')
+            pass
+
+        for clsf_name in self.config['Classifiers']['enabled_classifiers']:
+            if clsf_name not in available_models.keys():
+                Exception(f"{clsf_name} not available for download.")
+
+        for clsf_name in self.config['Classifiers']['enabled_classifiers']:
+            if clsf_name in installed_models:
+                if installed_models[clsf_name] != available_models[clsf_name]:
+                    self.download_model(clsf_name, available_models)
+            else:
+                self.download_model(clsf_name, available_models)
+
 
     def predict(self, img, clsf_name):
         img = img.resize(
