@@ -57,35 +57,16 @@ class Universal_Prediction:
 
         logger.info(f'Downloading Model:{clsf_name}')
         outfile = f"{local_model_root}\\{clsf_name}_model.h5"
-        upfile = available_models[clsf_name]['Key']
-
+        upfile = f"{self.config['Classifiers']['download_source_root']}/{available_models[clsf_name][f'{clsf_name}_model.h5']['Key']}"
         r = requests.get(upfile, allow_redirects=True)
         open(outfile, 'wb').write(r.content)
 
-
-
-        #if not os.path.isfile(f"{local_model_root}"):
-
-
-
-        if not os.path.isfile(self.config['Classifiers'][clsf_name]['model_location']):
-            logger.info(f'Downloading Model:{clsf_name}')
-            outfile = os.path.join(self.config['Classifiers'][clsf_name]['model_location'])
-            mkdir_p('\\'.join(self.config['Classifiers'][clsf_name]['model_location'].split('\\')[:-1]))
-            r = requests.get(self.config['Classifiers'][clsf_name]['download_source_model'], allow_redirects=True)
-            open(outfile, 'wb').write(r.content)
-        else:
-            logger.info(f'Using Downloaded Model:{clsf_name}')
-
-        if not os.path.isfile(self.config['Classifiers'][clsf_name]['class_location']):
-            logger.info(f'Downloading Classes:{clsf_name}')
-            outfile = os.path.join(self.config['Classifiers'][clsf_name]['class_location'])
-            mkdir_p('\\'.join(self.config['Classifiers'][clsf_name]['class_location'].split('\\')[:-1]))
-            response = requests.get(self.config['Classifiers'][clsf_name]['download_source_class'], stream=True)
-            with open(outfile, 'wb') as output:
-                output.write(response.content)
-        else:
-            logger.info(f'Using Downloaded Model:{clsf_name}')
+        logger.info(f'Downloading Meta:{clsf_name}')
+        outfile = f"{local_model_root}\\{clsf_name}_meta.json"
+        upfile = f"{self.config['Classifiers']['download_source_root']}/{available_models[clsf_name][f'{clsf_name}_meta.json']['Key']}"
+        r = requests.get(upfile, stream=True)
+        with open(outfile, 'wb') as output:
+            output.write(r.content)
 
     def sync_models(self):
         r = requests.get(self.config['Classifiers']['download_source_root'], allow_redirects=True)
@@ -113,8 +94,15 @@ class Universal_Prediction:
             if clsf_name in installed_models:
                 if installed_models[clsf_name] != available_models[clsf_name]:
                     self.download_model(clsf_name, available_models)
+                    installed_models[clsf_name] = available_models[clsf_name]
             else:
                 self.download_model(clsf_name, available_models)
+                installed_models[clsf_name] = available_models[clsf_name]
+
+        f = open(f"{self.config['Classifiers']['download_dest_root']}\\installed_models.json", "w")
+        f.write(installed_models)
+        f.close()
+
 
 
     def predict(self, img, clsf_name):
