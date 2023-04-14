@@ -15,7 +15,7 @@ Bot = Bot_Engine()
 
 class AI_Pilot():
     def __init__(self):
-        self.title = "AI Pilot"
+        self.title = "AI Pilot V1"
         self.root = tk.Tk()
         # self.root.attributes('-topmost', True)
         self.root.resizable(width=True, height=True)
@@ -33,7 +33,7 @@ class AI_Pilot():
         self.dock_at_destination_lb.grid(row=2, column=0, sticky=tk.N, padx=(5, 5), pady=(5, 10))
         self.dock_at_destination_log = []
         self.dock_at_destination_e_stop_bool = False
-
+        """
         self.migrate_ore_lf = tk.LabelFrame(self.root, text="Migrate Ore (Start in Space)")
         self.migrate_ore_lf.grid(row=0, column=1, sticky=tk.W, padx=(10, 10), pady=(10, 10))
 
@@ -64,6 +64,7 @@ class AI_Pilot():
         self.migrate_ore_lb = tk.Listbox(self.migrate_ore_lf, width=40)
         self.migrate_ore_lb.grid(row=4, column=0, sticky=tk.N, padx=(5, 5), pady=(5, 10))
         self.migrate_ore_log = []
+        """
 
     # region ----- universal functions
     def ui_element_change(self, element, element_property, value):

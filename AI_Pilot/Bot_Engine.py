@@ -161,7 +161,7 @@ class Bot_Engine:
         search_string = "Amsen VI - Moon - Moon 1 Science and Trade Institute School"
         self.perform_move_click(pos=(156, 130), button='left', perform_offset=True)
         pyautogui.write(search_string)
-        time.sleep(0.1)
+        time.sleep(3)
         pyautogui.press('enter')
         self.perform_move_click(pos=(1300, 650), button='right', perform_offset=True)
         self.perform_move_click(pos=(1300 + 50, 650 + 65), button='right', perform_offset=True)
