@@ -14,8 +14,9 @@ from sklearn.metrics import confusion_matrix
 
 #tf.config.set_visible_devices([], 'GPU')
 
-def build_and_train(root_image_directory,
-                    model_name, epochs=10, resize_ratio = 0.2):
+def build_and_train(root_image_directory, model_location,
+                    model_name, epochs=10, 
+                    resize_ratio = 0.2):
     data_dir = pathlib.Path(root_image_directory)
 
     image_list = list(data_dir.glob('*/*.png'))
@@ -46,11 +47,6 @@ def build_and_train(root_image_directory,
 
     class_names = train_ds.class_names
     print(class_names)
-
-    class_location = fr'{root_image_directory}\{model_name}_classes.json'
-    f = open(class_location, "w")
-    f.write(json.dumps(class_names))
-    f.close()
 
     AUTOTUNE = tf.data.AUTOTUNE
 
@@ -91,11 +87,14 @@ def build_and_train(root_image_directory,
     
     cf = confusion_matrix(targets, predictions.argmax(1).astype(int))
     
-    model_location = fr'{root_image_directory}\{model_name}_model.h5'
     model.save(model_location)
     
-    return {'image_resize': [img_height, img_width],
-            'class_location': class_location,
-            'model_location': model_location,
-            'class_names': class_names,
-            'cm':cf}
+    stats = {
+        'cm':cf
+    }
+    rendering = {
+            'image_resize': [img_height, img_width],
+            'classes':class_names
+    }
+    
+    return stats, rendering

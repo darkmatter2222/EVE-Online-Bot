@@ -1,0 +1,12 @@
+{
+ "image_resize": [
+  206,
+  384
+ ],
+ "classes": [
+  "char_select",
+  "connection_lost",
+  "in_flight",
+  "in_hanger"
+ ]
+}

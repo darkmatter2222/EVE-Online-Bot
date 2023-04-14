@@ -1,0 +1,10 @@
+{
+ "image_resize": [
+  206,
+  384
+ ],
+ "classes": [
+  "empty",
+  "set_quant"
+ ]
+}
