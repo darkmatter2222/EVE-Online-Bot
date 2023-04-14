@@ -16,6 +16,7 @@ class Bot_Engine:
         self.monitor_offset = np.array([monitor_spec['left'], monitor_spec['top']])  # x, y
 
         self.dock_at_destination_parms = {}
+        self.search_for_destination_parms = {}
 
     # region ----- Common Functions
     def move_to_default_pos(self):
@@ -147,4 +148,26 @@ class Bot_Engine:
         ui_callback('dock_at_destination_e_stop_button', 'state', 'disabled')
         logging_callback(f"Arrived")
     # endregion
+
+    # region ----- search_for_destination
+    def search_for_destination_threaded(self, logging_callback, ui_callback):
+        self.search_for_destination_parms['thread'] = threading.Thread(target=self.search_for_destination,
+                                                              args=(logging_callback, ui_callback,))
+        self.search_for_destination_parms['thread'].start()
+
+
+    def search_for_destination(self, logging_callback, ui_callback):
+        time.sleep(1)
+        search_string = "Amsen VI - Moon - Moon 1 Science and Trade Institute School"
+        self.perform_move_click(pos=(156, 130), button='left', perform_offset=True)
+        pyautogui.write(search_string)
+        time.sleep(0.1)
+        pyautogui.press('enter')
+        self.perform_move_click(pos=(1300, 650), button='right', perform_offset=True)
+        self.perform_move_click(pos=(1300 + 50, 650 + 65), button='right', perform_offset=True)
+        pass
+    # endregion
+
+
+
 

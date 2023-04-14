@@ -54,7 +54,7 @@ class AI_Pilot():
         self.migrate_ore_tb2.grid(row=0, column=1, sticky=tk.W, padx=(10, 10), pady=(10, 5))
 
         self.migrate_ore_start_button = tk.Button(self.migrate_ore_lf, text="Start", width=35,
-                                                  )
+                                                  command=self.search_for_destination_start)
         self.migrate_ore_start_button.grid(row=2, column=0, sticky=tk.N, padx=(10, 10), pady=(10, 5))
         self.migrate_ore_e_stop_button = tk.Button(self.migrate_ore_lf, text="End", width=35,
                                                    )
@@ -65,7 +65,12 @@ class AI_Pilot():
         self.migrate_ore_lb.grid(row=4, column=0, sticky=tk.N, padx=(5, 5), pady=(5, 10))
         self.migrate_ore_log = []
 
-    # region ----- ock_at_dest
+    # region ----- universal functions
+    def ui_element_change(self, element, element_property, value):
+        self.__dict__[element][element_property] = value
+    # endregion
+
+    # region ----- dock_at_dest
     def dock_at_destination_clear_log(self):
         self.dock_at_destination_lb.delete(0, tk.END)
 
@@ -78,9 +83,6 @@ class AI_Pilot():
         for record in self.dock_at_destination_log:
             self.dock_at_destination_lb.insert(0, f" {record}")
 
-    def ui_element_change(self, element, element_property, value):
-        self.__dict__[element][element_property] = value
-
     def dock_at_destination_e_stop(self):
         Bot.dock_at_destination_e_stop()
 
@@ -88,6 +90,13 @@ class AI_Pilot():
         self.dock_at_destination_clear_log()
         Bot.dock_at_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change)
 
+    # endregion
+
+    # region ----- search_for_destination_start
+    def search_for_destination_start(self):
+        Bot.search_for_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change)
+        time.sleep(3)
+        Bot.dock_at_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change)
     # endregion
 
     def start(self):
