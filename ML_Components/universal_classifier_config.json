@@ -22,7 +22,7 @@
         "download_source_model": "https://storage.googleapis.com/eve_online_models/nav_options/nav_options_model.h5",
         "class_location": "O:\\eve_models\\training_data\\nav_options\\nav_options_classes.json",
         "model_location": "O:\\eve_models\\training_data\\nav_options\\nav_options_model.h5",
-        "save_images": 0
+        "save_images": 1
       },
       "game_state": {
         "image_resize": [
@@ -51,8 +51,8 @@
           79,
           53
         ],
-        "download_source_class": "https://storage.googleapis.com/set_dest/hanger_menus/set_dest_classes.json",
-        "download_source_model": "https://storage.googleapis.com/set_dest/hanger_menus/set_dest_model.h5",
+        "download_source_class": "https://storage.googleapis.com/eve_online_models/set_dest/set_dest_classes.json",
+        "download_source_model": "https://storage.googleapis.com/eve_online_models/set_dest/set_dest_model.h5",
         "class_location": "O:\\eve_models\\training_data\\set_dest\\set_dest_classes.json",
         "model_location": "O:\\eve_models\\training_data\\set_dest\\set_dest_model.h5",
         "save_images": 0
@@ -62,8 +62,8 @@
           600,
           500
         ],
-        "download_source_class": "https://storage.googleapis.com/set_dest/route_y_large_vert_class_v2/route_y_large_vert_class_v2_classes.json",
-        "download_source_model": "https://storage.googleapis.com/set_dest/route_y_large_vert_class_v2/route_y_large_vert_class_v2_model.h5",
+        "download_source_class": "https://storage.googleapis.com/eve_online_models/route_y_large_vert_class_v2/route_y_large_vert_class_v2_classes.json",
+        "download_source_model": "https://storage.googleapis.com/eve_online_models/route_y_large_vert_class_v2/route_y_large_vert_class_v2_model.h5",
         "class_location": "O:\\eve_models\\training_data\\route_y_large_vert_class_v2\\route_y_large_vert_class_v2_classes.json",
         "model_location": "O:\\eve_models\\training_data\\route_y_large_vert_class_v2\\route_y_large_vert_class_v2_model.h5",
         "save_images": 1

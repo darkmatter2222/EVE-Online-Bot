@@ -40,9 +40,9 @@ class Universal_Prediction:
                 logger.info(f'Downloading Model:{clsf_name}')
                 outfile = os.path.join(self.config['Classifiers'][clsf_name]['model_location'])
                 mkdir_p('\\'.join(self.config['Classifiers'][clsf_name]['model_location'].split('\\')[:-1]))
-                response = requests.get(self.config['Classifiers'][clsf_name]['download_source_model'], stream=True)
-                with open(outfile, 'wb') as output:
-                    output.write(response.content)
+                r = requests.get(self.config['Classifiers'][clsf_name]['download_source_model'], allow_redirects=True)
+                open(outfile, 'wb').write(r.content)
+
             else:
                 logger.info(f'Using Downloaded Model:{clsf_name}')
 
