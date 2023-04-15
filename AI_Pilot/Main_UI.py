@@ -33,7 +33,7 @@ class AI_Pilot():
         self.dock_at_destination_lb.grid(row=2, column=0, sticky=tk.N, padx=(5, 5), pady=(5, 10))
         self.dock_at_destination_log = []
         self.dock_at_destination_e_stop_bool = False
-        """
+
         self.migrate_ore_lf = tk.LabelFrame(self.root, text="Migrate Ore (Start in Space)")
         self.migrate_ore_lf.grid(row=0, column=1, sticky=tk.W, padx=(10, 10), pady=(10, 10))
 
@@ -64,11 +64,14 @@ class AI_Pilot():
         self.migrate_ore_lb = tk.Listbox(self.migrate_ore_lf, width=40)
         self.migrate_ore_lb.grid(row=4, column=0, sticky=tk.N, padx=(5, 5), pady=(5, 10))
         self.migrate_ore_log = []
-        """
+
 
     # region ----- universal functions
     def ui_element_change(self, element, element_property, value):
         self.__dict__[element][element_property] = value
+
+    def ui_element_get_text(self, element):
+        return self.__dict__[element].get(1.0,'end')
     # endregion
 
     # region ----- dock_at_dest
@@ -95,9 +98,9 @@ class AI_Pilot():
 
     # region ----- search_for_destination_start
     def search_for_destination_start(self):
-        Bot.search_for_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change)
+        Bot.move_ore_threaded(self)
         time.sleep(3)
-        Bot.dock_at_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change)
+        #Bot.dock_at_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change)
     # endregion
 
     def start(self):

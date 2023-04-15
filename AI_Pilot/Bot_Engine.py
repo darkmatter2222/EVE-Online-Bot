@@ -2,6 +2,7 @@ import threading, time, json, socket, pyautogui, uuid, random
 from AI_Pilot.Monitor_Interface.Monitors import get_monitor_spec, get_screen
 from ML_Components.Universal_Prediction import Universal_Prediction
 import numpy as np
+from tqdm import tqdm
 from loguru import logger
 
 config_dir = r'../AI_Pilot/ai_pilot_config.json'
@@ -19,24 +20,37 @@ class Bot_Engine:
         self.search_for_destination_parms = {}
 
     # region ----- Common Functions
+
     def move_to_default_pos(self):
         pyautogui.moveTo(self.get_cords_with_offset(*config['default_cords']))
         time.sleep(0.1)
-
 
     def perform_click(self, button):
         pyautogui.click(button=button)
         time.sleep(0.1)
 
-    def perform_move_click(self, pos, button='right', perform_offset=True, finish_at_default=False):
+    def perform_move_click(self, pos, button='right', perform_offset=True, finish_at_default=True):
         # pos is tuple (x, y)
         if perform_offset:
             pos = self.get_cords_with_offset(*pos)
         pyautogui.moveTo(pos)
         time.sleep(0.1)
         self.perform_click(button)
-        self.move_to_default_pos()
+
+        if finish_at_default:
+            self.move_to_default_pos()
         return
+
+    def perform_range_select(self, pos_start, pos_end, button='left', perform_offset=True):
+        if perform_offset:
+            pos_start = self.get_cords_with_offset(*pos_start)
+            pos_end = self.get_cords_with_offset(*pos_end)
+            pyautogui.moveTo(pos_start)
+            time.sleep(0.1)
+            pyautogui.dragTo(*pos_end, 1, button=button)
+            time.sleep(0.1)
+
+
 
     def get_cords_with_offset(self, x, y):
         # don't ask why i did it this way, it felt good.
@@ -150,13 +164,110 @@ class Bot_Engine:
     # endregion
 
     # region ----- search_for_destination
-    def search_for_destination_threaded(self, logging_callback, ui_callback):
+    def move_ore_threaded(self, ui_class):
+        self.search_for_destination_parms['thread'] = threading.Thread(target=self.move_ore,
+                                                              args=(ui_class,))
+        self.search_for_destination_parms['thread'].start()
+
+    def move_ore(self, ui_class):
+        source_staton = ui_class.ui_element_get_text('migrate_ore_tb1')
+        destination_staton = ui_class.ui_element_get_text('migrate_ore_tb2')
+        next_target = source_staton
+        next_action = 'load'
+        while True:
+            self.perform_move_click(pos=(156, 130), button='left', perform_offset=True)
+            pyautogui.write(next_target)
+            time.sleep(3)
+            pyautogui.press('enter')
+
+            click_target = (1300, 650)
+            self.perform_move_click(pos=click_target, button='right', perform_offset=True)
+            box_top_left = (click_target[0] + 12, click_target[1] - 33)
+            box_bottom_right = (click_target[0] + 256 + 12, click_target[1] + 396 - 33)
+            img = get_screen(config['monitor_number'])
+            img = img.crop([box_top_left[0], box_top_left[1], box_bottom_right[0], box_bottom_right[1]])
+            set_dest_result = UP.predict(img, 'set_dest')
+
+            if set_dest_result['class'] == 'second_pos':
+                click_target = (click_target[0] + 50, click_target[1] + 60)
+            elif set_dest_result['class'] == 'seventh_pos':
+                click_target = (click_target[0] + 50, click_target[1] + 234)
+            elif set_dest_result['class'] == 'third_pos':
+                click_target = (click_target[0] + 50, click_target[1] + 109)
+
+            self.perform_move_click(pos=click_target, button='left', perform_offset=True)
+            time.sleep(2)
+            # nav
+            self.dock_at_destination(ui_class.dock_at_destination_append_log, ui_class.ui_element_change)
+            time.sleep(2)
+            # pick up ore
+            if next_action == 'load':
+                self.perform_move_click(pos=tuple(config['hanger_target']), button='left', perform_offset=True)
+                time.sleep(1)
+                self.perform_range_select(tuple(config['click_and_drag_inv_box'][2:4]),
+                                          tuple(config['click_and_drag_inv_box'][0:2]))
+                time.sleep(1)
+                self.perform_range_select(tuple(config['Load_to_mininghold_click_and_drag_inv_line'][0:2]),
+                                          tuple(config['ship_root_target']))
+                time.sleep(1)
+                img = get_screen(config['monitor_number'])
+                menu_result = UP.predict(img, 'hanger_menus')
+                if menu_result['class'] == 'set_quant':
+                    self.perform_move_click(pos=tuple(config['set_quant_target']), button='left', perform_offset=True)
+                time.sleep(1)
+            else:
+                self.perform_move_click(pos=tuple(config['ship_root_target']), button='left', perform_offset=True)
+                time.sleep(1)
+                self.perform_range_select(tuple(config['click_and_drag_inv_box'][2:4]),
+                                          tuple(config['click_and_drag_inv_box'][0:2]))
+                time.sleep(1)
+                self.perform_range_select(tuple(config['Load_to_mininghold_click_and_drag_inv_line'][0:2]),
+                                          tuple(config['hanger_target']))
+                time.sleep(1)
+
+            self.perform_move_click(pos=tuple(config['exit_hanger_target']), button='left', perform_offset=True)
+            time.sleep(30)
+
+            if next_target == source_staton:
+                next_target = destination_staton
+                next_action = 'unload'
+            else:
+                next_target = source_staton
+                next_action = 'load'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # set dest
+        # nav
+        # drop off
+
+
+
+        return
+
+
+
+    def search_for_destination_threaded(self, ui_class):
         self.search_for_destination_parms['thread'] = threading.Thread(target=self.search_for_destination,
-                                                              args=(logging_callback, ui_callback,))
+                                                              args=(ui_class))
         self.search_for_destination_parms['thread'].start()
 
 
-    def search_for_destination(self, logging_callback, ui_callback):
+    def search_for_destination(self, ui_class):
+
         time.sleep(1)
         search_string = "Amsen VI - Moon - Moon 1 Science and Trade Institute School"
         self.perform_move_click(pos=(156, 130), button='left', perform_offset=True)
