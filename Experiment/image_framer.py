@@ -32,9 +32,9 @@ plt.rcParams['figure.facecolor'] = '#0d1117'
 plt.rcParams['axes.facecolor'] = '#0d1117'
 plt.rcParams['savefig.facecolor'] = '#0d1117'
 
-cap = cv2.VideoCapture(f"C:\\Users\\ryans\\Videos\\2023-04-09 21-29-33.mp4")
+cap = cv2.VideoCapture(r"C:\Users\ryans\Documents\Adobe\Premiere Pro\14.0\Sequence 01_5.mp4")
 
-output = cv2.VideoWriter(f"C:\\Users\\ryans\\Videos\\out2.avi", cv2.VideoWriter_fourcc(*'DIVX'), 30, (1920, 1080))
+output = cv2.VideoWriter(f"C:\\Users\\ryans\\Videos\\out4.avi", cv2.VideoWriter_fourcc(*'DIVX'), 30, (1920, 1080))
 
 model2 = tf.keras.models.load_model(
     'O:\\eve_models\\training_data\\route_y_large_vert_class_v2\\route_y_large_vert_class_v2_model.h5', compile=False)
@@ -85,12 +85,19 @@ while (True):
         img = pil_image
 
         img = np.array([np.array(img)])
-        prediction = model2.predict(img)
-        argm = np.argmax(prediction)
-        y_prediction = class_names[argm]
+
+        model = tf.keras.Model(inputs=model2.inputs, outputs=model2.layers[1].output)
+
+        prediction = model.predict(img)
+        c1img = Image.fromarray((prediction[0][:, :, 9:12] * 255).astype(np.uint8))
+        #c2img = Image.fromarray((prediction[0][:, :, 3:6] * 255).astype(np.uint8))
+        c3img = Image.fromarray((prediction[0][:, :, 6:9] * 255).astype(np.uint8))
+        #prediction = model2.predict(img)
+        #argm = np.argmax(prediction)
+        #y_prediction = class_names[argm]
 
         frame = cv2.transpose(frame)
-
+        '''
         y0, dy = 200, 20
         paylaod = "Model Output: \n" + json.dumps(list(prediction[0].astype(str)), indent=1)
         for i, line in enumerate(paylaod.split('\n')):
@@ -104,8 +111,14 @@ while (True):
 
         frame = cv2.putText(frame, 'AI trying to locate the y axis of the waypoint bar', (100, 100), font, 2,
                             (0, 255, 0), 2, cv2.LINE_AA)
-        cv2.line(frame, (0, int(y_prediction) + 4), (1000, int(y_prediction) + 4),
-                 (0, 255, 0), thickness=2)
+        '''
+        #frame[0:600, 0:500] = c1img
+        frame[0:600, 500:1000] = c1img
+        frame[0:600, 1000:1500] = c3img
+
+        #cv2.line(frame, (0, int(y_prediction) + 4), (1000, int(y_prediction) + 4),
+                 #(0, 255, 0), thickness=2)
+
 
         # writing the new frame in output
         output.write(frame)

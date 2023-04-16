@@ -105,8 +105,8 @@ class Universal_Prediction:
 
 
 
-    def predict(self, img, clsf_name):
-        img = img.resize(
+    def predict(self, orig_img, clsf_name):
+        img = orig_img.resize(
             (self.classifiers[clsf_name]['meta']['image_resize'][1], self.classifiers[clsf_name]['meta']['image_resize'][0]),
             # TF trains backwards
             resample=Image.Resampling.NEAREST)

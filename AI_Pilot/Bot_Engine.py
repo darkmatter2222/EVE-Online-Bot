@@ -181,6 +181,9 @@ class Bot_Engine:
             pyautogui.press('enter')
 
             click_target = (1300, 650)
+            if next_action == 'unload':
+                click_target = (1300, 680)
+
             self.perform_move_click(pos=click_target, button='right', perform_offset=True)
             box_top_left = (click_target[0] + 12, click_target[1] - 33)
             box_bottom_right = (click_target[0] + 256 + 12, click_target[1] + 396 - 33)
