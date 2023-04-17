@@ -7,6 +7,9 @@
 
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+## UPDATE - 4/16/23  
+After much excitement moving the ML Core to [https://github.com/darkmatter2222/ml_botting_core](https://github.com/darkmatter2222/ml_botting_core) that way it can work for Any Game or Any Task on a PC.  
+
 ## UPDATE - 4/14/23  
 Much going on! However the coolest part might be the model are now public on GCP for download! [HERE](https://storage.googleapis.com/eve_online_models/)  
 However the new "Universal_Prediction" Class will download them for you at startup.  Soon we will have a UI and a formal Release! 
