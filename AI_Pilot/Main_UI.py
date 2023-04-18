@@ -2,14 +2,12 @@ import sys, os, decimal, json, socket, uuid, time
 import tkinter as tk
 
 sys.path.append(os.path.realpath('..'))
-from ML_Components.Universal_Prediction import Universal_Prediction
 from AI_Pilot.Bot_Engine import Bot_Engine
 from loguru import logger
 
 config_dir = r'../AI_Pilot/ai_pilot_config.json'
 config = json.load(open(config_dir))[socket.gethostname()]
 logger.add(config['log_dir'] + '\\' + socket.gethostname() + "_" + sys.argv[0].split('/')[-1:][0] + "_{time}.log")
-UC = Universal_Prediction()
 Bot = Bot_Engine()
 
 

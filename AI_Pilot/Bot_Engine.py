@@ -1,14 +1,18 @@
 import threading, time, json, socket, pyautogui, uuid, random
 from AI_Pilot.Monitor_Interface.Monitors import get_monitor_spec, get_screen
-from ML_Components.Universal_Prediction import Universal_Prediction
+#from ML_Components.Universal_Prediction import Universal_Prediction
+from ml_botting_core.universal_predictor.universal_predictor import universal_predictor
 import numpy as np
 from tqdm import tqdm
 from loguru import logger
 
 config_dir = r'../AI_Pilot/ai_pilot_config.json'
 config = json.load(open(config_dir))[socket.gethostname()]
-UP = Universal_Prediction()
 
+up_config_dir = r'../AI_Pilot/ml_botting_core_config.json'
+up_config = json.load(open(up_config_dir))
+UP = universal_predictor(config=up_config)
+UP.load_models()
 
 class Bot_Engine:
     def __init__(self):
