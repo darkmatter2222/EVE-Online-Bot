@@ -1,10 +1,14 @@
 # ML to Play Eve Online
-[Youtube Video](https://www.youtube.com/watch?v=AneoeBBwsco)
+[Youtube Video](https://youtu.be/VSUSqxJ7gNA)
+
 
 
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)  ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) ![Jupyter Notebook](https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white) ![PyCharm](https://img.shields.io/badge/pycharm-143?style=for-the-badge&logo=pycharm&logoColor=black&color=black&labelColor=green)
 
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
+
+## UPDATE - 4/16/23  
+After much excitement moving the ML Core to [https://github.com/darkmatter2222/ml_botting_core](https://github.com/darkmatter2222/ml_botting_core) that way it can work for Any Game or Any Task on a PC.  
 
 ## UPDATE - 4/14/23  
 Much going on! However the coolest part might be the model are now public on GCP for download! [HERE](https://storage.googleapis.com/eve_online_models/)  
