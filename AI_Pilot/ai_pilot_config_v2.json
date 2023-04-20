@@ -1,0 +1,117 @@
+{
+  "default": {
+    "general": {
+      "log_dir": "\\\\databrick\\N\\eve_logs",
+      "monitor_number": 2
+    },
+    "ml_botting_core": {
+      "public_models": [
+        {
+          "game": "eve_online",
+          "model_name": "game_state",
+          "download_latest": 1,
+          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+          "model_root_directory": "O:\\eve_live_models\\game_state"
+        },
+        {
+          "game": "eve_online",
+          "model_name": "mining_tool_state",
+          "download_latest": 1,
+          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+          "model_root_directory": "O:\\eve_live_models\\mining_tool_state"
+        },
+        {
+          "game": "eve_online",
+          "model_name": "nav_options",
+          "download_latest": 1,
+          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+          "model_root_directory": "O:\\eve_live_models\\nav_options"
+        },
+        {
+          "game": "eve_online",
+          "model_name": "hanger_menus",
+          "download_latest": 1,
+          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+          "model_root_directory": "O:\\eve_live_models\\hanger_menus"
+        },
+        {
+          "game": "eve_online",
+          "model_name": "set_dest",
+          "download_latest": 1,
+          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+          "model_root_directory": "O:\\eve_live_models\\set_dest"
+        },
+        {
+          "game": "eve_online",
+          "model_name": "route_y_large_vert_class_v2",
+          "download_latest": 1,
+          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+          "model_root_directory": "O:\\eve_live_models\\route_y_large_vert_class_v2"
+        }
+      ]
+    },
+    "static_screen_pos": {
+      "next_waypoint_click_target": [
+        137,
+        378
+      ],
+      "next_waypoint_menu_box": [
+        102,
+        289,
+        458,
+        658
+      ],
+      "default_cords": [
+        100,
+        100
+      ],
+      "hanger_target": [
+        150,
+        770
+      ],
+      "click_and_drag_inv_box": [
+        300,
+        670,
+        730,
+        970
+      ],
+      "click_and_drag_inv_line": [
+        336,
+        692,
+        182,
+        871
+      ],
+      "exit_hanger_target": [
+        1757,
+        378
+      ],
+      "set_quant_target": [
+        869,
+        652
+      ],
+      "Unload_nav_bot_click_and_drag_inv_line": [
+        336,
+        700,
+        150,
+        770
+      ],
+      "Load_to_mininghold_click_and_drag_inv_line": [
+        336,
+        692,
+        150,
+        675
+      ],
+      "ship_root_target": [
+        185,
+        674
+      ],
+      "cargo_box": [
+        379,
+        638,
+        584,
+        643
+      ]
+    }
+  }
+}
+

@@ -5,10 +5,16 @@ sys.path.append(os.path.realpath('..'))
 from AI_Pilot.Bot_Engine import Bot_Engine
 from loguru import logger
 
-config_dir = r'../AI_Pilot/ai_pilot_config.json'
-config = json.load(open(config_dir))[socket.gethostname()]
-logger.add(config['log_dir'] + '\\' + socket.gethostname() + "_" + sys.argv[0].split('/')[-1:][0] + "_{time}.log")
-Bot = Bot_Engine()
+config_dir = r'../AI_Pilot/ai_pilot_config_v2.json'
+host = socket.gethostname()
+config = json.load(open(config_dir))
+if host in config:
+    config = config[host]
+else:
+    config = config['default']
+
+logger.add(config['general']['log_dir'] + '\\' + host + "_" + sys.argv[0].split('/')[-1:][0] + "_{time}.log")
+Bot = Bot_Engine(config=config)
 
 
 class AI_Pilot():
