@@ -1,13 +1,19 @@
 from ml_botting_core import universal_predictor
 from loguru import logger
+import numpy as np
 from AI_Pilot.Monitor_Interface.Monitors import get_screen
 
 
-def get_game_state(general_config):
+def get_game_state(ag):
     # region ----- get game state
-    up = universal_predictor()
-    img = get_screen(general_config['monitor_number'])
-    state_result = up.predict(img, 'game_state')
+    img = get_screen(ag)
+    state_result = ag.up.predict(img, 'game_state')
     logger.info(state_result)
-    return state_result
     # endregion
+    return state_result
+
+
+def get_cords_with_offset(ag, x, y):
+    # don't ask why i did it this way, it felt good.
+    result = np.array([x, y]) + ag.monitor_spec['monitor_offset']
+    return result[0], result[1]

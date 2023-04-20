@@ -2,9 +2,10 @@ import mss, cv2
 import numpy as np
 from PIL import Image
 
-def get_monitor_spec(monitor_number):
+
+def get_monitor_spec(ag):
     with mss.mss() as sct:
-        mon = sct.monitors[monitor_number]
+        mon = sct.monitors[ag.general_config['monitor_number']]
 
         # The screen part to capture
         monitor = {
@@ -12,13 +13,14 @@ def get_monitor_spec(monitor_number):
             "left": mon["left"],
             "width": mon["width"],
             "height": mon["height"],
-            "monitor_number": monitor_number,
+            "monitor_number": ag.general_config['monitor_number'],
         }
     return monitor
 
-def get_screen(monitor_number):
+
+def get_screen(ag):
     with mss.mss() as sct:
-        mon = sct.monitors[monitor_number]
+        mon = sct.monitors[ag.general_config['monitor_number']]
 
         # The screen part to capture
         monitor = {
@@ -26,7 +28,7 @@ def get_screen(monitor_number):
             "left": mon["left"],
             "width": mon["width"],
             "height": mon["height"],
-            "monitor_number": monitor_number,
+            "monitor_number": ag.general_config['monitor_number'],
         }
 
         # Grab the data
