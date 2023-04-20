@@ -5,6 +5,7 @@ from AI_Pilot.Monitor_Interface.Monitors import get_screen
 from AI_Pilot.General.General import get_game_state, get_cords_with_offset
 from AI_Pilot.Mouse_Keyboard.Mouse_Keyboard import perform_move_click
 
+
 def get_nav_options(ag, crop):
     # region ----- get gav options
     img = get_screen(ag)
@@ -13,6 +14,7 @@ def get_nav_options(ag, crop):
     logger.info(nav_result)
     # endregion
     return nav_result
+
 
 def get_y_waypoint_nav_pos(ag):
     # region ----- get waypoint y
@@ -59,8 +61,6 @@ def navigate_one_waypoint(ag):
             perform_move_click(ag, pos=click_target, button='left', perform_offset=False)
 
     return state_result
-
-
 
 
 def navigate_waypoints_to_end(ag, allow_dock=True):
