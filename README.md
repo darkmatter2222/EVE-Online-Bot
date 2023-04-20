@@ -7,6 +7,12 @@
 
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+## UPDATE 4/17/23  
+New Core deployed! Check out [https://github.com/darkmatter2222/ml_botting_core](https://github.com/darkmatter2222/ml_botting_core), working outr some kinks. Works!  
+[pip install ml-botting-core](https://pypi.org/project/ml-botting-core/)    
+![](https://img.shields.io/pypi/v/ml_botting_core?style=for-the-badge) ![](https://img.shields.io/github/actions/workflow/status/darkmatter2222/ml_botting_core/python-publish.yml?style=for-the-badge) 
+
+
 ## UPDATE - 4/16/23  
 After much excitement moving the ML Core to [https://github.com/darkmatter2222/ml_botting_core](https://github.com/darkmatter2222/ml_botting_core) that way it can work for Any Game or Any Task on a PC.  
 
