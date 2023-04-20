@@ -3,9 +3,11 @@ from AI_Pilot.Monitor_Interface.Monitors import get_monitor_spec, get_screen
 from ml_botting_core import universal_predictor
 from AI_Pilot.General.General import get_game_state, get_cords_with_offset
 from AI_Pilot.Waypoint_Navigation.Waypoint_Navigation import navigate_waypoints_to_end
-from AI_Pilot.Mouse_Keyboard.Mouse_Keyboard import move_to_default_pos, perform_click, perform_move_click, perform_range_select
+from AI_Pilot.Mouse_Keyboard.Mouse_Keyboard import move_to_default_pos, perform_click, perform_move_click, \
+    perform_range_select
 import numpy as np
 from loguru import logger
+
 
 class active_globals():
     def __new__(cls, **args):  # make singleton
@@ -17,7 +19,6 @@ class active_globals():
     def __init__(self):
         if self.__initialized: return  # make singleton
         self.__initialized = True
-
 
 
 class Bot_Engine:
@@ -41,35 +42,13 @@ class Bot_Engine:
 
         self.ag.monitor_spec = {
             "monitor_dims": (monitor_spec['width'], monitor_spec['height']),
-            "monitor_offset": np.array([monitor_spec['left'], monitor_spec['top']]) # x, y
+            "monitor_offset": np.array([monitor_spec['left'], monitor_spec['top']])  # x, y
         }
 
         self.ag.up = universal_predictor(config=self.ag.ml_botting_core_config)
 
         self.dock_at_destination_parms = {}
         self.search_for_destination_parms = {}
-
-    # region ----- Training Data Collector
-    def data_collector(self):
-        combos = [
-            (138, 100),
-            (163, 100),
-            (189, 100)
-        ]
-        data_root = r'O:\eve_models\training_data\unclass'
-        for i in range(10):
-            xy = random.choice(combos)
-
-            perform_move_click(self.ag, pos=xy, button='left', perform_offset=True)
-            pyautogui.moveTo(get_cords_with_offset(self.ag, *self.static_screen_pos['default_cords']))
-            time.sleep(1)
-            img = get_screen(self.ag)
-            id = uuid.uuid1()
-            img = img.crop((0, 0, 500, 600))
-            img.save(f"{data_root}\\{id}.png")
-            logger.info(f'Saved image:{id}')
-
-    # endregion
 
     # region ----- dock_at_destination
     def dock_at_destination_e_stop(self):
@@ -138,7 +117,7 @@ class Bot_Engine:
             # pick up ore
             if next_action == 'load':
                 perform_move_click(self.ag, pos=tuple(self.static_screen_pos['hanger_target']), button='left',
-                                        perform_offset=True)
+                                   perform_offset=True)
                 time.sleep(1)
                 self.perform_range_select(tuple(self.static_screen_pos['click_and_drag_inv_box'][2:4]),
                                           tuple(self.static_screen_pos['click_and_drag_inv_box'][0:2]))
@@ -151,11 +130,11 @@ class Bot_Engine:
                 menu_result = self.up.predict(img, 'hanger_menus')
                 if menu_result['class'] == 'set_quant':
                     perform_move_click(self.ag, pos=tuple(self.static_screen_pos['set_quant_target']), button='left',
-                                            perform_offset=True)
+                                       perform_offset=True)
                 time.sleep(1)
             else:
                 perform_move_click(self.ag, pos=tuple(self.static_screen_pos['ship_root_target']), button='left',
-                                        perform_offset=True)
+                                   perform_offset=True)
                 time.sleep(1)
                 self.perform_range_select(tuple(self.static_screen_pos['click_and_drag_inv_box'][2:4]),
                                           tuple(self.static_screen_pos['click_and_drag_inv_box'][0:2]))
@@ -166,7 +145,7 @@ class Bot_Engine:
                 time.sleep(1)
 
             perform_move_click(self.ag, pos=tuple(self.static_screen_pos['exit_hanger_target']), button='left',
-                                    perform_offset=True)
+                               perform_offset=True)
             time.sleep(30)
 
             if next_target == source_staton:
