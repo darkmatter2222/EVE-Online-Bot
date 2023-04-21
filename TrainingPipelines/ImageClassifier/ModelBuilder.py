@@ -19,13 +19,13 @@ def build_and_train(root_image_directory, model_location,
                     resize_ratio = 0.2):
     data_dir = pathlib.Path(root_image_directory)
 
-    image_list = list(data_dir.glob('*/*.png'))
+    image_list = list(data_dir.glob('*/*.bmp'))
     image_count = len(image_list)
     print(image_count)
 
     img = Image.open(image_list[0])
 
-    batch_size = 1
+    batch_size = 10
     img_height = int(img.height * resize_ratio)
     img_width = int(img.width * resize_ratio)
 

@@ -47,6 +47,13 @@
           "download_latest": 1,
           "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
           "model_root_directory": "O:\\eve_live_models\\route_y_large_vert_class_v2"
+        },
+        {
+          "game": "eve_online",
+          "model_name": "route_y_large_vert_class_v4",
+          "download_latest": 1,
+          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+          "model_root_directory": "O:\\eve_live_models\\route_y_large_vert_class_v4"
         }
       ]
     },

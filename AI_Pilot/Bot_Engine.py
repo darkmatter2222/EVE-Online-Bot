@@ -2,8 +2,7 @@ import threading, time, json, socket, pyautogui, uuid, random
 from AI_Pilot.Monitor_Interface.Monitors import get_monitor_spec, get_screen
 from ml_botting_core import universal_predictor
 from AI_Pilot.Waypoint_Navigation.Waypoint_Navigation import navigate_waypoints_to_end
-from AI_Pilot.Mouse_Keyboard.Mouse_Keyboard import move_to_default_pos, perform_click, perform_move_click, \
-    perform_range_select
+from AI_Pilot.Mouse_Keyboard.Mouse_Keyboard import perform_move_click
 import numpy as np
 from loguru import logger
 

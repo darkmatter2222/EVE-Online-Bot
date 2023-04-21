@@ -1,4 +1,3 @@
-from ml_botting_core import universal_predictor
 from loguru import logger
 import time
 from AI_Pilot.Monitor_Interface.Monitors import get_screen
@@ -20,7 +19,7 @@ def get_y_waypoint_nav_pos(ag):
     # region ----- get waypoint y
     img = get_screen(ag)
     img_x = img.crop((0, 0, 500, 600))
-    route_y_large_vert_class_v2_result = ag.up.predict(img_x, 'route_y_large_vert_class_v2')
+    route_y_large_vert_class_v2_result = ag.up.predict(img_x, 'route_y_large_vert_class_v4')
     logger.info(route_y_large_vert_class_v2_result)
     # endregion
     return route_y_large_vert_class_v2_result
@@ -30,15 +29,21 @@ def navigate_one_waypoint(ag):
     state_result = get_game_state(ag)
     if state_result['class'] == 'in_flight':
         route_y_large_vert_class_v2_result = get_y_waypoint_nav_pos(ag)
-
-        target_y = int(route_y_large_vert_class_v2_result['class'])
-        nav_point_xy = get_cords_with_offset(ag, 136, target_y + 4)
+        splits = route_y_large_vert_class_v2_result['class'].split('_')
+        #target_y = int(route_y_large_vert_class_v2_result['class'])
+        #nav_point_xy = get_cords_with_offset(ag, 136, target_y + 4)
+        nav_point_xy = get_cords_with_offset(ag, int(splits[0]), int(splits[1]) + 4)
         perform_move_click(ag, pos=nav_point_xy, button='right', perform_offset=False)
 
         # TODO Train a model to crop this?
         template = ag.static_screen_pos['next_waypoint_menu_box']
-        template[1] = target_y - 90
+        template[1] = int(splits[1]) - 90
         template[3] = template[1] + 369
+
+        template[0] = int(splits[0]) - 28
+        template[2] = template[0] + 356
+
+
 
         nav_result = get_nav_options(ag, template)
 

@@ -1,4 +1,3 @@
-from ml_botting_core import universal_predictor
 from loguru import logger
 import numpy as np
 from AI_Pilot.Monitor_Interface.Monitors import get_screen
