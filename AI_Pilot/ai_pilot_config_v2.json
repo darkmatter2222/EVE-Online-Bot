@@ -11,62 +11,63 @@
           "model_name": "game_state",
           "download_latest": 1,
           "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\game_state"
+          "model_root_directory": "O:\\eve_live_models\\game_state",
+          "model_log_directory": "O:\\eve_live_logs\\game_state",
+          "save_images": 1
         },
         {
           "game": "eve_online",
           "model_name": "mining_tool_state",
           "download_latest": 1,
           "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\mining_tool_state"
+          "model_root_directory": "O:\\eve_live_models\\mining_tool_state",
+          "model_log_directory": "O:\\eve_live_logs\\mining_tool_state",
+          "save_images": 0
         },
         {
           "game": "eve_online",
           "model_name": "nav_options",
           "download_latest": 1,
           "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\nav_options"
+          "model_root_directory": "O:\\eve_live_models\\nav_options",
+          "model_log_directory": "O:\\eve_live_logs\\nav_options",
+          "save_images": 0
         },
         {
           "game": "eve_online",
           "model_name": "hanger_menus",
           "download_latest": 1,
           "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\hanger_menus"
+          "model_root_directory": "O:\\eve_live_models\\hanger_menus",
+          "model_log_directory": "O:\\eve_live_logs\\hanger_menus",
+          "save_images": 0
         },
         {
           "game": "eve_online",
           "model_name": "set_dest",
           "download_latest": 1,
           "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\set_dest"
-        },
-        {
-          "game": "eve_online",
-          "model_name": "route_y_large_vert_class_v2",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\route_y_large_vert_class_v2"
+          "model_root_directory": "O:\\eve_live_models\\set_dest",
+          "model_log_directory": "O:\\eve_live_logs\\set_dest",
+          "save_images": 0
         },
         {
           "game": "eve_online",
           "model_name": "route_y_large_vert_class_v4",
           "download_latest": 1,
           "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\route_y_large_vert_class_v4"
+          "model_root_directory": "O:\\eve_live_models\\route_y_large_vert_class_v4",
+          "model_log_directory": "O:\\eve_live_logs\\route_y_large_vert_class_v4",
+          "save_images": 0
         }
       ]
     },
     "static_screen_pos": {
-      "next_waypoint_click_target": [
-        137,
-        378
-      ],
-      "next_waypoint_menu_box": [
-        102,
-        289,
-        458,
-        658
+      "next_waypoint_menu_box_dims_from_click": [
+        -90,
+        369,
+        -28,
+        356
       ],
       "default_cords": [
         100,

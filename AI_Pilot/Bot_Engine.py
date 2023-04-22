@@ -2,7 +2,7 @@ import threading, time, json, socket, pyautogui, uuid, random
 from AI_Pilot.Monitor_Interface.Monitors import get_monitor_spec, get_screen
 from ml_botting_core import universal_predictor
 from AI_Pilot.Waypoint_Navigation.Waypoint_Navigation import navigate_waypoints_to_end
-from AI_Pilot.Mouse_Keyboard.Mouse_Keyboard import perform_move_click
+from AI_Pilot.Mouse_Keyboard.Mouse_Keyboard import perform_move_click, perform_range_select
 import numpy as np
 from loguru import logger
 
@@ -98,7 +98,7 @@ class Bot_Engine:
             box_bottom_right = (click_target[0] + 256 + 12, click_target[1] + 396 - 33)
             img = get_screen(self.ag)
             img = img.crop([box_top_left[0], box_top_left[1], box_bottom_right[0], box_bottom_right[1]])
-            set_dest_result = self.up.predict(img, 'set_dest')
+            set_dest_result = self.ag.up.predict(img, 'set_dest')
 
             if set_dest_result['class'] == 'second_pos':
                 click_target = (click_target[0] + 50, click_target[1] + 60)
@@ -114,35 +114,35 @@ class Bot_Engine:
             time.sleep(2)
             # pick up ore
             if next_action == 'load':
-                perform_move_click(self.ag, pos=tuple(self.static_screen_pos['hanger_target']), button='left',
+                perform_move_click(self.ag, pos=tuple(self.ag.static_screen_pos['hanger_target']), button='left',
                                    perform_offset=True)
                 time.sleep(1)
-                self.perform_range_select(tuple(self.static_screen_pos['click_and_drag_inv_box'][2:4]),
-                                          tuple(self.static_screen_pos['click_and_drag_inv_box'][0:2]))
+                #perform_range_select(self.ag, tuple(self.ag.static_screen_pos['click_and_drag_inv_box'][2:4]),
+                #                          tuple(self.ag.static_screen_pos['click_and_drag_inv_box'][0:2]))
                 time.sleep(1)
-                self.perform_range_select(
-                    tuple(self.static_screen_pos['Load_to_mininghold_click_and_drag_inv_line'][0:2]),
-                    tuple(self.static_screen_pos['ship_root_target']))
+                perform_range_select(self.ag,
+                    tuple(self.ag.static_screen_pos['Load_to_mininghold_click_and_drag_inv_line'][0:2]),
+                    tuple(self.ag.static_screen_pos['ship_root_target']))
                 time.sleep(1)
                 img = get_screen(self.ag)
-                menu_result = self.up.predict(img, 'hanger_menus')
+                menu_result = self.ag.up.predict(img, 'hanger_menus')
                 if menu_result['class'] == 'set_quant':
-                    perform_move_click(self.ag, pos=tuple(self.static_screen_pos['set_quant_target']), button='left',
+                    perform_move_click(self.ag, pos=tuple(self.ag.static_screen_pos['set_quant_target']), button='left',
                                        perform_offset=True)
                 time.sleep(1)
             else:
-                perform_move_click(self.ag, pos=tuple(self.static_screen_pos['ship_root_target']), button='left',
+                perform_move_click(self.ag, pos=tuple(self.ag.static_screen_pos['ship_root_target']), button='left',
                                    perform_offset=True)
                 time.sleep(1)
-                self.perform_range_select(tuple(self.static_screen_pos['click_and_drag_inv_box'][2:4]),
-                                          tuple(self.static_screen_pos['click_and_drag_inv_box'][0:2]))
+                perform_range_select(self.ag, tuple(self.ag.static_screen_pos['click_and_drag_inv_box'][2:4]),
+                                          tuple(self.ag.static_screen_pos['click_and_drag_inv_box'][0:2]))
                 time.sleep(1)
-                self.perform_range_select(
-                    tuple(self.static_screen_pos['Load_to_mininghold_click_and_drag_inv_line'][0:2]),
-                    tuple(self.static_screen_pos['hanger_target']))
+                perform_range_select(self.ag,
+                    tuple(self.ag.static_screen_pos['Load_to_mininghold_click_and_drag_inv_line'][0:2]),
+                    tuple(self.ag.static_screen_pos['hanger_target']))
                 time.sleep(1)
 
-            perform_move_click(self.ag, pos=tuple(self.static_screen_pos['exit_hanger_target']), button='left',
+            perform_move_click(self.ag, pos=tuple(self.ag.static_screen_pos['exit_hanger_target']), button='left',
                                perform_offset=True)
             time.sleep(30)
 

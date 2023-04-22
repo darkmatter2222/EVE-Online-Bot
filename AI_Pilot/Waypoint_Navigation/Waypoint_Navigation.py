@@ -32,18 +32,16 @@ def navigate_one_waypoint(ag):
         splits = route_y_large_vert_class_v2_result['class'].split('_')
         #target_y = int(route_y_large_vert_class_v2_result['class'])
         #nav_point_xy = get_cords_with_offset(ag, 136, target_y + 4)
-        nav_point_xy = get_cords_with_offset(ag, int(splits[0]), int(splits[1]) + 4)
+        nav_point_xy = get_cords_with_offset(ag, int(splits[0]) + 4, int(splits[1]) + 4)
         perform_move_click(ag, pos=nav_point_xy, button='right', perform_offset=False)
 
         # TODO Train a model to crop this?
-        template = ag.static_screen_pos['next_waypoint_menu_box']
-        template[1] = int(splits[1]) - 90
-        template[3] = template[1] + 369
+        template = [0, 0, 0, 0]
+        template[1] = int(splits[1]) + ag.static_screen_pos['next_waypoint_menu_box_dims_from_click'][0]
+        template[3] = template[1] + ag.static_screen_pos['next_waypoint_menu_box_dims_from_click'][1]
 
-        template[0] = int(splits[0]) - 28
-        template[2] = template[0] + 356
-
-
+        template[0] = int(splits[0]) + ag.static_screen_pos['next_waypoint_menu_box_dims_from_click'][2]
+        template[2] = template[0] + ag.static_screen_pos['next_waypoint_menu_box_dims_from_click'][3]
 
         nav_result = get_nav_options(ag, template)
 
@@ -71,6 +69,7 @@ def navigate_one_waypoint(ag):
 def navigate_waypoints_to_end(ag, allow_dock=True):
     while True:
         state_result = navigate_one_waypoint(ag)
+        # TODO, handle other states
         if state_result['class'] != 'in_flight' or not allow_dock:
             break
         else:
