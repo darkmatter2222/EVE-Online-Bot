@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 from sklearn.metrics import confusion_matrix
-
+from sklearn.utils.class_weight import  compute_class_weight
 
 #tf.config.set_visible_devices([], 'GPU')
 
@@ -19,7 +19,7 @@ def build_and_train(root_image_directory, model_location,
                     resize_ratio = 0.2):
     data_dir = pathlib.Path(root_image_directory)
 
-    image_list = list(data_dir.glob('*/*.bmp'))
+    image_list = list(data_dir.glob('*/*.png'))
     image_count = len(image_list)
     print(image_count)
 
@@ -28,7 +28,7 @@ def build_and_train(root_image_directory, model_location,
     batch_size = 10
     img_height = int(img.height * resize_ratio)
     img_width = int(img.width * resize_ratio)
-
+    
     train_ds = tf.keras.utils.image_dataset_from_directory(
         data_dir,
         validation_split=0.2,
@@ -44,6 +44,14 @@ def build_and_train(root_image_directory, model_location,
         seed=123,
         image_size=(img_height, img_width),
         batch_size=batch_size)
+    
+    y_train = np.concatenate([y for x, y in train_ds], axis=0)
+    print(y_train[0:20])
+    
+    class_weights = compute_class_weight(class_weight = "balanced", classes= np.unique(y_train), y=y_train)
+    class_weights = {i:w for i,w in enumerate(class_weights)}
+    
+    print(class_weights)
 
     class_names = train_ds.class_names
     print(class_names)
@@ -76,7 +84,8 @@ def build_and_train(root_image_directory, model_location,
     history = model.fit(
         train_ds,
         validation_data=val_ds,
-        epochs=epochs
+        epochs=epochs,
+        class_weight=class_weights
     )
     train_data = list(train_ds)
     features = np.concatenate([train_data[n][0] for n in range(0, len(train_data))])
