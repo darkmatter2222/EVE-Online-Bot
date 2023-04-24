@@ -7,6 +7,13 @@
 
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+
+
+## UPDATE 4/22/23  
+Noticed some model drift, collecting training data from twitch streamers.  
+To accommodate this mass influx of data, we needed to add class balancing to the training module [Here](https://github.com/darkmatter2222/ml_botting_core/commit/19a8d2c2a25a74554fd63b13ab7f0f2172000794).  
+![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/data_collection.png)
+
 ## UPDATE 4/19/23  
 Massive cleanup and refactoring. Fully implimented [ml_botting_core](https://github.com/darkmatter2222/ml_botting_core) and now really building out the architecture for the AI Pilot.  
 
