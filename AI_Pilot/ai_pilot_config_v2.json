@@ -59,6 +59,24 @@
           "model_root_directory": "O:\\eve_live_models\\route_y_large_vert_class_v4",
           "model_log_directory": "O:\\eve_live_logs\\route_y_large_vert_class_v4",
           "save_images": 0
+        },
+        {
+          "game": "eve_online",
+          "model_name": "game_state_cake_layer_1_v1",
+          "download_latest": 1,
+          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+          "model_root_directory": "O:\\eve_live_models\\game_state_cake_layer_1_v1",
+          "model_log_directory": "O:\\eve_live_logs\\game_state_cake_layer_1_v1",
+          "save_images": 1
+        },
+        {
+          "game": "eve_online",
+          "model_name": "game_state_cake_layer_2_v1",
+          "download_latest": 1,
+          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+          "model_root_directory": "O:\\eve_live_models\\game_state_cake_layer_2_v1",
+          "model_log_directory": "O:\\eve_live_logs\\game_state_cake_layer_2_v1",
+          "save_images": 1
         }
       ]
     },

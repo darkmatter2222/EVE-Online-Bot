@@ -176,3 +176,7 @@ class Bot_Engine:
         perform_move_click(self.ag, pos=(1300 + 50, 650 + 65), button='right', perform_offset=True)
         pass
     # endregion
+
+    # region ----- Mining Bot
+
+    # endregion

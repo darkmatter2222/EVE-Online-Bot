@@ -1,7 +1,7 @@
 from loguru import logger
 import time
 from AI_Pilot.Monitor_Interface.Monitors import get_screen
-from AI_Pilot.General.General import get_game_state, get_cords_with_offset
+from AI_Pilot.General.General import get_game_state, get_cords_with_offset, beta_get_game_state_cake
 from AI_Pilot.Mouse_Keyboard.Mouse_Keyboard import perform_move_click
 
 
@@ -26,7 +26,7 @@ def get_y_waypoint_nav_pos(ag):
 
 
 def navigate_one_waypoint(ag):
-    state_result = get_game_state(ag)
+    state_result = beta_get_game_state_cake(ag)
     if state_result['class'] == 'in_flight':
         route_y_large_vert_class_v2_result = get_y_waypoint_nav_pos(ag)
         splits = route_y_large_vert_class_v2_result['class'].split('_')

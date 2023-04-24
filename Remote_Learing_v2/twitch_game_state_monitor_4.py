@@ -1,6 +1,6 @@
 import threading, time, json, socket, pyautogui, uuid, random
 from AI_Pilot.Monitor_Interface.Monitors import get_monitor_spec, get_screen
-from AI_Pilot.General.General import get_game_state
+from AI_Pilot.General.General import get_game_state, beta_get_game_state_cake
 from ml_botting_core import universal_predictor
 import numpy as np
 
@@ -39,6 +39,6 @@ ag.monitor_spec = {
 }
 
 while True:
-    state_result = get_game_state(ag)
+    state_result = beta_get_game_state_cake(ag)
     time.sleep(10)
 

@@ -24,6 +24,7 @@ class AI_Pilot():
         # self.root.attributes('-topmost', True)
         self.root.resizable(width=True, height=True)
 
+        # region ----- Column 0
         self.dock_at_destination_lf = tk.LabelFrame(self.root, text="Dock at Destination")
         self.dock_at_destination_lf.grid(row=0, column=0, sticky=tk.NW, padx=(10, 10), pady=(10, 10))
         self.dock_at_destination_button = tk.Button(self.dock_at_destination_lf, text="Start", width=30,
@@ -37,7 +38,9 @@ class AI_Pilot():
         self.dock_at_destination_lb.grid(row=2, column=0, sticky=tk.N, padx=(5, 5), pady=(5, 10))
         self.dock_at_destination_log = []
         self.dock_at_destination_e_stop_bool = False
+        # endregion
 
+        # region ----- column 1
         self.migrate_ore_lf = tk.LabelFrame(self.root, text="Migrate Ore (Start in Space)")
         self.migrate_ore_lf.grid(row=0, column=1, sticky=tk.W, padx=(10, 10), pady=(10, 10))
 
@@ -68,6 +71,21 @@ class AI_Pilot():
         self.migrate_ore_lb = tk.Listbox(self.migrate_ore_lf, width=40)
         self.migrate_ore_lb.grid(row=4, column=0, sticky=tk.N, padx=(5, 5), pady=(5, 10))
         self.migrate_ore_log = []
+        # endregion
+
+        # region ----- column 2
+        self.model_prediction_lf = tk.LabelFrame(self.root, text="What is On Screen?")
+        self.model_prediction_lf.grid(row=0, column=2, sticky=tk.W, padx=(10, 10), pady=(10, 10))
+
+        OPTIONS = [
+            "get_state",
+        ]
+        variable = tk.StringVar(self.model_prediction_lf)
+        variable.set(OPTIONS[0])
+
+        self.model_menu = tk.OptionMenu(self.model_prediction_lf, variable, *OPTIONS)
+        self.model_menu.grid(row=0, column=0, sticky=tk.W, padx=(10, 10), pady=(0, 0))
+        # endregion
 
 
     # region ----- universal functions
