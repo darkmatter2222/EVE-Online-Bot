@@ -28,3 +28,7 @@ def beta_get_game_state_cake(ag):
         logger.info(result)
 
     return result
+
+
+def get_ship_root_cargo(ag):
+    return

@@ -1,6 +1,6 @@
 import threading, time, json, socket, pyautogui, uuid, random
-from AI_Pilot.Monitor_Interface.Monitors import get_monitor_spec, get_screen
-from AI_Pilot.General.General import get_game_state, beta_get_game_state_cake
+from AI_Pilot.Monitor_Interface.Monitors import get_monitor_spec
+from AI_Pilot.Setup.Overlay import overlay
 from ml_botting_core import universal_predictor
 import numpy as np
 
@@ -17,7 +17,7 @@ class active_globals():
 
 ag = active_globals()
 
-config_dir = r'..\AI_Pilot\ai_pilot_config_v2.json'
+config_dir = r'..\..\AI_Pilot\ai_pilot_config_v2.json'
 
 host = socket.gethostname()
 config = json.load(open(config_dir))
@@ -38,7 +38,4 @@ ag.monitor_spec = {
     "monitor_offset": np.array([monitor_spec['left'], monitor_spec['top']])  # x, y
 }
 
-while True:
-    state_result = beta_get_game_state_cake(ag)
-    time.sleep(10)
-
+overlay(ag)

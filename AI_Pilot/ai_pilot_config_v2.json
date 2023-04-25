@@ -87,15 +87,19 @@
         -28,
         356
       ],
-      "default_cords": [
+      "click_target_default_cords": [
         100,
         100
       ],
-      "hanger_target": [
-        150,
+      "click_target_first_item_in_inventory": [
+        315,
+        730
+      ],
+      "click_target_hanger": [
+        165,
         770
       ],
-      "click_and_drag_inv_box": [
+      "range_click_and_drag_inv_box": [
         300,
         670,
         730,
@@ -107,11 +111,11 @@
         182,
         871
       ],
-      "exit_hanger_target": [
+      "click_target_exit_hanger": [
         1757,
         378
       ],
-      "set_quant_target": [
+      "click_target_set_quant_target": [
         869,
         652
       ],
@@ -127,11 +131,11 @@
         150,
         675
       ],
-      "ship_root_target": [
-        185,
+      "click_target_ship_root": [
+        165,
         674
       ],
-      "cargo_box": [
+      "range_cargo_box": [
         379,
         638,
         584,
