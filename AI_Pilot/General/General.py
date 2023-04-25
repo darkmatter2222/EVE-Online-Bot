@@ -3,6 +3,7 @@ import numpy as np
 from AI_Pilot.Monitor_Interface.Monitors import get_screen
 
 
+
 def get_game_state(ag):
     # region ----- get game state
     img = get_screen(ag)
@@ -30,5 +31,14 @@ def beta_get_game_state_cake(ag):
     return result
 
 
+def convert_to_baw(img, thresh=140):
+    fn = lambda x: 255 if x > thresh else 0
+    return img.convert('L').point(fn, mode='1')
+
+
 def get_ship_root_cargo(ag):
-    return
+    img = get_screen(ag)
+    cargo_bar = convert_to_baw(img.crop(ag.static_screen_pos['range_cargo_box']), thresh=20)
+    img_array = np.array(cargo_bar)
+    return len(img_array[img_array == True]) / (
+            len(img_array[img_array == True]) + len(img_array[img_array == False]))

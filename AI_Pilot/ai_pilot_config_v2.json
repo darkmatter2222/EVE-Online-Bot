@@ -119,12 +119,6 @@
         869,
         652
       ],
-      "Unload_nav_bot_click_and_drag_inv_line": [
-        336,
-        700,
-        150,
-        770
-      ],
       "Load_to_mininghold_click_and_drag_inv_line": [
         336,
         692,
@@ -134,6 +128,14 @@
       "click_target_ship_root": [
         165,
         674
+      ],
+      "click_target_search_tab": [
+        990,
+        60
+      ],
+      "click_target_search_tab_search_bar": [
+        990,
+        130
       ],
       "range_cargo_box": [
         379,

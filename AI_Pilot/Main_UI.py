@@ -87,6 +87,14 @@ class AI_Pilot():
         self.model_menu.grid(row=0, column=0, sticky=tk.W, padx=(10, 10), pady=(0, 0))
         # endregion
 
+        # region ----- column 4
+        self.aggregate_resources_lf = tk.LabelFrame(self.root, text="aggregate Resources")
+        self.aggregate_resources_lf.grid(row=0, column=4, sticky=tk.NW, padx=(10, 10), pady=(10, 10))
+        self.aggregate_resources_start_button = tk.Button(self.aggregate_resources_lf, text="Start", width=30,
+                                                           command=self.aggregate_resources_start)
+        self.aggregate_resources_start_button.grid(row=0, column=0, sticky=tk.N, padx=(10, 10), pady=(5, 5))
+        # endregion
+
 
     # region ----- universal functions
     def ui_element_change(self, element, element_property, value):
@@ -124,6 +132,13 @@ class AI_Pilot():
         time.sleep(3)
         #Bot.dock_at_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change)
     # endregion
+
+    # region ----- start aggregate_resources
+    def aggregate_resources_start(self):
+        Bot.aggregate_resources_start()
+    # endregion
+
+
 
     def start(self):
         self.root.title(self.title)

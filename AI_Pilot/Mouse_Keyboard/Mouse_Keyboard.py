@@ -33,3 +33,5 @@ def perform_range_select(ag, pos_start, pos_end, button='left', perform_offset=T
         time.sleep(0.1)
         pyautogui.dragTo(*pos_end, 1, button=button)
         time.sleep(0.1)
+
+
