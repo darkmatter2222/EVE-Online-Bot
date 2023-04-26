@@ -1,149 +1,148 @@
 {
-  "default": {
-    "general": {
-      "log_dir": "\\\\databrick\\N\\eve_logs",
-      "monitor_number": 2
+ "default": {
+  "general": {
+   "log_dir": "\\\\databrick\\N\\eve_logs",
+   "monitor_number": 2
+  },
+  "ml_botting_core": {
+   "public_models": [
+    {
+     "game": "eve_online",
+     "model_name": "game_state",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\game_state",
+     "model_log_directory": "O:\\eve_live_logs\\game_state",
+     "save_images": 1
     },
-    "ml_botting_core": {
-      "public_models": [
-        {
-          "game": "eve_online",
-          "model_name": "game_state",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\game_state",
-          "model_log_directory": "O:\\eve_live_logs\\game_state",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "mining_tool_state",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\mining_tool_state",
-          "model_log_directory": "O:\\eve_live_logs\\mining_tool_state",
-          "save_images": 0
-        },
-        {
-          "game": "eve_online",
-          "model_name": "nav_options",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\nav_options",
-          "model_log_directory": "O:\\eve_live_logs\\nav_options",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "hanger_menus",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\hanger_menus",
-          "model_log_directory": "O:\\eve_live_logs\\hanger_menus",
-          "save_images": 0
-        },
-        {
-          "game": "eve_online",
-          "model_name": "set_dest",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\set_dest",
-          "model_log_directory": "O:\\eve_live_logs\\set_dest",
-          "save_images": 0
-        },
-        {
-          "game": "eve_online",
-          "model_name": "route_y_large_vert_class_v4",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\route_y_large_vert_class_v4",
-          "model_log_directory": "O:\\eve_live_logs\\route_y_large_vert_class_v4",
-          "save_images": 0
-        },
-        {
-          "game": "eve_online",
-          "model_name": "game_state_cake_layer_1_v1",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\game_state_cake_layer_1_v1",
-          "model_log_directory": "O:\\eve_live_logs\\game_state_cake_layer_1_v1",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "game_state_cake_layer_2_v1",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\game_state_cake_layer_2_v1",
-          "model_log_directory": "O:\\eve_live_logs\\game_state_cake_layer_2_v1",
-          "save_images": 1
-        }
-      ]
+    {
+     "game": "eve_online",
+     "model_name": "mining_tool_state",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\mining_tool_state",
+     "model_log_directory": "O:\\eve_live_logs\\mining_tool_state",
+     "save_images": 0
     },
-    "static_screen_pos": {
-      "next_waypoint_menu_box_dims_from_click": [
-        -90,
-        369,
-        -28,
-        356
-      ],
-      "click_target_default_cords": [
-        100,
-        100
-      ],
-      "click_target_first_item_in_inventory": [
-        315,
-        730
-      ],
-      "click_target_hanger": [
-        165,
-        770
-      ],
-      "range_click_and_drag_inv_box": [
-        300,
-        670,
-        730,
-        970
-      ],
-      "click_and_drag_inv_line": [
-        336,
-        692,
-        182,
-        871
-      ],
-      "click_target_exit_hanger": [
-        1757,
-        378
-      ],
-      "click_target_set_quant_target": [
-        869,
-        652
-      ],
-      "Load_to_mininghold_click_and_drag_inv_line": [
-        336,
-        692,
-        150,
-        675
-      ],
-      "click_target_ship_root": [
-        165,
-        674
-      ],
-      "click_target_search_tab": [
-        990,
-        60
-      ],
-      "click_target_search_tab_search_bar": [
-        990,
-        130
-      ],
-      "range_cargo_box": [
-        379,
-        638,
-        584,
-        643
-      ]
+    {
+     "game": "eve_online",
+     "model_name": "nav_options",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\nav_options",
+     "model_log_directory": "O:\\eve_live_logs\\nav_options",
+     "save_images": 1
+    },
+    {
+     "game": "eve_online",
+     "model_name": "hanger_menus",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\hanger_menus",
+     "model_log_directory": "O:\\eve_live_logs\\hanger_menus",
+     "save_images": 0
+    },
+    {
+     "game": "eve_online",
+     "model_name": "set_dest",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\set_dest",
+     "model_log_directory": "O:\\eve_live_logs\\set_dest",
+     "save_images": 0
+    },
+    {
+     "game": "eve_online",
+     "model_name": "route_y_large_vert_class_v4",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\route_y_large_vert_class_v4",
+     "model_log_directory": "O:\\eve_live_logs\\route_y_large_vert_class_v4",
+     "save_images": 0
+    },
+    {
+     "game": "eve_online",
+     "model_name": "game_state_cake_layer_1_v1",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\game_state_cake_layer_1_v1",
+     "model_log_directory": "O:\\eve_live_logs\\game_state_cake_layer_1_v1",
+     "save_images": 1
+    },
+    {
+     "game": "eve_online",
+     "model_name": "game_state_cake_layer_2_v1",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\game_state_cake_layer_2_v1",
+     "model_log_directory": "O:\\eve_live_logs\\game_state_cake_layer_2_v1",
+     "save_images": 1
     }
+   ]
+  },
+  "static_screen_pos": {
+   "next_waypoint_menu_box_dims_from_click": [
+    -90,
+    369,
+    -28,
+    356
+   ],
+   "click_target_default_cords": [
+    85,
+    60
+   ],
+   "click_target_first_item_in_inventory": [
+    315,
+    730
+   ],
+   "click_target_hanger": [
+    161,
+    771
+   ],
+   "range_click_and_drag_inv_box": [
+    275,
+    688,
+    786,
+    1013
+   ],
+   "click_and_drag_inv_line": [
+    336,
+    692,
+    182,
+    871
+   ],
+   "click_target_exit_hanger": [
+    1738,
+    377
+   ],
+   "click_target_set_quant_target": [
+    889,
+    651
+   ],
+   "Load_to_mininghold_click_and_drag_inv_line": [
+    336,
+    692,
+    150,
+    675
+   ],
+   "click_target_ship_root": [
+    170,
+    674
+   ],
+   "click_target_search_tab": [
+    990,
+    60
+   ],
+   "click_target_search_tab_search_bar": [
+    990,
+    130
+   ],
+   "range_cargo_box": [
+    371,
+    634,
+    631,
+    643
+   ]
   }
+ }
 }
-
