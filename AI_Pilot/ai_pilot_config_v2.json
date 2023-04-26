@@ -105,11 +105,34 @@
     786,
     1013
    ],
+   "range_grid_search_location_box": [
+    897,
+    195,
+    1462,
+    521
+   ],
+   "search_location_box_count": 13,
+   "search_location_box_columns": [
+    1
+   ],
    "click_and_drag_inv_line": [
     336,
     692,
     182,
     871
+   ],
+   "range_grid_survey_scan_box": [
+    1280,
+    613,
+    1851,
+    767
+   ],
+   "survey_scan_box_count": 6,
+   "survey_scan_box_columns": [
+    0.05,
+    0.45,
+    0.15,
+    0.18
    ],
    "click_target_exit_hanger": [
     1738,
@@ -140,8 +163,8 @@
    "range_cargo_box": [
     371,
     634,
-    631,
-    643
+    636,
+    641
    ]
   }
  }
