@@ -7,7 +7,9 @@
 
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
-
+## UPDATE 4/25/23  
+Should ahve made this months ago, a configuration overlay for easy X, Y configurations [Here](https://github.com/darkmatter2222/EVE-Online-Bot/tree/main/AI_Pilot/Setup)  
+[Youtube Video](https://www.youtube.com/watch?v=fqIvihY5VO0)
 
 ## UPDATE 4/22/23  
 Noticed some model drift, collecting training data from twitch streamers.  
