@@ -4,6 +4,7 @@ from ml_botting_core import universal_predictor
 from AI_Pilot.Waypoint_Navigation.Waypoint_Navigation import navigate_waypoints_to_end
 from AI_Pilot.Mouse_Keyboard.Mouse_Keyboard import perform_move_click, perform_range_select
 from AI_Pilot.Objectives.Aggregate_Resources.Aggregate_Resources import Aggregate_Resources
+from AI_Pilot.Config_Management.Config_Management import load_config
 import numpy as np
 from loguru import logger
 
@@ -27,15 +28,21 @@ class Bot_Engine:
             cls.instance.__initialized = False
         return cls.instance
 
-    def __init__(self, config):
+    def __init__(self, config_dir):
         if self.__initialized: return  # make singleton
         self.__initialized = True
 
         self.ag = active_globals()
 
-        self.ag.general_config = config['general']
-        self.ag.ml_botting_core_config = config['ml_botting_core']
-        self.ag.static_screen_pos = config['static_screen_pos']
+        #config_dir = r'..\..\AI_Pilot\ai_pilot_config_v2.json'
+
+        self.ag.config_dir = config_dir
+
+        load_config(self.ag)
+
+        self.ag.general_config = self.ag.this_config['general']
+        self.ag.ml_botting_core_config = self.ag.this_config['ml_botting_core']
+        self.ag.static_screen_pos = self.ag.this_config['static_screen_pos']
 
         monitor_spec = get_monitor_spec(self.ag)
 

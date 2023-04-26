@@ -7,6 +7,7 @@ def load_config(ag):
         config = ag.config[host]
     else:
         config = ag.config['default']
+    ag.this_config = config
 
     ag.general_config = config['general']
     ag.ml_botting_core_config = config['ml_botting_core']
