@@ -28,13 +28,5 @@ def beta_get_game_state_cake(ag):
 
 
 def exit_hanger(ag):
-    perform_move_click(ag.static_screen_pos['next_waypoint_menu_box_dims_from_click'])
+    perform_move_click(ag, ag.static_screen_pos['click_target_exit_hanger'], button='left')
     time.sleep(30)
-
-
-def get_ship_root_cargo(ag):
-    img = get_screen(ag)
-    cargo_bar = convert_to_baw(img.crop(ag.static_screen_pos['range_cargo_box']), thresh=20)
-    img_array = np.array(cargo_bar)
-    return len(img_array[img_array == True]) / (
-            len(img_array[img_array == True]) + len(img_array[img_array == False]))
