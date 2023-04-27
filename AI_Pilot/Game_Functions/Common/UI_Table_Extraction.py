@@ -1,38 +1,10 @@
-import time
-from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click
-from AI_Pilot.Control_Functions.Monitors import get_screen
+from AI_Pilot.Game_Functions.Common.UI_Table_Helpers import cell_dims, cell_dims_from_list, drange, get_row_points, get_col_points, get_cells
 from AI_Pilot.Control_Functions.General import convert_to_baw
-from loguru import logger
+from pytesseract import pytesseract
 import numpy as np
+import pandas as pd
 
-
-def get_game_state(ag):
-    # region ----- get game state
-    img = get_screen(ag)
-    state_result = ag.up.predict(img, 'game_state')
-    logger.info(state_result)
-    # endregion
-    return state_result
-
-
-def beta_get_game_state_cake(ag):
-    img = get_screen(ag)
-    result = ag.up.predict(img, 'game_state_cake_layer_1_v1')
-    logger.info(result)
-    min_threshold = ag.up.classifiers['game_state_cake_layer_1_v1']['meta']['decision_threshold']
-    if float(result['value_at_argmax']) < min_threshold:
-        result = ag.up.predict(img, 'game_state_cake_layer_2_v1')
-        logger.info(result)
-
-    return result
-
-
-def exit_hanger(ag):
-    perform_move_click(ag, ag.static_screen_pos['click_target_exit_hanger'], button='left')
-    time.sleep(30)
-
-
-def extract_values(img, cells, x_range, y_range, columns,
+def extract_values(ag, img, cells, x_range, y_range, columns,
                    monitor_x_offset, monitor_y_offset,
                    click_target_offset_x, click_target_offset_y
                    ):
@@ -55,7 +27,7 @@ def extract_values(img, cells, x_range, y_range, columns,
     return pd.DataFrame(frames, columns=columns)
 
 
-def extract_bool(img, cells, x_range, y_range, columns,
+def extract_bool(ag, img, cells, x_range, y_range, columns,
                  monitor_x_offset, monitor_y_offset,
                  click_target_offset_x, click_target_offset_y
                  ):
