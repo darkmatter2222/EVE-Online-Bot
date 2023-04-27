@@ -4,10 +4,7 @@ from pytesseract import pytesseract
 import numpy as np
 import pandas as pd
 
-def extract_values(ag, img, cells, x_range, y_range, columns,
-                   monitor_x_offset, monitor_y_offset,
-                   click_target_offset_x, click_target_offset_y
-                   ):
+def extract_values(ag, img, cells, x_range, y_range, columns):
     frames = []
     for i in range(len(y_range) - 1):
         frame = {}
@@ -21,16 +18,13 @@ def extract_values(ag, img, cells, x_range, y_range, columns,
                                                                                                        ' km').replace(
                 ',', '')
         frame['click_target'] = (
-            cells[0, i][0] + click_target_offset_x + monitor_x_offset,
-            cells[0, i][1] + click_target_offset_y + monitor_y_offset)  # offset by 10x10 pixels
+            cells[0, i][0] + 10 + ag.monitor_spec['monitor_offset'][0],
+            cells[0, i][1] + 10 + ag.monitor_spec['monitor_offset'][1])  # offset by 10x10 pixels
         frames.append(frame)
     return pd.DataFrame(frames, columns=columns)
 
 
-def extract_bool(ag, img, cells, x_range, y_range, columns,
-                 monitor_x_offset, monitor_y_offset,
-                 click_target_offset_x, click_target_offset_y
-                 ):
+def extract_bool(ag, img, cells, x_range, y_range, columns):
     frames = []
     for i in range(len(y_range) - 1):
         frame = {}
@@ -51,7 +45,7 @@ def extract_bool(ag, img, cells, x_range, y_range, columns,
             frame[columns[j]] = populated
 
         frame['click_target'] = (
-            cells[0, i][0] + click_target_offset_x + monitor_x_offset,
-            cells[0, i][1] + click_target_offset_y + monitor_y_offset)  # offset by 10x10 pixels
+            cells[0, i][0] + 10 + ag.monitor_spec['monitor_offset'][0],
+            cells[0, i][1] + 10 + ag.monitor_spec['monitor_offset'][1])  # offset by 10x10 pixels
         frames.append(frame)
     return pd.DataFrame(frames, columns=columns)

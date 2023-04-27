@@ -99,6 +99,10 @@
     161,
     771
    ],
+   "click_target_mining_hold": [
+    162,
+    726
+   ],
    "click_target_scanner_button": [
     1123,
     908
@@ -109,7 +113,12 @@
     786,
     1013
    ],
-   "range_miners": [1058, 820, 1188, 878],
+   "range_miners": [
+    1058,
+    820,
+    1188,
+    878
+   ],
    "range_grid_search_location_box": [
     897,
     195,
@@ -154,8 +163,8 @@
     675
    ],
    "click_target_ship_root": [
-    170,
-    674
+    168,
+    669
    ],
    "click_target_search_tab": [
     990,
@@ -170,6 +179,19 @@
     634,
     636,
     641
+   ],
+   "mining_sites": [
+    "Site Two Alpha",
+    "Site One Alpha",
+    "Site Three Alpha",
+    "Site One Beta",
+    "Site Twa Beta",
+    "Site Three Beta",
+    "Site One Charlie",
+    "Site Three Charlie",
+    "Site One Delta",
+    "Site Three Delta",
+    "Site One Epsilon"
    ]
   }
  }
