@@ -1,5 +1,5 @@
-from AI_Pilot.General.General import get_ship_root_cargo
-from AI_Pilot.Mouse_Keyboard.Mouse_Keyboard import perform_move_click
+from AI_Pilot.Control_Functions.General import get_ship_root_cargo
+from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click
 from loguru import logger
 
 

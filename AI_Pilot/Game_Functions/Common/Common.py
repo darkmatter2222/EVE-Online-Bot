@@ -1,7 +1,9 @@
+import time
+from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click
+from AI_Pilot.Control_Functions.Monitors import get_screen
+from AI_Pilot.Control_Functions.General import convert_to_baw
 from loguru import logger
 import numpy as np
-from AI_Pilot.Monitor_Interface.Monitors import get_screen
-
 
 
 def get_game_state(ag):
@@ -11,12 +13,6 @@ def get_game_state(ag):
     logger.info(state_result)
     # endregion
     return state_result
-
-
-def get_cords_with_offset(ag, x, y):
-    # don't ask why i did it this way, it felt good.
-    result = np.array([x, y]) + ag.monitor_spec['monitor_offset']
-    return result[0], result[1]
 
 
 def beta_get_game_state_cake(ag):
@@ -31,9 +27,9 @@ def beta_get_game_state_cake(ag):
     return result
 
 
-def convert_to_baw(img, thresh=140):
-    fn = lambda x: 255 if x > thresh else 0
-    return img.convert('L').point(fn, mode='1')
+def exit_hanger(ag):
+    perform_move_click(ag.static_screen_pos['next_waypoint_menu_box_dims_from_click'])
+    time.sleep(30)
 
 
 def get_ship_root_cargo(ag):

@@ -1,7 +1,6 @@
 from tkinter import *
-from AI_Pilot.General.General import get_cords_with_offset
 from AI_Pilot.Config_Management.Config_Management import save_config
-import sys, os, decimal, json
+import decimal
 import numpy as np
 
 

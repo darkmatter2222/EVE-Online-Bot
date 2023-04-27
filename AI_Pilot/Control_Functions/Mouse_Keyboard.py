@@ -1,5 +1,5 @@
-import threading, time, json, socket, pyautogui, uuid, random
-from AI_Pilot.General.General import get_cords_with_offset
+import time, pyautogui
+from AI_Pilot.Control_Functions.General import get_cords_with_offset
 
 
 def move_to_default_pos(ag):

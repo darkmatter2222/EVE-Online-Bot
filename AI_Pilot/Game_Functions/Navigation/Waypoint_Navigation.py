@@ -1,8 +1,9 @@
 from loguru import logger
 import time
-from AI_Pilot.Monitor_Interface.Monitors import get_screen
-from AI_Pilot.General.General import get_game_state, get_cords_with_offset, beta_get_game_state_cake
-from AI_Pilot.Mouse_Keyboard.Mouse_Keyboard import perform_move_click
+from AI_Pilot.Control_Functions.Monitors import get_screen
+from AI_Pilot.Control_Functions.General import get_cords_with_offset
+from AI_Pilot.Game_Functions.Common.Common import beta_get_game_state_cake
+from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click
 
 
 def get_nav_options(ag, crop):

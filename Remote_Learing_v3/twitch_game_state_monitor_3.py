@@ -1,6 +1,6 @@
-import threading, time, json, socket, pyautogui, uuid, random
-from AI_Pilot.Monitor_Interface.Monitors import get_monitor_spec, get_screen
-from AI_Pilot.General.General import get_game_state
+import time, json, socket
+from AI_Pilot.Control_Functions.Monitors import get_monitor_spec
+from AI_Pilot.Control_Functions.General import get_game_state
 from ml_botting_core import universal_predictor
 import numpy as np
 

@@ -1,12 +1,12 @@
-import threading, time, json, socket, pyautogui, uuid, random
-from AI_Pilot.Monitor_Interface.Monitors import get_monitor_spec, get_screen
+import threading, time, pyautogui
+from AI_Pilot.Control_Functions.Monitors import get_monitor_spec, get_screen
 from ml_botting_core import universal_predictor
-from AI_Pilot.Waypoint_Navigation.Waypoint_Navigation import navigate_waypoints_to_end
-from AI_Pilot.Mouse_Keyboard.Mouse_Keyboard import perform_move_click, perform_range_select
-from AI_Pilot.Objectives.Aggregate_Resources.Aggregate_Resources import Aggregate_Resources
+from AI_Pilot.Game_Functions.Navigation.Waypoint_Navigation import navigate_waypoints_to_end
+from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click, perform_range_select
+#from AI_Pilot.Objectives.Aggregate_Resources.Aggregate_Resources import Aggregate_Resources
 from AI_Pilot.Config_Management.Config_Management import load_config
+from AI_Pilot.Objectives.Mining.Miner import mining_cycle
 import numpy as np
-from loguru import logger
 
 
 class active_globals():
@@ -192,5 +192,11 @@ class Bot_Engine:
     # region ----- aggrogate_resources
     def aggregate_resources_start(self):
         Aggregate_Resources(self.ag)
+        return
+    # endregion
+
+    # region ----- minning
+    def start_mining(self):
+        mining_cycle(self.ag)
         return
     # endregion
