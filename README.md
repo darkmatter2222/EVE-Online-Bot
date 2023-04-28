@@ -7,6 +7,9 @@
 
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+## UPDATE 4/27/23
+We are approaching a release of AI Pilot!
+
 ## UPDATE 4/25/23  
 Should ahve made this months ago, a configuration overlay for easy X, Y configurations [Here](https://github.com/darkmatter2222/EVE-Online-Bot/tree/main/AI_Pilot/Setup)  
 [Youtube Video](https://www.youtube.com/watch?v=fqIvihY5VO0)
