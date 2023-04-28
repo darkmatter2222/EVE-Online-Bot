@@ -20,20 +20,17 @@ log_template = {
 
 class History:
     # make singleton
-    def __new__(cls, config_dir=r'..\Configs\configs.json'):
+    def __new__(cls, ag):
         if not hasattr(cls, 'instance'):
             cls.instance = super(History, cls).__new__(cls)
         return cls.instance
 
-    def __init__(self, config_dir=r'..\Configs\configs.json'):
-        self.config_dir = config_dir
-        self.config = json.load(open(self.config_dir))[socket.gethostname()]
-
-        self.client = MongoClient(self.config['mongo_host'],
+    def __init__(self, ag):
+        self.client = MongoClient(ag.mongo_logging['mining_bot']['mongo_host'],
                                   username=os.getenv("eve_username"),
                                   password=os.getenv("eve_password"))
-        self.db = self.client[self.config['db_name']]
-        self.collection = self.db[self.config['collection_name']]
+        self.db = self.client[ag.mongo_logging['mining_bot']['db_name']]
+        self.collection = self.db[ag.mongo_logging['mining_bot']['collection_name']]
         self.temp = 0
 
     def insert_payload(self, payload):

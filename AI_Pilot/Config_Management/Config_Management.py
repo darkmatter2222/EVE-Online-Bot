@@ -12,6 +12,7 @@ def load_config(ag):
     ag.general_config = config['general']
     ag.ml_botting_core_config = config['ml_botting_core']
     ag.static_screen_pos = config['static_screen_pos']
+    ag.mongo_logging = config['mongo_logging']
 
 def save_config(ag):
     host = socket.gethostname()
@@ -25,6 +26,7 @@ def save_config(ag):
     raw_config[target]['general'] = ag.general_config
     raw_config[target]['ml_botting_core'] = ag.ml_botting_core_config
     raw_config[target]['static_screen_pos'] = ag.static_screen_pos
+    raw_config[target]['mongo_logging'] = ag.mongo_logging
 
     with open(ag.config_dir, "w+") as outfile:
         outfile.write(json.dumps(raw_config, indent=1))

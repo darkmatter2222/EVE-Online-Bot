@@ -28,8 +28,9 @@ def execute_scan(ag):
     time.sleep(10)
 
 
-def get_survey_scan_data(ag):
-    execute_scan(ag)
+def get_survey_scan_data(ag, force_scan=False):
+    if force_scan:
+        execute_scan(ag)
 
     y_range = get_row_points(ag.static_screen_pos['range_grid_survey_scan_box'],
                              ag.static_screen_pos['survey_scan_box_count'])
@@ -57,13 +58,13 @@ def fault_tick(ag):
         logger.error(message)
         raise Exception(message)
 
-def get_scrub_scan_data(ag):
+def get_scrub_scan_data(ag, force_scan=False):
     e_break = 0
     scan_df = None
     while True:
         e_break += 1
         time.sleep(1)
-        scan_df = get_survey_scan_data(ag)
+        scan_df = get_survey_scan_data(ag, force_scan=force_scan)
         logger.info(scan_df)
         scan_df = scan_df[0:4]
         scan_df = scan_df[scan_df['Ore'] == True].reset_index()
@@ -163,7 +164,7 @@ def find_mining_spot_v2(ag, keep_finding=True):
 
         time.sleep(60)
 
-        scan_df = get_scrub_scan_data(ag)
+        scan_df = get_scrub_scan_data(ag, force_scan=True)
 
         if len(scan_df[scan_df['Volume'] == True]) >= 2:
             return target
@@ -254,14 +255,16 @@ def mine_till_full_v2(ag):
                 perform_move_ctrl_click(ag, scan_df.loc[i, 'click_target'], button='left', perform_offset=False)
                 time.sleep(1)
             time.sleep(4)
+
             xy = None
             for i, index in enumerate(top_two_not_locked_scan_indicies):
                 xy = scan_df.loc[index, 'click_target']
 
                 perform_move_click(ag, xy, button='left', perform_offset=False)
-                time.sleep(0.1)
+                time.sleep(1)
                 press_release_f_key(ag, i + 1)
                 time.sleep(1)
+
             ag.log.log_extraction(action='Both_Miners')
             logger.info('Both Miners Started...')
         # valid, desirable states
@@ -304,6 +307,7 @@ def mine_till_full_v2(ag):
                 ag.log.log_stale_mining('Invalid Miner State (L1)')
                 fault_tick(ag)
             else:
+                #TODO handle this  and a full recycle at dock
                 logger.info(f'FAULT (L1) - Another Chance')
 
         move_to_default_pos(ag)
@@ -322,4 +326,4 @@ def sub_mining_cycle(ag):
     # find minig Spot
     find_mining_spot_v2(ag)
     mine_till_full_v2(ag)
-    pass
+

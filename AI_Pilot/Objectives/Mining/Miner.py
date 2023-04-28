@@ -6,7 +6,7 @@ from AI_Pilot.Game_Functions.Navigation.Locations_Navigation import dock_at_home
 from loguru import logger
 import time
 
-cargo_unload_threshold = 0.9
+cargo_unload_threshold = 0.8
 
 def mining_cycle(ag):
     last_execution = None
@@ -27,7 +27,7 @@ def mining_cycle(ag):
         elif state_result['class'] == 'in_flight' and not cargo_full:
             mining_tool_state_result = get_miners_running(ag)
             sub_mining_cycle(ag)
-            pass
+
 
 
         time.sleep(30)

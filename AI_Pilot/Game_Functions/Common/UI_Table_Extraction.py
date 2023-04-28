@@ -45,7 +45,7 @@ def extract_bool(ag, img, cells, x_range, y_range, columns):
             frame[columns[j]] = populated
 
         frame['click_target'] = (
-            cells[0, i][0] + 10 + ag.monitor_spec['monitor_offset'][0],
-            cells[0, i][1] + 10 + ag.monitor_spec['monitor_offset'][1])  # offset by 10x10 pixels
+            cells[0, i][0] + 80 + ag.monitor_spec['monitor_offset'][0],
+            cells[0, i][1] + 16 + ag.monitor_spec['monitor_offset'][1])  # offset by 10x10 pixels
         frames.append(frame)
     return pd.DataFrame(frames, columns=columns)
