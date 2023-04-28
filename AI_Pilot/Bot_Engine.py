@@ -5,7 +5,7 @@ from AI_Pilot.Game_Functions.Navigation.Waypoint_Navigation import navigate_wayp
 from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click, perform_range_select
 #from AI_Pilot.Objectives.Aggregate_Resources.Aggregate_Resources import Aggregate_Resources
 from AI_Pilot.Config_Management.Config_Management import load_config
-from AI_Pilot.Objectives.Mining.Miner import mining_cycle
+from AI_Pilot.Objectives.Mining import Miner
 import numpy as np
 
 
@@ -197,6 +197,12 @@ class Bot_Engine:
 
     # region ----- minning
     def start_mining(self):
-        mining_cycle(self.ag)
+        Miner.mining_cycle(self.ag)
         return
+
+    def restart_fault_vars(self):
+        Miner.restart_fault_vars(self.ag)
+
+    def reset_stale_mining_sites(self):
+        Miner.reset_stale_mining_sites(self.ag)
     # endregion

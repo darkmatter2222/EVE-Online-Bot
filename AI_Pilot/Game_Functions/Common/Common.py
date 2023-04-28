@@ -26,6 +26,13 @@ def beta_get_game_state_cake(ag):
 
     return result
 
+def beta_get_game_state_cake_l2(ag):
+    img = get_screen(ag)
+    result = ag.up.predict(img, 'game_state_cake_layer_2_v1')
+    logger.info(result)
+
+    return result
+
 
 def exit_hanger(ag):
     perform_move_click(ag, ag.static_screen_pos['click_target_exit_hanger'], button='left')

@@ -11,6 +11,12 @@ from PIL import Image
 from datetime import datetime, timedelta
 import time
 
+def reset(ag):
+    ag.fault_count = 0
+
+def reset_stale(ag):
+    ag.stale_mining_locations = {}
+
 
 def get_miners_running(ag):
     image_stack = []
