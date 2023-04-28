@@ -33,7 +33,7 @@ class Universal_Prediction:
         self.config = json.load(open(self.config_dir))[socket.gethostname()]
 
         logger.add(
-            self.config['log_dir'] + '\\' + socket.gethostname() + "_" + sys.argv[0].split('/')[-1:][0] + "_{time}.log")
+            self.config['log_dir'] + '\\' + socket.gethostname() + "Audit_History" + sys.argv[0].split('/')[-1:][0] + "Audit_History{time}.log")
 
         self.sync_models()
 

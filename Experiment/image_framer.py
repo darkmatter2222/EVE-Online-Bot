@@ -624,7 +624,7 @@ while (True):
         #prediction = model2.predict(img)
         argm = np.argmax(prediction)
         y_prediction = class_names[argm]
-        pres = y_prediction.split('_')
+        pres = y_prediction.split('Audit_History')
         frame = cv2.transpose(frame)
         '''
         y0, dy = 200, 20

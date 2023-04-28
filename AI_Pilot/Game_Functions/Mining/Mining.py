@@ -1,6 +1,7 @@
 from AI_Pilot.Control_Functions.Monitors import get_screen
-from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click
+from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click, perform_move_ctrl_click, press_release_f_key
 from AI_Pilot.Game_Functions.Common.UI_Table_Extraction import extract_bool
+from AI_Pilot.Game_Functions.Cargo.Cargo import get_ship_root_cargo
 from AI_Pilot.Game_Functions.Navigation.Locations_Navigation import get_location_table, dock_at_home
 from AI_Pilot.Game_Functions.Common.UI_Table_Helpers import cell_dims, cell_dims_from_list, drange, get_row_points, \
     get_col_points, get_cells
@@ -167,7 +168,11 @@ def find_mining_spot_v2(ag, keep_finding=True):
     return
 
 
-def mine_till_full_v2(self):
+def select_mining_hold(ag):
+    perform_move_click(ag, ag.static_screen_pos['click_target_mining_hold'], button='left')
+
+
+def mine_till_full_v2(ag):
     default_location = (10, 10)
     field_depleted = False
     mining_stale = False
@@ -175,8 +180,8 @@ def mine_till_full_v2(self):
     cycle_delay = 30
     race_condition_fault_count = 0
     while True:
-        self.select_mining_hold()  # Ensure we have our mining hold selected so we can read the inv space
-        cargo_percent = self.game.get_cargo_data(refresh_screen=True)
+        select_mining_hold(ag)  # Ensure we have our mining hold selected so we can read the inv space
+        cargo_percent = get_ship_root_cargo(ag)
         logger.info(f'Cargo {cargo_percent:.2f}')
 
         # Stale Check
@@ -184,13 +189,13 @@ def mine_till_full_v2(self):
         if mining_cycle_start + timedelta(minutes=30) < datetime.utcnow():
             mining_stale = True
             logger.info('Time Based mining_stale = True')
-            self.log.log_stale_mining('30 Minute Timeout')
+            ag.log.log_stale_mining('30 Minute Timeout')
 
         if cargo_percent > 0.9 or mining_stale:
-            self.navigate_home()
+            dock_at_home()
             break
 
-        scan_df = self.get_scrub_scan_data()
+        scan_df = get_survey_scan_data(ag)
 
         logger.info('Full scan:')
         logger.info(scan_df)
@@ -201,11 +206,11 @@ def mine_till_full_v2(self):
         count_valid_minables = len(scan_df.index)
 
         if len(scan_df) == 0:
-            #field_depleted = True
+            # field_depleted = True
             # logger.info('field_depleted = True')
-            self.log.log_field_depleted()
+            ag.log.log_field_depleted()
             logger.info('field_depleted - finding new mining spot...')
-            self.find_mining_spot_v2()
+            find_mining_spot_v2(ag)
             logger.info('field_depleted - Spot Found, proceeding harvesting...')
             continue
 
@@ -219,7 +224,7 @@ def mine_till_full_v2(self):
 
         top_two_not_locked_scan_indicies = top_two_not_locked_scan_df.index  # top two rows that are not locked
         logger.info('Identifying what miner is running...')
-        mining_tool_results = self.game.get_mining_tool_class()
+        mining_tool_results = get_miners_running(ag)
         logger.info(mining_tool_results)
         time.sleep(1)
 
@@ -236,25 +241,19 @@ def mine_till_full_v2(self):
         elif len(top_two_not_locked_scan_indicies) == 2 and mining_tool_results['class'] == 'no_miners_running':
             # fire up both miners
             for i in top_two_not_locked_scan_indicies:
-                pyautogui.moveTo(scan_df.loc[i, 'click_target'])
-                time.sleep(0.1)
-                pyautogui.keyDown('ctrl')
-                time.sleep(0.1)
-                pyautogui.click()
-                time.sleep(0.1)
-                pyautogui.keyUp('ctrl')
+                perform_move_ctrl_click(ag, scan_df.loc[i, 'click_target'], button='left', perform_offset=False)
                 time.sleep(1)
             time.sleep(4)
             xy = None
             for i, index in enumerate(top_two_not_locked_scan_indicies):
                 xy = scan_df.loc[index, 'click_target']
-                pyautogui.moveTo(xy)
+
+                perform_move_ctrl_click(ag, xy, button='left', perform_offset=False)
                 time.sleep(0.1)
-                pyautogui.click()
-                time.sleep(0.1)
-                pyautogui.press(f'f{i + 1}')
+                press_release_f_key(ag, i + 1)
                 time.sleep(1)
-            self.log.log_extraction(action='Both_Miners')
+
+            ag.log.log_extraction(action='Both_Miners')
             logger.info('Both Miners Started...')
         # valid, desirable states
         elif len(top_two_not_locked_scan_indicies) == 1 and \
@@ -315,11 +314,12 @@ def mine_till_full_v2(self):
         logger.info(f'Cycle Delay... {cycle_delay} seconds...')
         time.sleep(30)
 
+
 def sub_mining_cycle(ag):
     if not hasattr(ag, 'stale_mining_locations'):
         ag.stale_mining_locations = {}
     # always asume we are not mining and we need to nav to starting point
     # find minig Spot
     find_mining_spot_v2(ag)
-    get_scrub_scan_data(ag)
+    mine_till_full_v2(ag)
     pass

@@ -16,7 +16,7 @@ game = Interface(config_dir=config_dir)
 bot = Actions(config_dir=config_dir, interface=game)
 log = History(config_dir=config_dir)
 
-logger.add(config['log_dir'] + '\\' + socket.gethostname() + "_" + sys.argv[0].split('/')[-1:][0] + "_{time}.log")
+logger.add(config['log_dir'] + '\\' + socket.gethostname() + "Audit_History" + sys.argv[0].split('/')[-1:][0] + "Audit_History{time}.log")
 #logger.add(config['log_dir'] + '\\' + "miner_{time}.log")
 logger.info('starting Miner...')
 logger.info('waiting 5 seconds...')

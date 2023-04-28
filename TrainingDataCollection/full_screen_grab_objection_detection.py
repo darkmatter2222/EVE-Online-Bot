@@ -12,7 +12,7 @@ game = Interface(config_dir=config_dir)
 
 data_root = r'O:\eve_models\training_data\unclass'
 
-logger.add(config['log_dir'] + '\\' + socket.gethostname() + "_" + sys.argv[0].split('/')[-1:][0] + "_{time}.log")
+logger.add(config['log_dir'] + '\\' + socket.gethostname() + "Audit_History" + sys.argv[0].split('/')[-1:][0] + "Audit_History{time}.log")
 
 while True:
     img = game.get_screen()

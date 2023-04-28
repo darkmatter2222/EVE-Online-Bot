@@ -30,7 +30,7 @@ def navigate_one_waypoint(ag):
     state_result = beta_get_game_state_cake(ag)
     if state_result['class'] == 'in_flight':
         route_y_large_vert_class_v2_result = get_y_waypoint_nav_pos(ag)
-        splits = route_y_large_vert_class_v2_result['class'].split('_')
+        splits = route_y_large_vert_class_v2_result['class'].split('Audit_History')
         #target_y = int(route_y_large_vert_class_v2_result['class'])
         #nav_point_xy = get_cords_with_offset(ag, 136, target_y + 4)
         nav_point_xy = get_cords_with_offset(ag, int(splits[0]) + 4, int(splits[1]) + 4)

@@ -24,6 +24,21 @@ def perform_move_click(ag, pos, button='right', perform_offset=True, finish_at_d
         move_to_default_pos(ag)
     return
 
+def perform_move_ctrl_click(ag, pos, button='right', perform_offset=True, finish_at_default=True):
+    # pos is tuple (x, y)
+    if perform_offset:
+        pos = get_cords_with_offset(ag, *pos)
+    pyautogui.moveTo(pos)
+    time.sleep(0.1)
+    pyautogui.keyDown('ctrl')
+    perform_click(ag, button)
+    time.sleep(0.1)
+    pyautogui.keyUp('ctrl')
+
+    if finish_at_default:
+        move_to_default_pos(ag)
+    return
+
 
 def perform_drag(ag, start_pos, end_pos, button='right', perform_offset=True, finish_at_default=True):
     # pos is tuple (x, y)
@@ -48,3 +63,6 @@ def perform_range_select(ag, pos_start, pos_end, button='left', perform_offset=T
         time.sleep(0.1)
         pyautogui.dragTo(*pos_end, 1, button=button)
         time.sleep(0.1)
+
+def press_release_f_key(ag, f_key_number):
+    pyautogui.press(f'f{f_key_number}')
