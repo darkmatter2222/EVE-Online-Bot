@@ -1,5 +1,5 @@
 from AI_Pilot.Control_Functions.Monitors import get_screen
-from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click, perform_move_ctrl_click, press_release_f_key
+from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click, perform_move_ctrl_click, press_release_f_key, move_to_default_pos
 from AI_Pilot.Game_Functions.Common.UI_Table_Extraction import extract_bool
 from AI_Pilot.Game_Functions.Cargo.Cargo import get_ship_root_cargo
 from AI_Pilot.Game_Functions.Navigation.Locations_Navigation import get_location_table, dock_at_home
@@ -46,6 +46,16 @@ def get_survey_scan_data(ag):
 
     return df
 
+def restart(ag):
+    ag.fault_count = 0
+
+def fault_tick(ag):
+    ag.fault_count += 1
+    logger.info(f'fault_count:{ag.fault_count}')
+    if ag.fault_count > 10:
+        message = 'Fault Count Exceeded'
+        logger.error(message)
+        raise Exception(message)
 
 def get_scrub_scan_data(ag):
     e_break = 0
@@ -248,55 +258,42 @@ def mine_till_full_v2(ag):
             for i, index in enumerate(top_two_not_locked_scan_indicies):
                 xy = scan_df.loc[index, 'click_target']
 
-                perform_move_ctrl_click(ag, xy, button='left', perform_offset=False)
+                perform_move_click(ag, xy, button='left', perform_offset=False)
                 time.sleep(0.1)
                 press_release_f_key(ag, i + 1)
                 time.sleep(1)
-
             ag.log.log_extraction(action='Both_Miners')
             logger.info('Both Miners Started...')
         # valid, desirable states
         elif len(top_two_not_locked_scan_indicies) == 1 and \
                 mining_tool_results['class'] in ['miner_1_running', 'miner_2_running']:
 
-            # Start Targeting
-            pyautogui.moveTo(scan_df.loc[top_two_not_locked_scan_indicies[0], 'click_target'])
-            time.sleep(0.1)
-            pyautogui.keyDown('ctrl')
-            time.sleep(0.1)
-            pyautogui.click()
-            time.sleep(0.1)
-            pyautogui.keyUp('ctrl')
-            time.sleep(1)
-            # wait for targeting...
+            perform_move_ctrl_click(ag, scan_df.loc[top_two_not_locked_scan_indicies[0], 'click_target'], button='left', perform_offset=False)
             time.sleep(4)
-            # reselect post targeting...
-            pyautogui.moveTo(scan_df.loc[top_two_not_locked_scan_indicies[0], 'click_target'])
-            time.sleep(0.1)
-            pyautogui.click()
+            perform_move_click(ag, scan_df.loc[top_two_not_locked_scan_indicies[0], 'click_target'], button='left', perform_offset=False)
             time.sleep(1)
 
             if mining_tool_results['class'] == 'miner_1_running':
                 # fire up miner 2
-                pyautogui.press(f'f{2}')
+                press_release_f_key(ag, 2)
                 time.sleep(1)
                 mining_cycle_start = datetime.utcnow()
-                self.log.log_extraction(action='Miner_2')
+                ag.log.log_extraction(action='Miner_2')
                 logger.info('Miner 2 Started...')
                 pass
             elif mining_tool_results['class'] == 'miner_2_running':
                 # fire up miner 1
-                pyautogui.press(f'f{1}')
+                press_release_f_key(ag, 1)
                 time.sleep(1)
                 mining_cycle_start = datetime.utcnow()
-                self.log.log_extraction(action='Miner_1')
+                ag.log.log_extraction(action='Miner_1')
                 logger.info('Miner 1 Started...')
             else:
                 # should be impossible to get here, log just in case.
                 # #aybe a race condition between scanning and mining tool check?
                 logger.info(f'FAULT (L2) - skipping....')
                 mining_stale = True
-                self.log.log_stale_mining('Invalid Miner State (L2)')
+                ag.log.log_stale_mining('Invalid Miner State (L2)')
         # Catch All
         else:
             logger.info(f'FAULT (L1) race_condition_fault_count:{race_condition_fault_count}')
@@ -304,12 +301,12 @@ def mine_till_full_v2(ag):
             if race_condition_fault_count > 5:
                 mining_stale = True
                 logger.info(f'FAULT (L1) - Going Stale')
-                self.log.log_stale_mining('Invalid Miner State (L1)')
-                self.fault_tick()
+                ag.log.log_stale_mining('Invalid Miner State (L1)')
+                fault_tick(ag)
             else:
                 logger.info(f'FAULT (L1) - Another Chance')
 
-        pyautogui.moveTo(default_location)
+        move_to_default_pos(ag)
 
         logger.info(f'Cycle Delay... {cycle_delay} seconds...')
         time.sleep(30)
@@ -318,6 +315,9 @@ def mine_till_full_v2(ag):
 def sub_mining_cycle(ag):
     if not hasattr(ag, 'stale_mining_locations'):
         ag.stale_mining_locations = {}
+    if not hasattr(ag, 'fault_count'):
+        ag.fault_count = 0
+
     # always asume we are not mining and we need to nav to starting point
     # find minig Spot
     find_mining_spot_v2(ag)
