@@ -15,8 +15,11 @@ def get_ship_root_cargo(ag):
 
 
 def unload_cargo(ag):
+    perform_move_click(ag, ag.static_screen_pos['click_target_mining_hold'], button='left')
+
     perform_range_select(ag, ag.static_screen_pos['range_click_and_drag_inv_box'][2:4],
                          ag.static_screen_pos['range_click_and_drag_inv_box'][0:2])
 
     perform_drag(ag, ag.static_screen_pos['click_target_first_item_in_inventory'],
                  ag.static_screen_pos['click_target_hanger'])
+

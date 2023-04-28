@@ -203,7 +203,7 @@ def mine_till_full_v2(ag):
             ag.log.log_stale_mining('30 Minute Timeout')
 
         if cargo_percent > 0.9 or mining_stale:
-            dock_at_home()
+            dock_at_home(ag)
             break
 
         scan_df = get_survey_scan_data(ag)

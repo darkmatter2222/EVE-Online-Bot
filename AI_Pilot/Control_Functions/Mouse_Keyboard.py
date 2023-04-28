@@ -40,7 +40,7 @@ def perform_move_ctrl_click(ag, pos, button='right', perform_offset=True, finish
     return
 
 
-def perform_drag(ag, start_pos, end_pos, button='right', perform_offset=True, finish_at_default=True):
+def perform_drag(ag, start_pos, end_pos, button='left', perform_offset=True, finish_at_default=True):
     # pos is tuple (x, y)
     if perform_offset:
         start_pos = get_cords_with_offset(ag, *start_pos)
