@@ -7,6 +7,10 @@
 
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
+
+## UPDATE 4/28/23
+The Mining Bot is now one with AI Pilot!  Much clean up and testing to do.  
+
 ## UPDATE 4/27/23
 We are approaching a release of AI Pilot!
 
