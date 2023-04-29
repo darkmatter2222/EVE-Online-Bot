@@ -9,13 +9,14 @@ import numpy as np
 def get_game_state(ag):
     # region ----- get game state
     img = get_screen(ag)
-    state_result = ag.up.predict(img, 'game_state')
+    state_result = ag.up.predict(img, 'game_state_v2')
     logger.info(state_result)
     # endregion
     return state_result
 
 
 def beta_get_game_state_cake(ag):
+    '''
     img = get_screen(ag)
     result = ag.up.predict(img, 'game_state_cake_layer_1_v1')
     logger.info(result)
@@ -23,15 +24,18 @@ def beta_get_game_state_cake(ag):
     if float(result['value_at_argmax']) < min_threshold:
         result = ag.up.predict(img, 'game_state_cake_layer_2_v1')
         logger.info(result)
+    '''
 
-    return result
+    return get_game_state(ag)
 
 def beta_get_game_state_cake_l2(ag):
+    '''
     img = get_screen(ag)
     result = ag.up.predict(img, 'game_state_cake_layer_2_v1')
     logger.info(result)
+    '''
 
-    return result
+    return get_game_state(ag)
 
 
 def exit_hanger(ag):

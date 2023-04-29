@@ -16,7 +16,7 @@ from sklearn.utils.class_weight import  compute_class_weight
 
 def build_and_train(root_image_directory, model_location,
                     model_name, epochs=10,
-                    resize_ratio=0.2, auto_balance_data=True):
+                    resize_ratio=0.2, auto_balance_data=True, batch_size=1):
     data_dir = pathlib.Path(root_image_directory)
 
     image_list = list(data_dir.glob('*/*.png'))
@@ -25,7 +25,7 @@ def build_and_train(root_image_directory, model_location,
 
     img = Image.open(image_list[0])
 
-    batch_size = 1
+    batch_size = batch_size
     img_height = int(img.height * resize_ratio)
     img_width = int(img.width * resize_ratio)
 
