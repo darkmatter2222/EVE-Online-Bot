@@ -1,10 +1,13 @@
 import sys, os, decimal, json, socket, uuid, time, signal
+
+sys.path.append(os.path.realpath('...'))
+
 from AI_Pilot.Bot_Engine import Bot_Engine
 from AI_Pilot.Audit_History.History import History
 from AI_Pilot.Game_Functions.Game_Client.Game_Client import login_sequience
 from loguru import logger
 
-config_dir = r'../AI_Pilot/ai_pilot_config_v2.json'
+config_dir = r'AI_Pilot/ai_pilot_config_v2.json'
 
 Bot = Bot_Engine(config_dir=config_dir)
 host = socket.gethostname()
