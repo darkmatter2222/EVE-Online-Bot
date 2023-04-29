@@ -1,6 +1,7 @@
 import sys, os, decimal, json, socket, uuid, time, signal
 
 sys.path.append(os.path.realpath('...'))
+sys.path.append(os.path.realpath('..'))
 
 from AI_Pilot.Bot_Engine import Bot_Engine
 from AI_Pilot.Audit_History.History import History
