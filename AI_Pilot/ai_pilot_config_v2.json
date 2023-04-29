@@ -1,412 +1,412 @@
 {
-  "default": {
-    "general": {
-      "log_dir": "\\\\databrick\\N\\eve_logs",
-      "monitor_number": 2,
-      "eve_launcher": "D:\\EVE\\Launcher\\evelauncher.exe"
-    },
-    "mongo_logging": {
-      "mining_bot": {
-        "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
-        "mongo_authMechanism": "SCRAM-SHA-256",
-        "db_name": "Eve",
-        "collection_name": "History"
-      }
-    },
-    "ml_botting_core": {
-      "public_models": [
-        {
-          "game": "eve_online",
-          "model_name": "game_state",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\game_state",
-          "model_log_directory": "O:\\eve_live_logs\\game_state",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "mining_tool_state",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\mining_tool_state",
-          "model_log_directory": "O:\\eve_live_logs\\mining_tool_state",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "nav_options",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\nav_options",
-          "model_log_directory": "O:\\eve_live_logs\\nav_options",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "hanger_menus",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\hanger_menus",
-          "model_log_directory": "O:\\eve_live_logs\\hanger_menus",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "set_dest",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\set_dest",
-          "model_log_directory": "O:\\eve_live_logs\\set_dest",
-          "save_images": 0
-        },
-        {
-          "game": "eve_online",
-          "model_name": "route_y_large_vert_class_v4",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\route_y_large_vert_class_v4",
-          "model_log_directory": "O:\\eve_live_logs\\route_y_large_vert_class_v4",
-          "save_images": 0
-        },
-        {
-          "game": "eve_online",
-          "model_name": "game_state_cake_layer_1_v1",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\game_state_cake_layer_1_v1",
-          "model_log_directory": "O:\\eve_live_logs\\game_state_cake_layer_1_v1",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "game_state_cake_layer_2_v1",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\game_state_cake_layer_2_v1",
-          "model_log_directory": "O:\\eve_live_logs\\game_state_cake_layer_2_v1",
-          "save_images": 1
-        }
-      ]
-    },
-    "static_screen_pos": {
-      "next_waypoint_menu_box_dims_from_click": [
-        -90,
-        369,
-        -28,
-        356
-      ],
-      "click_target_default_cords": [
-        85,
-        60
-      ],
-      "click_target_first_item_in_inventory": [
-        315,
-        730
-      ],
-      "click_target_hanger": [
-        158,
-        800
-      ],
-      "click_target_mining_hold": [
-        162,
-        726
-      ],
-      "click_target_scanner_button": [
-        1123,
-        908
-      ],
-      "range_click_and_drag_inv_box": [
-        275,
-        688,
-        786,
-        1013
-      ],
-      "range_miners": [
-        1058,
-        820,
-        1188,
-        878
-      ],
-      "range_grid_search_location_box": [
-        897,
-        195,
-        1462,
-        521
-      ],
-      "search_location_box_count": 13,
-      "search_location_box_columns": [
-        1
-      ],
-      "click_and_drag_inv_line": [
-        336,
-        692,
-        182,
-        871
-      ],
-      "range_grid_survey_scan_box": [
-        1280,
-        613,
-        1851,
-        767
-      ],
-      "survey_scan_box_count": 6,
-      "survey_scan_box_columns": [
-        0.05,
-        0.45,
-        0.15,
-        0.18
-      ],
-      "click_target_exit_hanger": [
-        1738,
-        377
-      ],
-      "click_target_set_quant_target": [
-        889,
-        651
-      ],
-      "Load_to_mininghold_click_and_drag_inv_line": [
-        336,
-        692,
-        150,
-        675
-      ],
-      "click_target_ship_root": [
-        168,
-        669
-      ],
-      "click_target_search_tab": [
-        990,
-        60
-      ],
-      "click_target_search_tab_search_bar": [
-        990,
-        130
-      ],
-      "range_cargo_box": [
-        371,
-        634,
-        636,
-        641
-      ],
-      "mining_sites": [
-        "Site Two Alpha",
-        "Site One Alpha",
-        "Site Three Alpha",
-        "Site One Beta",
-        "Site Twa Beta",
-        "Site Three Beta",
-        "Site One Charlie",
-        "Site Three Charlie",
-        "Site One Delta",
-        "Site Three Delta",
-        "Site One Epsilon"
-      ]
-    }
+ "default": {
+  "general": {
+   "log_dir": "\\\\databrick\\N\\eve_logs",
+   "monitor_number": 2,
+   "eve_launcher": "D:\\EVE\\Launcher\\evelauncher.exe"
   },
-  "databrick": {
-    "general": {
-      "log_dir": "\\\\databrick\\N\\eve_logs",
-      "monitor_number": 1,
-      "eve_launcher": "D:\\EVE\\Launcher\\evelauncher.exe"
+  "mongo_logging": {
+   "mining_bot": {
+    "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
+    "mongo_authMechanism": "SCRAM-SHA-256",
+    "db_name": "Eve",
+    "collection_name": "History"
+   }
+  },
+  "ml_botting_core": {
+   "public_models": [
+    {
+     "game": "eve_online",
+     "model_name": "game_state",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\game_state",
+     "model_log_directory": "O:\\eve_live_logs\\game_state",
+     "save_images": 1
     },
-    "mongo_logging": {
-      "mining_bot": {
-        "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
-        "mongo_authMechanism": "SCRAM-SHA-256",
-        "db_name": "Eve",
-        "collection_name": "History"
-      }
+    {
+     "game": "eve_online",
+     "model_name": "mining_tool_state",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\mining_tool_state",
+     "model_log_directory": "O:\\eve_live_logs\\mining_tool_state",
+     "save_images": 1
     },
-    "ml_botting_core": {
-      "public_models": [
-        {
-          "game": "eve_online",
-          "model_name": "game_state",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "E:\\eve_live_models\\game_state",
-          "model_log_directory": "E:\\eve_live_logs\\game_state",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "mining_tool_state",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "E:\\eve_live_models\\mining_tool_state",
-          "model_log_directory": "E:\\eve_live_logs\\mining_tool_state",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "nav_options",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "E:\\eve_live_models\\nav_options",
-          "model_log_directory": "E:\\eve_live_logs\\nav_options",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "hanger_menus",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "E:\\eve_live_models\\hanger_menus",
-          "model_log_directory": "E:\\eve_live_logs\\hanger_menus",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "set_dest",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "E:\\eve_live_models\\set_dest",
-          "model_log_directory": "E:\\eve_live_logs\\set_dest",
-          "save_images": 0
-        },
-        {
-          "game": "eve_online",
-          "model_name": "route_y_large_vert_class_v4",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "E:\\eve_live_models\\route_y_large_vert_class_v4",
-          "model_log_directory": "E:\\eve_live_logs\\route_y_large_vert_class_v4",
-          "save_images": 0
-        },
-        {
-          "game": "eve_online",
-          "model_name": "game_state_cake_layer_1_v1",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "E:\\eve_live_models\\game_state_cake_layer_1_v1",
-          "model_log_directory": "E:\\eve_live_logs\\game_state_cake_layer_1_v1",
-          "save_images": 1
-        },
-        {
-          "game": "eve_online",
-          "model_name": "game_state_cake_layer_2_v1",
-          "download_latest": 1,
-          "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "E:\\eve_live_models\\game_state_cake_layer_2_v1",
-          "model_log_directory": "E:\\eve_live_logs\\game_state_cake_layer_2_v1",
-          "save_images": 1
-        }
-      ]
+    {
+     "game": "eve_online",
+     "model_name": "nav_options",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\nav_options",
+     "model_log_directory": "O:\\eve_live_logs\\nav_options",
+     "save_images": 1
     },
-    "static_screen_pos": {
-      "next_waypoint_menu_box_dims_from_click": [
-        -90,
-        369,
-        -28,
-        356
-      ],
-      "click_target_default_cords": [
-        85,
-        60
-      ],
-      "click_target_first_item_in_inventory": [
-        315,
-        730
-      ],
-      "click_target_hanger": [
-        158,
-        800
-      ],
-      "click_target_mining_hold": [
-        162,
-        726
-      ],
-      "click_target_scanner_button": [
-        1123,
-        908
-      ],
-      "range_click_and_drag_inv_box": [
-        275,
-        688,
-        786,
-        1013
-      ],
-      "range_miners": [
-        1058,
-        820,
-        1188,
-        878
-      ],
-      "range_grid_search_location_box": [
-        897,
-        195,
-        1462,
-        521
-      ],
-      "search_location_box_count": 13,
-      "search_location_box_columns": [
-        1
-      ],
-      "click_and_drag_inv_line": [
-        336,
-        692,
-        182,
-        871
-      ],
-      "range_grid_survey_scan_box": [
-        1280,
-        613,
-        1851,
-        767
-      ],
-      "survey_scan_box_count": 6,
-      "survey_scan_box_columns": [
-        0.05,
-        0.45,
-        0.15,
-        0.18
-      ],
-      "click_target_exit_hanger": [
-        1738,
-        377
-      ],
-      "click_target_set_quant_target": [
-        889,
-        651
-      ],
-      "Load_to_mininghold_click_and_drag_inv_line": [
-        336,
-        692,
-        150,
-        675
-      ],
-      "click_target_ship_root": [
-        168,
-        669
-      ],
-      "click_target_search_tab": [
-        990,
-        60
-      ],
-      "click_target_search_tab_search_bar": [
-        990,
-        130
-      ],
-      "range_cargo_box": [
-        371,
-        634,
-        636,
-        641
-      ],
-      "mining_sites": [
-        "Site Two Alpha",
-        "Site One Alpha",
-        "Site Three Alpha",
-        "Site One Beta",
-        "Site Twa Beta",
-        "Site Three Beta",
-        "Site One Charlie",
-        "Site Three Charlie",
-        "Site One Delta",
-        "Site Three Delta",
-        "Site One Epsilon"
-      ]
+    {
+     "game": "eve_online",
+     "model_name": "hanger_menus",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\hanger_menus",
+     "model_log_directory": "O:\\eve_live_logs\\hanger_menus",
+     "save_images": 1
+    },
+    {
+     "game": "eve_online",
+     "model_name": "set_dest",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\set_dest",
+     "model_log_directory": "O:\\eve_live_logs\\set_dest",
+     "save_images": 0
+    },
+    {
+     "game": "eve_online",
+     "model_name": "route_y_large_vert_class_v4",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\route_y_large_vert_class_v4",
+     "model_log_directory": "O:\\eve_live_logs\\route_y_large_vert_class_v4",
+     "save_images": 0
+    },
+    {
+     "game": "eve_online",
+     "model_name": "game_state_cake_layer_1_v1",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\game_state_cake_layer_1_v1",
+     "model_log_directory": "O:\\eve_live_logs\\game_state_cake_layer_1_v1",
+     "save_images": 1
+    },
+    {
+     "game": "eve_online",
+     "model_name": "game_state_cake_layer_2_v1",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "O:\\eve_live_models\\game_state_cake_layer_2_v1",
+     "model_log_directory": "O:\\eve_live_logs\\game_state_cake_layer_2_v1",
+     "save_images": 1
     }
+   ]
+  },
+  "static_screen_pos": {
+   "next_waypoint_menu_box_dims_from_click": [
+    -90,
+    369,
+    -28,
+    356
+   ],
+   "click_target_default_cords": [
+    85,
+    60
+   ],
+   "click_target_first_item_in_inventory": [
+    315,
+    730
+   ],
+   "click_target_hanger": [
+    158,
+    800
+   ],
+   "click_target_mining_hold": [
+    162,
+    726
+   ],
+   "click_target_scanner_button": [
+    1123,
+    908
+   ],
+   "range_click_and_drag_inv_box": [
+    275,
+    688,
+    786,
+    1013
+   ],
+   "range_miners": [
+    1058,
+    820,
+    1188,
+    878
+   ],
+   "range_grid_search_location_box": [
+    897,
+    195,
+    1462,
+    521
+   ],
+   "search_location_box_count": 13,
+   "search_location_box_columns": [
+    1
+   ],
+   "click_and_drag_inv_line": [
+    336,
+    692,
+    182,
+    871
+   ],
+   "range_grid_survey_scan_box": [
+    1280,
+    613,
+    1851,
+    767
+   ],
+   "survey_scan_box_count": 6,
+   "survey_scan_box_columns": [
+    0.05,
+    0.45,
+    0.15,
+    0.18
+   ],
+   "click_target_exit_hanger": [
+    1738,
+    377
+   ],
+   "click_target_set_quant_target": [
+    889,
+    651
+   ],
+   "Load_to_mininghold_click_and_drag_inv_line": [
+    336,
+    692,
+    150,
+    675
+   ],
+   "click_target_ship_root": [
+    168,
+    669
+   ],
+   "click_target_search_tab": [
+    990,
+    60
+   ],
+   "click_target_search_tab_search_bar": [
+    990,
+    130
+   ],
+   "range_cargo_box": [
+    371,
+    634,
+    636,
+    641
+   ],
+   "mining_sites": [
+    "Site Two Alpha",
+    "Site One Alpha",
+    "Site Three Alpha",
+    "Site One Beta",
+    "Site Twa Beta",
+    "Site Three Beta",
+    "Site One Charlie",
+    "Site Three Charlie",
+    "Site One Delta",
+    "Site Three Delta",
+    "Site One Epsilon"
+   ]
   }
+ },
+ "databrick": {
+  "general": {
+   "log_dir": "\\\\databrick\\N\\eve_logs",
+   "monitor_number": 1,
+   "eve_launcher": "D:\\EVE\\Launcher\\evelauncher.exe"
+  },
+  "mongo_logging": {
+   "mining_bot": {
+    "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
+    "mongo_authMechanism": "SCRAM-SHA-256",
+    "db_name": "Eve",
+    "collection_name": "History"
+   }
+  },
+  "ml_botting_core": {
+   "public_models": [
+    {
+     "game": "eve_online",
+     "model_name": "game_state",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "E:\\eve_live_models\\game_state",
+     "model_log_directory": "E:\\eve_live_logs\\game_state",
+     "save_images": 1
+    },
+    {
+     "game": "eve_online",
+     "model_name": "mining_tool_state",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "E:\\eve_live_models\\mining_tool_state",
+     "model_log_directory": "E:\\eve_live_logs\\mining_tool_state",
+     "save_images": 1
+    },
+    {
+     "game": "eve_online",
+     "model_name": "nav_options",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "E:\\eve_live_models\\nav_options",
+     "model_log_directory": "E:\\eve_live_logs\\nav_options",
+     "save_images": 1
+    },
+    {
+     "game": "eve_online",
+     "model_name": "hanger_menus",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "E:\\eve_live_models\\hanger_menus",
+     "model_log_directory": "E:\\eve_live_logs\\hanger_menus",
+     "save_images": 1
+    },
+    {
+     "game": "eve_online",
+     "model_name": "set_dest",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "E:\\eve_live_models\\set_dest",
+     "model_log_directory": "E:\\eve_live_logs\\set_dest",
+     "save_images": 0
+    },
+    {
+     "game": "eve_online",
+     "model_name": "route_y_large_vert_class_v4",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "E:\\eve_live_models\\route_y_large_vert_class_v4",
+     "model_log_directory": "E:\\eve_live_logs\\route_y_large_vert_class_v4",
+     "save_images": 0
+    },
+    {
+     "game": "eve_online",
+     "model_name": "game_state_cake_layer_1_v1",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "E:\\eve_live_models\\game_state_cake_layer_1_v1",
+     "model_log_directory": "E:\\eve_live_logs\\game_state_cake_layer_1_v1",
+     "save_images": 1
+    },
+    {
+     "game": "eve_online",
+     "model_name": "game_state_cake_layer_2_v1",
+     "download_latest": 1,
+     "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
+     "model_root_directory": "E:\\eve_live_models\\game_state_cake_layer_2_v1",
+     "model_log_directory": "E:\\eve_live_logs\\game_state_cake_layer_2_v1",
+     "save_images": 1
+    }
+   ]
+  },
+  "static_screen_pos": {
+   "next_waypoint_menu_box_dims_from_click": [
+    -90,
+    369,
+    -28,
+    356
+   ],
+   "click_target_default_cords": [
+    85,
+    60
+   ],
+   "click_target_first_item_in_inventory": [
+    315,
+    730
+   ],
+   "click_target_hanger": [
+    158,
+    875
+   ],
+   "click_target_mining_hold": [
+    160,
+    731
+   ],
+   "click_target_scanner_button": [
+    1123,
+    908
+   ],
+   "range_click_and_drag_inv_box": [
+    275,
+    688,
+    741,
+    1006
+   ],
+   "range_miners": [
+    1058,
+    820,
+    1188,
+    878
+   ],
+   "range_grid_search_location_box": [
+    814,
+    156,
+    1242,
+    480
+   ],
+   "search_location_box_count": 13,
+   "search_location_box_columns": [
+    1
+   ],
+   "click_and_drag_inv_line": [
+    336,
+    692,
+    182,
+    871
+   ],
+   "range_grid_survey_scan_box": [
+    1277,
+    616,
+    1851,
+    767
+   ],
+   "survey_scan_box_count": 6,
+   "survey_scan_box_columns": [
+    0.05,
+    0.45,
+    0.15,
+    0.18
+   ],
+   "click_target_exit_hanger": [
+    1726,
+    397
+   ],
+   "click_target_set_quant_target": [
+    889,
+    651
+   ],
+   "Load_to_mininghold_click_and_drag_inv_line": [
+    336,
+    692,
+    150,
+    675
+   ],
+   "click_target_ship_root": [
+    165,
+    670
+   ],
+   "click_target_search_tab": [
+    990,
+    60
+   ],
+   "click_target_search_tab_search_bar": [
+    990,
+    130
+   ],
+   "range_cargo_box": [
+    379,
+    635,
+    584,
+    641
+   ],
+   "mining_sites": [
+    "Site Two Alpha",
+    "Site One Alpha",
+    "Site Three Alpha",
+    "Site One Beta",
+    "Site Twa Beta",
+    "Site Three Beta",
+    "Site One Charlie",
+    "Site Three Charlie",
+    "Site One Delta",
+    "Site Three Delta",
+    "Site One Epsilon"
+   ]
+  }
+ }
 }
