@@ -1,6 +1,21 @@
 import time, pyautogui
 from AI_Pilot.Control_Functions.General import get_cords_with_offset
+from loguru import logger
 
+
+def recover_mouse(ag):
+    try:
+        logger.info('recovering mouse...')
+        pyautogui.FAILSAFE = False
+        time.sleep(1)
+        move_to_default_pos(ag)
+        time.sleep(1)
+        pyautogui.FAILSAFE = True
+        logger.info('recovered')
+    except:
+        logger.info('failed recovery')
+        pass
+    time.sleep(5)
 
 def move_to_default_pos(ag):
     pyautogui.moveTo(get_cords_with_offset(ag, *ag.static_screen_pos['click_target_default_cords']))
