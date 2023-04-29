@@ -208,7 +208,7 @@
   "general": {
    "log_dir": "\\\\databrick\\N\\eve_logs",
    "monitor_number": 1,
-   "eve_launcher": "D:\\EVE\\Launcher\\evelauncher.exe"
+   "eve_launcher": "C:\\EVE\\Launcher\\evelauncher.exe"
   },
   "mongo_logging": {
    "mining_bot": {
