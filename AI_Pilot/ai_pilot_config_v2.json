@@ -225,8 +225,8 @@
           "model_name": "game_state_v2",
           "download_latest": 1,
           "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
-          "model_root_directory": "O:\\eve_live_models\\game_state_v2",
-          "model_log_directory": "O:\\eve_live_logs\\game_state_v2",
+          "model_root_directory": "E:\\eve_live_models\\game_state_v2",
+          "model_log_directory": "E:\\eve_live_logs\\game_state_v2",
           "save_images": 1
         },
         {
