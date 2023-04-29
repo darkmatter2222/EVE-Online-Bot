@@ -207,7 +207,7 @@
   "databrick": {
     "general": {
       "log_dir": "\\\\databrick\\N\\eve_logs",
-      "monitor_number": 2,
+      "monitor_number": 1,
       "eve_launcher": "D:\\EVE\\Launcher\\evelauncher.exe"
     },
     "mongo_logging": {
