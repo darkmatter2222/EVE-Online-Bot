@@ -16,7 +16,7 @@ from sklearn.utils.class_weight import  compute_class_weight
 
 def build_and_train(root_image_directory, model_location,
                     model_name, epochs=10,
-                    resize_ratio=0.2, auto_balance_data=True, batch_size=1):
+                    resize_ratio=0.2, auto_balance_data=True, batch_size=1, final_actvation=None):
     data_dir = pathlib.Path(root_image_directory)
 
     image_list = list(data_dir.glob('*/*.png'))
@@ -78,7 +78,7 @@ def build_and_train(root_image_directory, model_location,
         layers.Flatten(),
         layers.Dense(128, activation='relu'),
         layers.Dropout(0.5),
-        layers.Dense(num_classes, activation='sigmoid')
+        layers.Dense(num_classes, activation=final_actvation)
     ])
 
     model.compile(optimizer='adam',
@@ -109,7 +109,7 @@ def build_and_train(root_image_directory, model_location,
     val_cf = confusion_matrix(val_targets, val_predictions.argmax(1).astype(int))
     
     eval_results = model.evaluate(val_features, val_targets)
-    
+        
     decision_threshold = 0.8
     if eval_results[1] != 1.0:
         decision_threshold = 1.0- ((1.0 - eval_results[1]))
@@ -128,4 +128,4 @@ def build_and_train(root_image_directory, model_location,
         'decision_threshold': decision_threshold
     }
 
-    return stats, rendering
+    return stats, rendering, eval_results

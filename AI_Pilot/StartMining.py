@@ -80,8 +80,8 @@ while True:
         logger.info('Main Loop-Sleeping 30 seconds...')
         time.sleep(30)
     except Exception as e:
-        raise e
-        logger.error(f'Main Loop-Exception:{e}')
+        logger.info(f'Main Loop-Exception:{e}')
+        logger.exception(e)
         Bot.ag.log.log_main_loop_activity('Recycle', "Recycle Exception Main Loop Starting")
         recycle(launcher_pid, game_pid)
         Bot.ag.log.log_main_loop_activity('Recycle', "Recycle Exception Main Loop Finished")
