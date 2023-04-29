@@ -1,3 +1,7 @@
+import sys, os
+
+sys.path.append(os.path.realpath('...'))
+
 from AI_Pilot.Control_Functions.Monitors import get_monitor_spec
 from AI_Pilot.Setup.Overlay import overlay
 from ml_botting_core import universal_predictor
@@ -17,7 +21,7 @@ class active_globals():
 
 ag = active_globals()
 
-config_dir = r'..\..\AI_Pilot\ai_pilot_config_v2.json'
+config_dir = r'AI_Pilot\ai_pilot_config_v2.json'
 
 ag.config_dir = config_dir
 
