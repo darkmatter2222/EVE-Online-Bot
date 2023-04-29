@@ -12,7 +12,7 @@ config_dir = r'AI_Pilot/ai_pilot_config_v2.json'
 Bot = Bot_Engine(config_dir=config_dir)
 host = socket.gethostname()
 Bot.ag.log = History(Bot.ag)
-logger.add(Bot.ag.this_config['general']['log_dir'] + '\\' + host + "Audit_History" + sys.argv[0].split('/')[-1:][0] + f"Audit_History{time}.log")
+logger.add(Bot.ag.this_config['general']['log_dir'] + '\\' + host + "Audit_History{time}.log")
 
 def recycle(launcher_pid, game_pid):
     try:
