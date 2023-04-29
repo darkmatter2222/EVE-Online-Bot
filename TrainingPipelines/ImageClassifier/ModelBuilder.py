@@ -78,7 +78,7 @@ def build_and_train(root_image_directory, model_location,
         layers.Flatten(),
         layers.Dense(128, activation='relu'),
         layers.Dropout(0.5),
-        layers.Dense(num_classes)
+        layers.Dense(num_classes, activation='sigmoid')
     ])
 
     model.compile(optimizer='adam',
@@ -112,7 +112,7 @@ def build_and_train(root_image_directory, model_location,
     
     decision_threshold = 0.8
     if eval_results[1] != 1.0:
-        decision_threshold = 1.0- ((1.0 - eval_results[1]) * 2)
+        decision_threshold = 1.0- ((1.0 - eval_results[1]))
     
 
     model.save(model_location)

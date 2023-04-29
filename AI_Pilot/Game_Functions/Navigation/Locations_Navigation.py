@@ -3,6 +3,7 @@ from AI_Pilot.Control_Functions.Monitors import get_screen
 from AI_Pilot.Game_Functions.Common.UI_Table_Extraction import extract_values
 from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click
 import time
+from loguru import logger
 
 def get_location_table(ag):
     y_range = get_row_points(ag.static_screen_pos['range_grid_search_location_box'],
@@ -17,6 +18,9 @@ def get_location_table(ag):
 
     df = extract_values(ag, img=img, cells=cells, x_range=x_range[0:2],
                           y_range=y_range, columns=extract_columns)
+
+    logger.info('Locations:')
+    logger.info(df)
 
     return df
 

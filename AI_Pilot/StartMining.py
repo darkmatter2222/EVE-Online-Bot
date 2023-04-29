@@ -51,14 +51,25 @@ while True:
         try:
             Bot.start_mining()
         except Exception as e:
-            logger.info(e)
-            if e.args[0] == 'Connection Lost, Restart':
-                break # Recycle and repeat main loop
-            elif e.args[0] == 'Fault Count Exceeded':
+            logger.exception(e)
+            try:
+                if e.args[0] == 'Connection Lost, Restart':
+                    break # Recycle and repeat main loop
+                elif e.args[0] == 'Fault Count Exceeded':
+                    break
+                elif 'PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen' in e.args[0]:
+                    Bot.recover_mouse()
+                    break
+                else:
+                    break
+            except Exception as ex:
+                logger.exception(ex)
                 break
-            elif 'PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen' in e.args[0]:
-                Bot.recover_mouse()
-            pass
+
+
+
+
+
         Bot.ag.log.log_main_loop_activity('Mine', "Mining Main Loop Finished")
 
         # recycle
