@@ -1,4 +1,4 @@
-from AI_Pilot.Game_Functions.Common.Common import beta_get_game_state_cake
+from AI_Pilot.Game_Functions.Common.Common import get_game_state
 from AI_Pilot.Game_Functions.Cargo.Cargo import get_ship_root_cargo, unload_cargo
 from AI_Pilot.Game_Functions.Common.Common import exit_hanger
 from AI_Pilot.Game_Functions.Mining.Mining import get_miners_running, sub_mining_cycle, select_mining_hold, reset, reset_stale
@@ -13,7 +13,7 @@ def mining_cycle(ag):
     last_execution = None
     while True:
         select_mining_hold(ag)
-        state_result = beta_get_game_state_cake(ag)
+        state_result = get_game_state(ag)
         cargo_full = True if get_ship_root_cargo(ag) > cargo_unload_threshold else False
         if state_result['class'] == 'in_flight' and cargo_full:
             dock_at_home(ag)

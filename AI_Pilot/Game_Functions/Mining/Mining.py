@@ -1,6 +1,8 @@
 from AI_Pilot.Control_Functions.Monitors import get_screen
-from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click, perform_move_ctrl_click, press_release_f_key, move_to_default_pos
+from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click, perform_move_ctrl_click, press_release_f_key, \
+    move_to_default_pos
 from AI_Pilot.Game_Functions.Common.UI_Table_Extraction import extract_bool
+from AI_Pilot.Game_Functions.Common.Common import get_game_state
 from AI_Pilot.Game_Functions.Cargo.Cargo import get_ship_root_cargo
 from AI_Pilot.Game_Functions.Navigation.Locations_Navigation import get_location_table, dock_at_home
 from AI_Pilot.Game_Functions.Common.UI_Table_Helpers import cell_dims, cell_dims_from_list, drange, get_row_points, \
@@ -11,8 +13,10 @@ from PIL import Image
 from datetime import datetime, timedelta
 import time
 
+
 def reset(ag):
     ag.fault_count = 0
+
 
 def reset_stale(ag):
     ag.stale_mining_locations = {}
@@ -53,8 +57,10 @@ def get_survey_scan_data(ag, force_scan=False):
 
     return df
 
+
 def restart(ag):
     ag.fault_count = 0
+
 
 def fault_tick(ag):
     ag.fault_count += 1
@@ -63,6 +69,7 @@ def fault_tick(ag):
         message = 'Fault Count Exceeded'
         logger.error(message)
         raise Exception(message)
+
 
 def get_scrub_scan_data(ag, force_scan=False):
     e_break = 0
@@ -197,6 +204,11 @@ def mine_till_full_v2(ag):
     cycle_delay = 30
     race_condition_fault_count = 0
     while True:
+        # validate we are in flgiht
+        game_state = get_game_state(ag)
+        if game_state['class'] != 'in_flight':
+            break
+
         select_mining_hold(ag)  # Ensure we have our mining hold selected so we can read the inv space
         cargo_percent = get_ship_root_cargo(ag)
         logger.info(f'Cargo {cargo_percent:.2f}')
@@ -277,9 +289,11 @@ def mine_till_full_v2(ag):
         elif len(top_two_not_locked_scan_indicies) == 1 and \
                 mining_tool_results['class'] in ['miner_1_running', 'miner_2_running']:
 
-            perform_move_ctrl_click(ag, scan_df.loc[top_two_not_locked_scan_indicies[0], 'click_target'], button='left', perform_offset=False)
+            perform_move_ctrl_click(ag, scan_df.loc[top_two_not_locked_scan_indicies[0], 'click_target'], button='left',
+                                    perform_offset=False)
             time.sleep(4)
-            perform_move_click(ag, scan_df.loc[top_two_not_locked_scan_indicies[0], 'click_target'], button='left', perform_offset=False)
+            perform_move_click(ag, scan_df.loc[top_two_not_locked_scan_indicies[0], 'click_target'], button='left',
+                               perform_offset=False)
             time.sleep(1)
 
             if mining_tool_results['class'] == 'miner_1_running':
@@ -313,7 +327,7 @@ def mine_till_full_v2(ag):
                 ag.log.log_stale_mining('Invalid Miner State (L1)')
                 fault_tick(ag)
             else:
-                #TODO handle this  and a full recycle at dock
+                # TODO handle this  and a full recycle at dock
                 logger.info(f'FAULT (L1) - Another Chance')
 
         move_to_default_pos(ag)
@@ -332,4 +346,3 @@ def sub_mining_cycle(ag):
     # find minig Spot
     find_mining_spot_v2(ag)
     mine_till_full_v2(ag)
-
