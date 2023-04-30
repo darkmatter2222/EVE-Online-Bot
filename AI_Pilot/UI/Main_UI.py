@@ -1,19 +1,18 @@
-import sys, os, decimal, json, socket, uuid, time
+import sys, os, socket, time
 import tkinter as tk
 
-sys.path.append(os.path.realpath('..'))
-from AI_Pilot.Bot_Engine import Bot_Engine
+from AI_Pilot.Bot_Engine.Bot_Engine import Bot_Engine
 from loguru import logger
-
-config_dir = r'../AI_Pilot/ai_pilot_config_v2.json'
-
-Bot = Bot_Engine(config_dir=config_dir)
-host = socket.gethostname()
-logger.add(Bot.ag.this_config['general']['log_dir'] + '\\' + host + "Audit_History" + sys.argv[0].split('/')[-1:][0] + "Audit_History{time}.log")
 
 
 class AI_Pilot():
-    def __init__(self):
+    def __init__(self, config_dir):
+        self.bot = Bot_Engine(config_dir=config_dir)
+        host = socket.gethostname()
+        logger.add(
+            self.bot.ag.this_config['general']['log_dir'] + '\\' + host + "Audit_History" + sys.argv[0].split('/')[-1:][
+                0] + "Audit_History{time}.log")
+
         self.title = "AI Pilot V1"
         self.root = tk.Tk()
         # self.root.attributes('-topmost', True)
@@ -113,24 +112,24 @@ class AI_Pilot():
             self.dock_at_destination_lb.insert(0, f" {record}")
 
     def dock_at_destination_e_stop(self):
-        Bot.dock_at_destination_e_stop()
+        self.bot.dock_at_destination_e_stop()
 
     def dock_at_destination_start(self):
         self.dock_at_destination_clear_log()
-        Bot.dock_at_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change)
+        self.bot.dock_at_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change)
 
     # endregion
 
     # region ----- search_for_destination_start
     def search_for_destination_start(self):
-        Bot.move_ore_threaded(self)
+        self.bot.move_ore_threaded(self)
         time.sleep(3)
         #Bot.dock_at_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change)
     # endregion
 
     # region ----- start aggregate_resources
     def aggregate_resources_start(self):
-        Bot.aggregate_resources_start()
+        self.bot.aggregate_resources_start()
     # endregion
 
 
@@ -140,5 +139,5 @@ class AI_Pilot():
         self.root.mainloop()
 
 
-AIP = AI_Pilot()
-AIP.start()
+#AIP = AI_Pilot()
+#AIP.start()
