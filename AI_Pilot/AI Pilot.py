@@ -17,8 +17,8 @@ from AI_Pilot.UI.Main_UI import AI_Pilot
 
 # parse arguments
 parser = argparse.ArgumentParser(prog='AI Pilot.py')
-parser.add_argument("-config_file", metavar="config_file", type=str)
-parser.add_argument("-headless_miner", metavar="headless_miner", type=str)
+parser.add_argument("--config_file", metavar="config_file", type=str)
+parser.add_argument("--headless_miner", metavar="headless_miner", type=str)
 params = parser.parse_args()
 
 if params.config_file is None:
