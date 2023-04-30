@@ -128,4 +128,4 @@ def build_and_train(root_image_directory, model_location,
         'decision_threshold': decision_threshold
     }
 
-    return stats, rendering, eval_results
+    return stats, rendering

@@ -29,6 +29,8 @@ def mining_cycle(ag):
         elif state_result['class'] == 'in_flight' and not cargo_full:
             mining_tool_state_result = get_miners_running(ag)
             sub_mining_cycle(ag)
+        elif state_result['class'] == 'connection_lost':
+            break
 
         time.sleep(30)
 
