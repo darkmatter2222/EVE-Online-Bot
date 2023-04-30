@@ -31,6 +31,8 @@ def mining_cycle(ag):
             sub_mining_cycle(ag)
         elif state_result['class'] == 'connection_lost':
             break
+        elif state_result['class'] == 'char_select':
+            break
 
         time.sleep(30)
 
