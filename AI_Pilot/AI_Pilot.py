@@ -16,7 +16,7 @@ from AI_Pilot.Objectives.Mining.StartMining import start_mining
 from AI_Pilot.UI.Main_UI import AI_Pilot
 
 # parse arguments
-parser = argparse.ArgumentParser(prog='AI Pilot.py')
+parser = argparse.ArgumentParser(prog='AI_Pilot.py')
 parser.add_argument("--config_file", metavar="config_file", type=str)
 parser.add_argument("--headless_miner", metavar="headless_miner", type=str)
 params = parser.parse_args()
