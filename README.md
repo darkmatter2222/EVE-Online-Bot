@@ -14,9 +14,44 @@
      - [Settings](#settings)
 
 ## Features
+The following are features of this bot and for the most part, work out of the box after the user has [configured](#installation) their environment. 
 ### Objectives
+Objectives are high level functions where all the rules to accomplish the particular objective have been aggregated and normalized into a sequence of events.  
+Some objectives can be short lived such as navigating waypoints. Other objectives can consume an entire session such as mining. 
 #### Auto Miner
+This objective consumes the entire session, and in fact, will create its own session and manage both the launcher and login process. This bot was built to be a One Click start and will manage itself.  
+**Key Features:**
+ - Auto Unload at 'Home'
+ - Auto Field depleted detection and avoidance 
+ - Auto server reboot and reconnect  
+ 
+**ML Component:**
+ - Game State (In Hanger, In Flight, Server Disconnected, Character Selection)
+ - Miner 1 and miner 2 states  
+ 
+**Pixel Density Component:**
+ - Survey Scan Results Window
+ - Inventory Window Cargo Fullness  
+ 
+**Tesseract Component:**
+ - Locations Window
 #### Waypoint Navigation
+This objective only runs for as long as you need it to or until it has arrived at its destination, set a chain of waypoints and let the bot blitz through them. How is this different from Auto Pilot in Eve Online? Auto Pilot will land you w/in 5-10km of the target. This wings you as close as your ship will allow.  
+Whats the magic here? Leveraging ML to understand the content menus and select the right options.  
+**Key Features:**
+ - High Speed Way Point Navigation 
+ - Auto Stop on Destination
+ 
+**ML Component:**
+ - Game State (In Hanger, In Flight, Server Disconnected, Character Selection)
+ - Context menu understanding
+ 
+**Pixel Density Component:**
+ - None
+ 
+**Tesseract Component:**
+ - None
+
 ### Sub Functions
 
 
