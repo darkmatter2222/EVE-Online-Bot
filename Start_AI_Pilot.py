@@ -4,13 +4,13 @@ repo = 'https://github.com/darkmatter2222/EVE-Online-Bot'
 import argparse
 import sys
 import os
-from pathlib import Path
+#from pathlib import Path
 # logging w/o a log directory until sup app determines
 from loguru import logger
 
-this_file_path = Path(__file__).parent.parent
-logger.info(f"Adding: {this_file_path} to path")
-sys.path.append(os.path.dirname(this_file_path))
+#this_file_path = Path(__file__).parent.parent
+#logger.info(f"Adding: {this_file_path} to path")
+#sys.path.append(os.path.dirname(this_file_path))
 
 this_file_path = os.path.abspath(__file__)
 logger.info(f"Adding: {this_file_path} to path")
