@@ -9,6 +9,7 @@
         - [Auto Miner](#auto-miner)
         - [Waypoint Navigation](#waypoint-navigation)
     - [Sub Functions (Developers)](#sub-functions)
+- [Architecture](#architecture)
 - [Installation](#installation)
      - [Requirements](#requirements)
      - [Settings](#settings)
@@ -54,6 +55,8 @@ Whats the magic here? Leveraging ML to understand the content menus and select t
 
 ### Sub Functions
 
+## Architecture
+![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
 ## Installation
 This bot consumes your mouse and keyboard, good for running on standalone PC.
@@ -96,6 +99,5 @@ In [this config file](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main
 
 
 
-![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
 
