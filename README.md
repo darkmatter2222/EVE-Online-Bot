@@ -14,7 +14,7 @@
      - [Requirements](#requirements)
      - [Settings](#settings)
 
-## Features
+## :gift:Features
 The following are features of this bot and for the most part, work out of the box after the user has [configured](#installation) their environment. 
 ### Objectives
 Objectives are high level functions where all the rules to accomplish the particular objective have been aggregated and normalized into a sequence of events.  
