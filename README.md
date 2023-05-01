@@ -6,9 +6,9 @@
 ## Table Of Contents
 - [Features](#features)
     - [Objectives](#objectives)
-        - [Auto Miner](#autominer)
-        - [Waypoint Navigation](#waypointnavigation)
-    - [Sub Functions (Developers)](#subfunctions)
+        - [Auto Miner](#auto-miner)
+        - [Waypoint Navigation](#waypoint-navigation)
+    - [Sub Functions (Developers)](#sub-functions)
 - [Installation](#installation)
      - [Requirements](#requirements)
      - [Settings](#settings)
