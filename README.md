@@ -16,10 +16,10 @@
 
 ## :gift:Features
 The following are features of this bot and for the most part, work out of the box after the user has [configured](#installation) their environment. 
-### Objectives
+### :bulb:Objectives
 Objectives are high level functions where all the rules to accomplish the particular objective have been aggregated and normalized into a sequence of events.  
 Some objectives can be short lived such as navigating waypoints. Other objectives can consume an entire session such as mining. 
-#### Auto Miner
+#### :construction:Auto Miner
 This objective consumes the entire session, and in fact, will create its own session and manage both the launcher and login process. This bot was built to be a One Click start and will manage itself.  
 **Key Features:**
  - Auto Unload at 'Home'
@@ -36,7 +36,7 @@ This objective consumes the entire session, and in fact, will create its own ses
  
 **Tesseract Component:**
  - Locations Window
-#### Waypoint Navigation
+#### :car:Waypoint Navigation
 This objective only runs for as long as you need it to or until it has arrived at its destination, set a chain of waypoints and let the bot blitz through them. How is this different from Auto Pilot in Eve Online? Auto Pilot will land you w/in 5-10km of the target. This wings you as close as your ship will allow.  
 Whats the magic here? Leveraging ML to understand the content menus and select the right options.  
 **Key Features:**
@@ -53,7 +53,7 @@ Whats the magic here? Leveraging ML to understand the content menus and select t
 **Tesseract Component:**
  - None
 
-### Sub Functions
+### :wrench:Sub Functions
  - [cargo levels](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Cargo/Cargo.py)
  - [unload cargo](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Cargo/Cargo.py)
  - [game state](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Common/Common.py)
@@ -64,13 +64,13 @@ Whats the magic here? Leveraging ML to understand the content menus and select t
  - [saved locations navigation](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Navigation/Locations_Navigation.py)
  - [mining](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Mining/Mining.py)
 
-## Architecture
+## :office:Architecture
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
 
-## Installation
+## :floppy_disk:Installation
 This bot consumes your mouse and keyboard, good for running on standalone PC.
 
-### Requirements
+### :clipboard:Requirements
 1. 1920x1080 Monitor
 2. Eve Online running full screen or windowed
 3. Create your virtual environment (python 3.9)
@@ -79,7 +79,7 @@ This bot consumes your mouse and keyboard, good for running on standalone PC.
     - pip install tensorflow (recommended, for CPU only)
     - pip install tensorflow-gpu (will require additional GPU setup, not recommended)
 
-### Settings
+### :page_with_curl:Settings
 Working on a YT video for this. You will need to configure this for your personal setup. Some of this config is done by hand, the rest is done by an overlay tool.
 ##### General Config
 In [this config file](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/ai_pilot_config_v2.json), under "default.general", set "log_dir", "monitor_number", and "eve_launcher" to your appropriate settings:  
