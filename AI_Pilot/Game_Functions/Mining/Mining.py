@@ -325,7 +325,6 @@ def mine_till_full_v2(ag):
         # Catch All
         else:
             logger.info(f'FAULT (L1) race_condition_fault_count:{race_condition_fault_count}')
-            fault_tick_test(ag)
             race_condition_fault_count += 1
             if race_condition_fault_count > 5:
                 mining_stale = True

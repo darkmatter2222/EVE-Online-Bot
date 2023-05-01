@@ -39,13 +39,6 @@ def start_mining(config_dir):
             logger.info(f'Main Loop-Launcher PID:{launcher_pid}, Game PID:{game_pid}')
             Bot.ag.log.log_main_loop_activity('Startup', "Login Sequence Finished")
 
-            # prep
-            # logger.info('Main Loop-Prep')
-            # Bot.ag.log.log_main_loop_activity('Prep', "Get To Starting Point Starting")
-            # Bot.get_to_starting_point()
-            # Bot.reset_stale_mining_sites()
-            # Bot.ag.log.log_main_loop_activity('Prep', "Get To Starting Point Finished")
-
             # mine
             logger.info('Main Loop-Mine')  # should spend 23 hours a day here...
             Bot.ag.log.log_main_loop_activity('Mine', "Mining Main Loop Starting")
@@ -55,17 +48,17 @@ def start_mining(config_dir):
                 logger.exception(e)
                 try:
                     if e.args[0] == 'Connection Lost, Restart':
-                        break  # Recycle and repeat main loop
+                        pass  # Recycle and repeat main loop
                     elif e.args[0] == 'Fault Count Exceeded':
-                        break
+                        pass
                     elif 'PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen' in e.args[0]:
                         Bot.recover_mouse()
-                        break
+                        pass
                     else:
-                        break
+                        pass
                 except Exception as ex:
                     logger.exception(ex)
-                    break
+                    pass
 
             Bot.ag.log.log_main_loop_activity('Mine', "Mining Main Loop Finished")
 
@@ -84,4 +77,3 @@ def start_mining(config_dir):
             Bot.ag.log.log_main_loop_activity('Recycle', "Recycle Exception Main Loop Finished")
             logger.info('Main Loop-Sleeping 30 seconds...')
             time.sleep(30)
-            pass
