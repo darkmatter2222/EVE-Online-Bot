@@ -4,9 +4,21 @@
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
 
 ## Table Of Contents
+- [Features](#features)
+    - [Objectives](#objectives)
+        - [Auto Miner](#autominer)
+        - [Waypoint Navigation](#waypointnavigation)
+    - [Sub Functions (Developers)](#subfunctions)
 - [Installation](#installation)
      - [Requirements](#requirements)
      - [Settings](#settings)
+
+## Features
+### Objectives
+#### Auto Miner
+#### Waypoint Navigation
+### Sub Functions
+
 
 ## Installation
 This bot consumes your mouse and keyboard, good for running on standalone PC.
