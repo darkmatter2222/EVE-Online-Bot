@@ -4,8 +4,13 @@ repo = 'https://github.com/darkmatter2222/EVE-Online-Bot'
 import argparse
 import sys
 import os
+#from pathlib import Path
 # logging w/o a log directory until sup app determines
 from loguru import logger
+
+#this_file_path = Path(__file__).parent.parent
+#logger.info(f"Adding: {this_file_path} to path")
+#Ssys.path.append(os.path.dirname(this_file_path))
 
 this_file_path = os.path.abspath(__file__)
 logger.info(f"Adding: {this_file_path} to path")
@@ -16,7 +21,7 @@ from AI_Pilot.Objectives.Mining.StartMining import start_mining
 from AI_Pilot.UI.Main_UI import AI_Pilot
 
 # parse arguments
-parser = argparse.ArgumentParser(prog='AI_Pilot.py')
+parser = argparse.ArgumentParser(prog='Start_AI_Pilot.py')
 parser.add_argument("--config_file", metavar="config_file", type=str)
 parser.add_argument("--headless_miner", metavar="headless_miner", type=str)
 params = parser.parse_args()
@@ -41,7 +46,3 @@ if params.headless_miner:
 else:
     aip = AI_Pilot(params.config_file)
     aip.start()
-
-
-
-
