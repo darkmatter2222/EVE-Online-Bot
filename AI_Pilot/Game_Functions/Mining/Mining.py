@@ -59,7 +59,7 @@ def get_survey_scan_data(ag, force_scan=False):
 
 
 def restart(ag):
-    ag.fault_count = 0
+    ag.fault_count = 10
 
 
 def fault_tick(ag):
@@ -340,7 +340,7 @@ def sub_mining_cycle(ag):
     if not hasattr(ag, 'stale_mining_locations'):
         ag.stale_mining_locations = {}
     if not hasattr(ag, 'fault_count'):
-        ag.fault_count = 0
+        ag.fault_count = 10
 
     # always asume we are not mining and we need to nav to starting point
     # find minig Spot
