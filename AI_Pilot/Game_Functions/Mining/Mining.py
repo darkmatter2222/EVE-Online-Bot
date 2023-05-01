@@ -59,7 +59,7 @@ def get_survey_scan_data(ag, force_scan=False):
 
 
 def restart(ag):
-    ag.fault_count = 10
+    ag.fault_count = 0
 
 
 def fault_tick(ag):
@@ -69,6 +69,11 @@ def fault_tick(ag):
         message = 'Fault Count Exceeded'
         logger.error(message)
         raise Exception(message)
+
+def fault_tick_test(ag):
+    message = 'Fault Count Exceeded'
+    logger.error(message)
+    raise Exception(message)
 
 
 def get_scrub_scan_data(ag, force_scan=False):
@@ -320,6 +325,7 @@ def mine_till_full_v2(ag):
         # Catch All
         else:
             logger.info(f'FAULT (L1) race_condition_fault_count:{race_condition_fault_count}')
+            fault_tick_test(ag)
             race_condition_fault_count += 1
             if race_condition_fault_count > 5:
                 mining_stale = True
@@ -340,7 +346,7 @@ def sub_mining_cycle(ag):
     if not hasattr(ag, 'stale_mining_locations'):
         ag.stale_mining_locations = {}
     if not hasattr(ag, 'fault_count'):
-        ag.fault_count = 10
+        ag.fault_count = 0
 
     # always asume we are not mining and we need to nav to starting point
     # find minig Spot

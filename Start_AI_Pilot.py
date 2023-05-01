@@ -11,6 +11,8 @@ this_file_path = os.path.abspath(__file__)
 logger.info(f"Adding: {this_file_path} to path")
 sys.path.append(os.path.dirname(this_file_path))
 
+logger.info(sys.path)
+
 # AI Pilot Atrium Imports
 from AI_Pilot.Objectives.Mining.StartMining import start_mining
 from AI_Pilot.UI.Main_UI import AI_Pilot
