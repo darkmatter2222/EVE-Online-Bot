@@ -54,6 +54,15 @@ Whats the magic here? Leveraging ML to understand the content menus and select t
  - None
 
 ### Sub Functions
+ - [cargo levels](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Cargo/Cargo.py)
+ - [unload cargo](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Cargo/Cargo.py)
+ - [game state](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Common/Common.py)
+ - [exit hanger](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Common/Common.py)
+ - [game launcher](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Game_Client/Game_Client.py)
+ - [login](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Game_Client/Game_Client.py)
+ - [waypoint navigation](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Navigation/Waypoint_Navigation.py)
+ - [saved locations navigation](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Navigation/Locations_Navigation.py)
+ - [mining](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/AI_Pilot/Game_Functions/Mining/Mining.py)
 
 ## Architecture
 ![alt text](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/banner.png)  
