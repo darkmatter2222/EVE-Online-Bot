@@ -101,7 +101,7 @@ In [this config file](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main
 ##### Static Screen Locations
 Out of the box, the following command would work, we are starting the Overlay tooling to set your static clicking and reading space.  
 ```bat
-..\EVE-Online-Bot\Start_AI_Pilot.py --config_file "O:\source\repos\EVE-Online-Bot\AI_Pilot\ai_pilot_config_v2.json" --setup_mode 1
+Start_AI_Pilot.py --config_file "AI_Pilot\ai_pilot_config_v2.json" --setup_mode 1
 ```
 Your objective, click and drag the dots to align with how it appears below.
 
