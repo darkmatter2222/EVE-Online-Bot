@@ -97,6 +97,11 @@ In [this config file](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main
 > You wont need to alter anything under, 'ml_botting_core' if you are using the repo as intended. 'ml_botting_core' feeds directly into, [ml-botting-core](https://github.com/darkmatter2222/ml_botting_core)
 
 ##### Static Screen Locations
+Out of the box, the following command would work, we are starting the Overlay tooling to set your static clicking and reading space.  
+```bat
+..\EVE-Online-Bot\Start_AI_Pilot.py --config_file "O:\source\repos\EVE-Online-Bot\AI_Pilot\ai_pilot_config_v2.json" --setup_mode 1
+```
+
 
 
 
