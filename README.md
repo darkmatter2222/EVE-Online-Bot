@@ -127,7 +127,8 @@ Very simple, will auto start the game client.
 Start_AI_Pilot.py --config_file "AI_Pilot\ai_pilot_config_v2.json" --headless_miner 1
 ```
 ##### Setting up Locations:
-
+Set up about 9 locations and have the names added to the list in the config file under node "mining_sites", Be sure to add a "Home" location for unloading. 
+![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/MiningLocationsSpacingV1.png)
 
 
 
