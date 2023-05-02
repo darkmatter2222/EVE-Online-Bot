@@ -13,6 +13,12 @@
 - [Installation](#installation)
      - [Requirements](#requirements)
      - [Settings](#settings)
+        - [General Config]()
+        - [ml_botting_core]()
+        - [Static Screen Locations]()
+- [Running Miner]()
+    - [Setting up Locations]()
+- [Running Waypoint Navigation]()
 
 ## :gift:Features
 The following are features of this bot and for the most part, work out of the box after the user has [configured](#installation) their environment. 
@@ -95,6 +101,7 @@ In [this config file](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main
 > **Note**
 > 'monitor_number' is just a random number the toolkit assigns to your monitors. if you only have 1 monitor, set the value to 0. Experiment what number is yours in the next step.
 
+##### ml_botting_core
 > **Note**
 > You wont need to alter anything under, 'ml_botting_core' if you are using the repo as intended. 'ml_botting_core' feeds directly into, [ml-botting-core](https://github.com/darkmatter2222/ml_botting_core)
 
@@ -112,7 +119,18 @@ Your objective, click and drag the dots to align with how it appears below.
 
 ![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/OverlaySetupV1.png)  
 
-![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/OverlaySetupV2.png)
+![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/OverlaySetupV2.png)  
+
+### Running Miner
+Very simple, will auto start the game client.
+```bat
+Start_AI_Pilot.py --config_file "AI_Pilot\ai_pilot_config_v2.json" --headless_miner 1
+```
+##### Setting up Locations:
+
+
+
+
 
 
 
