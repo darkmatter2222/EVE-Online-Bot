@@ -3,6 +3,9 @@
 
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
 
+> :warning: **WARNING**  
+> This is for educational Purposes only. Authors of this Repo or associated repos take no responsibility for its usage.
+
 ## Table Of Contents
 - [Features](#giftfeatures)
     - [Objectives](#bulbobjectives)
