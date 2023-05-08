@@ -14,7 +14,7 @@ def get_ship_root_cargo(ag):
             len(img_array[img_array == True]) + len(img_array[img_array == False]))
 
 
-def unload_cargo(ag):
+def unload_mining_cargo(ag):
     perform_move_click(ag, ag.static_screen_pos['click_target_mining_hold'], button='left')
 
     perform_range_select(ag, ag.static_screen_pos['range_click_and_drag_inv_box'][2:4],
@@ -22,4 +22,22 @@ def unload_cargo(ag):
 
     perform_drag(ag, ag.static_screen_pos['click_target_first_item_in_inventory'],
                  ag.static_screen_pos['click_target_hanger'])
+
+
+def load_mining_cargo(ag):
+    perform_move_click(ag, ag.static_screen_pos['click_target_hanger'], button='left')
+
+    #perform_range_select(ag, ag.static_screen_pos['range_click_and_drag_inv_box'][2:4],
+    #                     ag.static_screen_pos['range_click_and_drag_inv_box'][0:2])
+
+    perform_drag(ag, ag.static_screen_pos['click_target_first_item_in_inventory'],
+                 ag.static_screen_pos['click_target_mining_hold'])
+
+def get_hanger_menus(ag):
+    # region ----- get gav options
+    img = get_screen(ag)
+    hanger_menus_result = ag.up.predict(img, 'hanger_menus')
+    logger.info(hanger_menus_result)
+    # endregion
+    return hanger_menus_result
 

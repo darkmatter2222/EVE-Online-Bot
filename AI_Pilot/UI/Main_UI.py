@@ -10,8 +10,7 @@ class AI_Pilot():
         self.bot = Bot_Engine(config_dir=config_dir)
         host = socket.gethostname()
         logger.add(
-            self.bot.ag.this_config['general']['log_dir'] + '\\' + host + "Audit_History" + sys.argv[0].split('/')[-1:][
-                0] + "Audit_History{time}.log")
+            self.bot.ag.this_config['general']['log_dir'] + '\\' + host + "Audit_History{time}.log")
 
         self.title = "AI Pilot V1"
         self.root = tk.Tk()
@@ -34,56 +33,9 @@ class AI_Pilot():
         self.dock_at_destination_e_stop_bool = False
         # endregion
 
-        # region ----- column 1
-        self.migrate_ore_lf = tk.LabelFrame(self.root, text="Migrate Ore (Start in Space)")
-        self.migrate_ore_lf.grid(row=0, column=1, sticky=tk.W, padx=(10, 10), pady=(10, 10))
-
-        self.migrate_ore_lf_sub1 = tk.Frame(self.migrate_ore_lf)
-        self.migrate_ore_lf_sub1.grid(row=0, column=0, sticky=tk.W, padx=(10, 10), pady=(0, 0))
-        self.migrate_ore_l1 = tk.Label(self.migrate_ore_lf_sub1, text="From:")
-        self.migrate_ore_l1.grid(row=0, column=0, sticky=tk.W, padx=(10, 10), pady=(10, 5))
-        self.migrate_ore_tb1 = tk.Text(self.migrate_ore_lf_sub1, height=1, width=25)
-        self.migrate_ore_tb1.insert(tk.INSERT, "Amsen VI - Moon - Moon 1 Science and Trade Institute School")
-        self.migrate_ore_tb1.grid(row=0, column=1, sticky=tk.W, padx=(10, 10), pady=(10, 5))
-
-        self.migrate_ore_lf_sub2 = tk.Frame(self.migrate_ore_lf)
-        self.migrate_ore_lf_sub2.grid(row=1, column=0, sticky=tk.W, padx=(10, 10), pady=(0, 0))
-        self.migrate_ore_l2 = tk.Label(self.migrate_ore_lf_sub2, text="To:")
-        self.migrate_ore_l2.grid(row=0, column=0, sticky=tk.W, padx=(10, 10), pady=(5, 10))
-        self.migrate_ore_tb2 = tk.Text(self.migrate_ore_lf_sub2, height=1, width=25)
-        self.migrate_ore_tb2.insert(tk.INSERT, "Jita IV - Moon 4 - Caldari Navy Assembly Plant")
-        self.migrate_ore_tb2.grid(row=0, column=1, sticky=tk.W, padx=(10, 10), pady=(10, 5))
-
-        self.migrate_ore_start_button = tk.Button(self.migrate_ore_lf, text="Start", width=35,
-                                                  command=self.search_for_destination_start)
-        self.migrate_ore_start_button.grid(row=2, column=0, sticky=tk.N, padx=(10, 10), pady=(10, 5))
-        self.migrate_ore_e_stop_button = tk.Button(self.migrate_ore_lf, text="End", width=35,
-                                                   )
-        self.migrate_ore_e_stop_button.grid(row=3, column=0, sticky=tk.N, padx=(10, 10), pady=(5, 5))
-        self.migrate_ore_e_stop_button["state"] = "disabled"
-
-        self.migrate_ore_lb = tk.Listbox(self.migrate_ore_lf, width=40)
-        self.migrate_ore_lb.grid(row=4, column=0, sticky=tk.N, padx=(5, 5), pady=(5, 10))
-        self.migrate_ore_log = []
-        # endregion
-
-        # region ----- column 2
-        self.model_prediction_lf = tk.LabelFrame(self.root, text="What is On Screen?")
-        self.model_prediction_lf.grid(row=0, column=2, sticky=tk.W, padx=(10, 10), pady=(10, 10))
-
-        OPTIONS = [
-            "get_state",
-        ]
-        variable = tk.StringVar(self.model_prediction_lf)
-        variable.set(OPTIONS[0])
-
-        self.model_menu = tk.OptionMenu(self.model_prediction_lf, variable, *OPTIONS)
-        self.model_menu.grid(row=0, column=0, sticky=tk.W, padx=(10, 10), pady=(0, 0))
-        # endregion
-
         # region ----- column 4
         self.aggregate_resources_lf = tk.LabelFrame(self.root, text="aggregate Resources")
-        self.aggregate_resources_lf.grid(row=0, column=4, sticky=tk.NW, padx=(10, 10), pady=(10, 10))
+        self.aggregate_resources_lf.grid(row=0, column=1, sticky=tk.NW, padx=(10, 10), pady=(10, 10))
         self.aggregate_resources_start_button = tk.Button(self.aggregate_resources_lf, text="Start", width=30,
                                                            command=self.aggregate_resources_start)
         self.aggregate_resources_start_button.grid(row=0, column=0, sticky=tk.N, padx=(10, 10), pady=(5, 5))

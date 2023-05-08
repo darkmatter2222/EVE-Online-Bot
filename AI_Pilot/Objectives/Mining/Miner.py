@@ -1,5 +1,5 @@
 from AI_Pilot.Game_Functions.Common.Common import get_game_state
-from AI_Pilot.Game_Functions.Cargo.Cargo import get_ship_root_cargo, unload_cargo
+from AI_Pilot.Game_Functions.Cargo.Cargo import get_ship_root_cargo, unload_mining_cargo
 from AI_Pilot.Game_Functions.Common.Common import exit_hanger
 from AI_Pilot.Game_Functions.Mining.Mining import get_miners_running, sub_mining_cycle, select_mining_hold, reset, reset_stale
 from AI_Pilot.Game_Functions.Navigation.Locations_Navigation import dock_at_home
@@ -20,7 +20,7 @@ def mining_cycle(ag):
             last_execution = 'Dock'
         elif state_result['class'] == 'in_hanger' and cargo_full:
             # unload
-            unload_cargo(ag)
+            unload_mining_cargo(ag)
             last_execution = 'Unload'
         elif state_result['class'] == 'in_hanger' and not cargo_full:
             # exit hanger

@@ -3,7 +3,7 @@ from AI_Pilot.Control_Functions.Monitors import get_monitor_spec, get_screen
 from ml_botting_core import universal_predictor
 from AI_Pilot.Game_Functions.Navigation.Waypoint_Navigation import navigate_waypoints_to_end
 from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click, perform_range_select, recover_mouse
-#from AI_Pilot.Objectives.Aggregate_Resources.Aggregate_Resources import Aggregate_Resources
+from AI_Pilot.Objectives.Aggregate_Resources.Aggregate_Resources import Aggregate_Resources
 from AI_Pilot.Config_Management.Config_Management import load_config
 from AI_Pilot.Objectives.Mining import Miner
 import numpy as np
