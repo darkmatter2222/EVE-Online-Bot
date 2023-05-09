@@ -74,7 +74,7 @@ def load_until_full(ag):
         # =============================================================
         df = get_assets_search_table(ag)
         logger.info(df)
-        df = df[~df['Name'].str.contains('Jita')].reset_index(drop=True)
+        df = df[~df['Name'].str.contains('Jita|Amsen')].reset_index(drop=True)
         logger.info(df)
         perform_move_click(ag, df.loc[0, 'click_target'], button='right', perform_offset=False)
 
