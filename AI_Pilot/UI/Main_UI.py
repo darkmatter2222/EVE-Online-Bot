@@ -67,8 +67,11 @@ class AI_Pilot():
         self.bot.dock_at_destination_e_stop()
 
     def dock_at_destination_start(self):
+        params = {
+                "navigation_use_warpdrive_fkey": None
+            }
         self.dock_at_destination_clear_log()
-        self.bot.dock_at_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change)
+        self.bot.dock_at_destination_threaded(self.dock_at_destination_append_log, self.ui_element_change, params)
 
     # endregion
 
@@ -81,7 +84,10 @@ class AI_Pilot():
 
     # region ----- start aggregate_resources
     def aggregate_resources_start(self):
-        self.bot.aggregate_resources_start()
+        params = {
+                "navigation_use_warpdrive_fkey": None
+            }
+        self.bot.aggregate_resources_start(params)
     # endregion
 
 

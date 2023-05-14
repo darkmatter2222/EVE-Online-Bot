@@ -250,7 +250,7 @@
      "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
      "model_root_directory": "\\\\databrick\\N\\eve_logs\\eve_live_models\\mining_tool_state",
      "model_log_directory": "\\\\databrick\\N\\eve_logs\\eve_live_logs\\mining_tool_state",
-     "save_images": 0
+     "save_images": 1
     },
     {
      "game": "eve_online",

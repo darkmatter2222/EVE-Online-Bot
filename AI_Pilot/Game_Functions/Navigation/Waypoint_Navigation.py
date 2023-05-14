@@ -3,7 +3,7 @@ import time
 from AI_Pilot.Control_Functions.Monitors import get_screen
 from AI_Pilot.Control_Functions.General import get_cords_with_offset
 from AI_Pilot.Game_Functions.Common.Common import get_game_state
-from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click
+from AI_Pilot.Control_Functions.Mouse_Keyboard import perform_move_click, press_release_alt_f_key
 
 
 def get_nav_options(ag, crop):
@@ -63,6 +63,17 @@ def navigate_one_waypoint(ag):
 
         if click_target is not None:
             perform_move_click(ag, pos=click_target, button='left', perform_offset=False)
+
+        try:
+            if hasattr(ag, 'navigation'):
+                if 'navigation_use_warpdrive_fkey' in ag.navigation:
+                    if ag.navigation['navigation_use_warpdrive_fkey'] is not None:
+                        time.sleep(0.5)
+                        press_release_alt_f_key(ag, ag.navigation['navigation_use_warpdrive_fkey'])
+        except Exception as e:
+            logger.exception(e)
+
+
 
     return state_result
 

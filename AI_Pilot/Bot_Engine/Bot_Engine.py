@@ -60,18 +60,18 @@ class Bot_Engine:
     def dock_at_destination_e_stop(self):
         self.dock_at_destination_parms['e_stop'] = True
 
-    def dock_at_destination_threaded(self, logging_callback, ui_callback):
+    def dock_at_destination_threaded(self, logging_callback, ui_callback, params):
         self.dock_at_destination_parms['thread'] = threading.Thread(target=self.dock_at_destination,
-                                                                    args=(logging_callback, ui_callback,))
+                                                                    args=(logging_callback, ui_callback,params,))
         self.dock_at_destination_parms['thread'].start()
 
-    def dock_at_destination(self, logging_callback, ui_callback):
+    def dock_at_destination(self, logging_callback, ui_callback, params):
         self.dock_at_destination_parms['e_stop'] = False
         ui_callback('dock_at_destination_button', 'state', 'disabled')
         ui_callback('dock_at_destination_e_stop_button', 'state', 'active')
         logging_callback(f"Starting in 1 Second...")
         time.sleep(1)
-
+        self.ag.navigation = params
         navigate_waypoints_to_end(self.ag)
 
         ui_callback('dock_at_destination_button', 'state', 'active')
@@ -190,7 +190,8 @@ class Bot_Engine:
     # endregion
 
     # region ----- aggrogate_resources
-    def aggregate_resources_start(self):
+    def aggregate_resources_start(self, params):
+        self.ag.navigation = params
         Aggregate_Resources(self.ag)
         return
     # endregion

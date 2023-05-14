@@ -17,6 +17,7 @@ def recover_mouse(ag):
         pass
     time.sleep(5)
 
+
 def move_to_default_pos(ag):
     pyautogui.moveTo(get_cords_with_offset(ag, *ag.static_screen_pos['click_target_default_cords']))
     time.sleep(0.1)
@@ -38,6 +39,7 @@ def perform_move_click(ag, pos, button='right', perform_offset=True, finish_at_d
     if finish_at_default:
         move_to_default_pos(ag)
     return
+
 
 def perform_move_ctrl_click(ag, pos, button='right', perform_offset=True, finish_at_default=True):
     # pos is tuple (x, y)
@@ -79,5 +81,13 @@ def perform_range_select(ag, pos_start, pos_end, button='left', perform_offset=T
         pyautogui.dragTo(*pos_end, 1, button=button)
         time.sleep(0.1)
 
+
 def press_release_f_key(ag, f_key_number):
     pyautogui.press(f'f{f_key_number}')
+
+
+def press_release_alt_f_key(ag, f_key_number):
+    pyautogui.keyDown('alt')
+    pyautogui.press(f'f{f_key_number}')
+    time.sleep(0.1)
+    pyautogui.keyUp('alt')
