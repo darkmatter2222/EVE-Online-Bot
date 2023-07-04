@@ -18,6 +18,7 @@ log_template = {
 
 }
 
+
 class History:
     # make singleton
     def __new__(cls, ag):
@@ -26,14 +27,27 @@ class History:
         return cls.instance
 
     def __init__(self, ag):
-        self.client = MongoClient(ag.mongo_logging['mining_bot']['mongo_host'],
-                                  username=os.getenv("eve_username"),
-                                  password=os.getenv("eve_password"))
-        self.db = self.client[ag.mongo_logging['mining_bot']['db_name']]
-        self.collection = self.db[ag.mongo_logging['mining_bot']['collection_name']]
-        self.temp = 0
+        self.mining_audit_enabled = True
+        if 'mining_bot' not in ag.mongo_logging:
+            self.mining_audit_enabled = False
+
+        if self.mining_audit_enabled:
+            self.client = MongoClient(ag.mongo_logging['mining_bot']['mongo_host'],
+                                      username=os.getenv("eve_username"),
+                                      password=os.getenv("eve_password"))
+            self.db = self.client[ag.mongo_logging['mining_bot']['db_name']]
+            self.collection = self.db[ag.mongo_logging['mining_bot']['collection_name']]
+            self.temp = 0
+        else:
+            self.client = None
+            self.db = None
+            self.collection = None
+            self.temp = None
 
     def insert_payload(self, payload):
+        if ~self.mining_audit_enabled:
+            return
+
         insert_id = None
         try:
             insert_id = self.collection.insert_one(payload).inserted_id
@@ -42,9 +56,14 @@ class History:
             pass
 
     def empty_collection(self):
+        if ~self.mining_audit_enabled:
+            return
         self.collection.delete_many({})
 
     def get_all(self):
+        if ~self.mining_audit_enabled:
+            return []
+
         results = []
         doc_cur = self.collection.find({})
         for doc in doc_cur:
