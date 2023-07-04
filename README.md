@@ -21,6 +21,8 @@
         - [Static Screen Locations](#static-screen-locations)
 - [Running Miner](#running-miner)
     - [Setting up Locations](#setting-up-locations)
+- [Running Project Discovery](#running-project-discovery)
+
 
 ## :gift:Features
 The following are features of this bot and for the most part, work out of the box after the user has [configured](#installation) their environment. 
@@ -131,6 +133,33 @@ Start_AI_Pilot.py --config_file "AI_Pilot\ai_pilot_config_v2.json" --headless_mi
 ##### Setting up Locations:
 Set up about 9 locations and have the names added to the list in the config file under node "mining_sites", Be sure to add a "Home" location for unloading. 
 ![](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main/Images/MiningLocationsSpacingV1.png)
+
+### Running Project Discovery
+Have the game open, have project discovery open and have already configured the [two PD Ranges and Click Target.](#static-screen-locations)
+```bat
+Start_AI_Pilot.py --config_file "AI_Pilot\ai_pilot_config_v2.json" --headless_project_discovery 1
+```
+
+```json
+"click_target_pd_submit_target": [
+    1173,
+    696
+],
+"range_pd_top": [
+    101,
+    458,
+    567,
+    682
+],
+"range_pd_bottom": [
+    101,
+    214,
+    571,
+    424
+],
+```  
+
+
 
 
 
