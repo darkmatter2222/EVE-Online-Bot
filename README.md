@@ -108,15 +108,16 @@ In [this config file](https://github.com/darkmatter2222/EVE-Online-Bot/blob/main
 ```json
 "mongo_logging": {
     "mining_bot": {
-    "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
-    "mongo_authMechanism": "SCRAM-SHA-256",
-    "db_name": "Eve",
-    "collection_name": "History"
+        "mongo_host": "mongodb+srv://cluster0.ufnlr1u.mongodb.net/?retryWrites=true&w=majority",
+        "mongo_authMechanism": "SCRAM-SHA-256",
+        "db_name": "Eve",
+        "collection_name": "History"
+  }
 }
 ```  
 
 > **Note**
-> To disable Mongo Logging, just delete this dictionary from the config. 
+> To disable Mongo Logging, just delete 'mining_bot' dictionary from the config. 
 
 
 ##### ml_botting_core
