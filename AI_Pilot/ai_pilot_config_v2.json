@@ -2,7 +2,7 @@
  "default": {
   "general": {
    "log_dir": "\\\\databrick\\N\\eve_logs",
-   "monitor_number": 2,
+   "monitor_number": 3,
    "eve_launcher": "D:\\EVE\\Launcher\\evelauncher.exe"
   },
   "mongo_logging": {
@@ -22,7 +22,7 @@
      "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
      "model_root_directory": "O:\\eve_live_models\\game_state_v2",
      "model_log_directory": "O:\\eve_live_logs\\game_state_v2",
-     "save_images": 1
+     "save_images": 0
     },
     {
      "game": "eve_online",
@@ -31,7 +31,7 @@
      "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
      "model_root_directory": "O:\\eve_live_models\\mining_tool_state",
      "model_log_directory": "O:\\eve_live_logs\\mining_tool_state",
-     "save_images": 1
+     "save_images": 0
     },
     {
      "game": "eve_online",
@@ -40,7 +40,7 @@
      "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
      "model_root_directory": "O:\\eve_live_models\\nav_options",
      "model_log_directory": "O:\\eve_live_logs\\nav_options",
-     "save_images": 1
+     "save_images": 0
     },
     {
      "game": "eve_online",
@@ -49,7 +49,7 @@
      "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
      "model_root_directory": "O:\\eve_live_models\\hanger_menus",
      "model_log_directory": "O:\\eve_live_logs\\hanger_menus",
-     "save_images": 1
+     "save_images": 0
     },
     {
      "game": "eve_online",
@@ -58,7 +58,7 @@
      "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
      "model_root_directory": "O:\\eve_live_models\\set_dest",
      "model_log_directory": "O:\\eve_live_logs\\set_dest",
-     "save_images": 1
+     "save_images": 0
     },
     {
      "game": "eve_online",
@@ -76,7 +76,7 @@
      "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
      "model_root_directory": "O:\\eve_live_models\\game_state_cake_layer_1_v1",
      "model_log_directory": "O:\\eve_live_logs\\game_state_cake_layer_1_v1",
-     "save_images": 1
+     "save_images": 0
     },
     {
      "game": "eve_online",
@@ -85,11 +85,27 @@
      "download_latest_from": "https://storage.googleapis.com/eve_online_models/",
      "model_root_directory": "O:\\eve_live_models\\game_state_cake_layer_2_v1",
      "model_log_directory": "O:\\eve_live_logs\\game_state_cake_layer_2_v1",
-     "save_images": 1
+     "save_images": 0
     }
    ]
   },
   "static_screen_pos": {
+   "click_target_pd_submit_target": [
+    1173,
+    696
+   ],
+   "range_pd_top": [
+    101,
+    458,
+    567,
+    682
+   ],
+   "range_pd_bottom": [
+    101,
+    214,
+    571,
+    424
+   ],
    "next_waypoint_menu_box_dims_from_click": [
     -90,
     369,
