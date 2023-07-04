@@ -15,6 +15,7 @@ logger.info(sys.path)
 
 # AI Pilot Atrium Imports
 from AI_Pilot.Objectives.Mining.StartMining import start_mining
+from AI_Pilot.Objectives.Project_Discovery.AutoRanger import auto_range
 from AI_Pilot.Setup.Display_Overlay import display_overlay
 from AI_Pilot.UI.Main_UI import AI_Pilot
 
@@ -22,6 +23,7 @@ from AI_Pilot.UI.Main_UI import AI_Pilot
 parser = argparse.ArgumentParser(prog='Start_AI_Pilot.py')
 parser.add_argument("--config_file", metavar="config_file", type=str)
 parser.add_argument("--headless_miner", metavar="headless_miner", type=str)
+parser.add_argument("--headless_project_discovery", metavar="headless_project_discovery", type=str)
 parser.add_argument("--setup_mode", metavar="setup_mode", type=str)
 params = parser.parse_args()
 
@@ -39,18 +41,26 @@ elif not os.path.isfile(params.config_file):
     raise Exception(exception_message)
 
 params.headless_miner = False if params.headless_miner is None else bool(eval(params.headless_miner))
+params.headless_project_discovery = False if params.headless_project_discovery is None else bool(eval(params.headless_project_discovery))
 params.setup_mode = False if params.setup_mode is None else bool(eval(params.setup_mode))
 
-if params.headless_miner and params.setup_mode:
-    exception_message = f"Received headless_miner=True and setup_mode=True"
-    exception_message += f" Please choose one or the other"
+objectives = [
+    params.headless_miner,
+    params.headless_project_discovery,
+    params.setup_mode
+]
+
+if sum(bool(x) for x in objectives) != 1:
+    exception_message = f"More or less than one objective selected."
+    exception_message += f" Please choose only one objective: [headless_miner, headless_project_discovery, setup_mode]"
     exception_message += f" Visit '{repo}' for instructions."
     logger.exception(exception_message)
     raise Exception(exception_message)
 
-
 if params.headless_miner:
     start_mining(params.config_file)
+elif params.headless_project_discovery:
+    auto_range(params.config_file)
 elif params.setup_mode:
     display_overlay(params.config_file)
 else:
