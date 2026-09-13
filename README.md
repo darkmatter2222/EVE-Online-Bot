@@ -1,3 +1,7 @@
+> **☕ Support my work**
+>
+> If this project has helped you, consider supporting my work on [**Buy Me a Coffee**](https://buymeacoffee.com/j6oiubzfnh).
+
 # EVE Online Bot
 :star: Consider leaving a Star on [GitHub](https://github.com/darkmatter2222/EVE-Online-Bot) — Great motivation to continue development!
 
